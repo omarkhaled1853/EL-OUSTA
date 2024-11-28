@@ -1,13 +1,13 @@
-package com.ELOUSTA.User_profile;
+package com.ELOUSTA.Profile_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserProfileApplication {
+public class ProfileBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserProfileApplication.class, args);
+		SpringApplication.run(ProfileBackendApplication.class, args);
 	}
 
 }

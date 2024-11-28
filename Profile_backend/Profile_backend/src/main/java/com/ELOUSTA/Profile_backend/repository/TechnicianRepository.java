@@ -1,6 +1,6 @@
-package com.ELOUSTA.User_profile.repository;
+package com.ELOUSTA.Profile_backend.repository;
 
-import com.ELOUSTA.User_profile.entity.Technician;
+import com.ELOUSTA.Profile_backend.entity.Technician;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TechnicianRepository extends JpaRepository<Technician, Integer> {

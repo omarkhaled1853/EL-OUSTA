@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ELOUSTA</groupId>
-	<artifactId>User-profile</artifactId>
+	<artifactId>Profile_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>User-profile</name>
-	<description>User profile project</description>
+	<name>Profile_backend</name>
+	<description>Profile backend project</description>
 	<url/>
 	<licenses>
 		<license/>

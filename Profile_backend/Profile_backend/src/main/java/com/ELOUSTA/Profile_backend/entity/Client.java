@@ -1,4 +1,4 @@
-package com.ELOUSTA.User_profile.entity;
+package com.ELOUSTA.Profile_backend.entity;
 
 import jakarta.persistence.Entity;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.ELOUSTA.User_profile.repository;
+package com.ELOUSTA.Profile_backend.repository;
 
-import com.ELOUSTA.User_profile.entity.Client;
+import com.ELOUSTA.Profile_backend.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client, Integer> {
