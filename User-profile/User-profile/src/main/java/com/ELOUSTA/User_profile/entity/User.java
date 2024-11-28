@@ -18,10 +18,14 @@ public class User {
     private Integer id;
     private String firstName;
     private String lastName;
+    private Date dob;
     private String userName;
     private String phoneNumber;
-    private Date dob;
     private String email;
     private String password;
     private Date signUpDate;
+    private String governorate;
+    private String district;
+    private String roles;
+    private String profilePicture;
 }
