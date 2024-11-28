@@ -1,20 +1,27 @@
 package com.ELOUSTA.User_profile.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @MappedSuperclass
-@SuperBuilder
 @Data
+@SuperBuilder
 public class User {
-    protected String firstName;
-    protected String lastName;
-    protected String userName;
-    protected String phoneNumber;
-    protected Data dob;
-    protected String email;
-    protected String password;
-    protected Data signUpDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String phoneNumber;
+    private Date dob;
+    private String email;
+    private String password;
+    private Date signUpDate;
 }
