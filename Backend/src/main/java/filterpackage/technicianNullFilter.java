@@ -1,7 +1,7 @@
-package FilterPackage;
+package filterpackage;
 
-import Classes.Technician;
-import Interfaces.ITechFilter;
+import classes.Technician;
+import interfaces.ITechFilter;
 
 import java.util.ArrayList;
 

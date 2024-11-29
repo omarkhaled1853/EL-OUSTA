@@ -1,6 +1,6 @@
-package FilterPackage;
+package filterpackage;
 
-import Interfaces.ITechFilter;
+import interfaces.ITechFilter;
 
 public class filterCriteriaFactory {
 

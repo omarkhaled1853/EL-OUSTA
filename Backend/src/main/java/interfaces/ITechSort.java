@@ -1,8 +1,7 @@
-package Interfaces;
+package interfaces;
 
-import Classes.Technician;
+import classes.Technician;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ITechSort {

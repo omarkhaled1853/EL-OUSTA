@@ -1,7 +1,7 @@
-package SortPackage;
+package sortpackage;
 
-import Classes.Technician;
-import Interfaces.ITechSort;
+import classes.Technician;
+import interfaces.ITechSort;
 
 import java.util.ArrayList;
 import java.util.List;

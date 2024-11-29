@@ -1,10 +1,10 @@
-package Services;
+package services;
 
-import Classes.TechnicianDTO;
-import Interfaces.ITechFilter;
+import classes.TechnicianDTO;
+import interfaces.ITechFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import FilterPackage.*;
+import filterpackage.*;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class filterTechnicianService {
     private final filterCriteriaFactory filterCriteriaFactory;
 
     @Autowired
-    public filterTechnicianService(FilterPackage.filterCriteriaFactory filterCriteriaFactory) {
+    public filterTechnicianService(filterpackage.filterCriteriaFactory filterCriteriaFactory) {
         this.filterCriteriaFactory = filterCriteriaFactory;
     }
 

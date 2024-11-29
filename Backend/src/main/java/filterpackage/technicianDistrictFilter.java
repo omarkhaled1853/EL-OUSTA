@@ -1,11 +1,17 @@
-package FilterPackage;
+package filterpackage;
 
-import Classes.Technician;
-import Interfaces.ITechFilter;
+import classes.Technician;
+import interfaces.ITechFilter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class technicianRateFilter implements ITechFilter {
+@NoArgsConstructor
+@Setter
+@Getter
+public class technicianDistrictFilter implements ITechFilter {
 
 
     @Override
@@ -14,8 +20,8 @@ public class technicianRateFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getRate().equals(query))
-                Answer.add(tech);
+              if(tech.getDistrict().equals(query))
+                  Answer.add(tech);
         }
         return Answer;
     }

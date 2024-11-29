@@ -1,6 +1,6 @@
-package SearchPackage;
+package searchpackage;
 
-import Classes.Technician;
+import classes.Technician;
 
 import java.util.ArrayList;
 import java.util.List;

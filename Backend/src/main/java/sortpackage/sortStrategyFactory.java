@@ -1,6 +1,6 @@
-package SortPackage;
+package sortpackage;
 
-import Interfaces.ITechSort;
+import interfaces.ITechSort;
 
 public class sortStrategyFactory {
     private technicianExperienceSort experienceSort=null;
