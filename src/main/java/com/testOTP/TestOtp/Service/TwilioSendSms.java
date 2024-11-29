@@ -45,6 +45,10 @@ public class TwilioSendSms {
         return String.valueOf(otp);
     }
     public boolean verification(OtpBody otpBody) {
-        return this.otpmap.get(otpBody.getUserphonenumber()).equals(otpBody.getOtp());
+        if(this.otpmap.get(otpBody.getUserphonenumber()).equals(otpBody.getOtp())) {
+            otpmap.put(otpBody.getUserphonenumber(),null);
+            return true;
+        }
+        return false;
     }
 }
