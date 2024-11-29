@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,17 +29,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
-//
-//    @Autowired
-//    private AuthenticationManager authenticationManager;
 
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserInfoService();
     }
-
     @Bean
-    public TechnicianService technicianService(){
+    public UserDetailsService technicianDetailsService(){
         return new TechnicianService();
     }
 
@@ -49,11 +44,11 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/user", "/auth/addNewUser", "/auth/tech", "/auth/addNewTech").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/signUp", "/user/signIn", "/tech/signUp", "/tech/signIn").permitAll()
                         .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
-                ).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Make the session stateless as we make per request token
+                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Make the session stateless as we make per request token
                 .authenticationManager(customAuthenticationManager(http))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -78,7 +73,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider technicianAuthenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(technicianService());
+        authenticationProvider.setUserDetailsService(technicianDetailsService());
 
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
@@ -93,14 +88,13 @@ public class SecurityConfig {
                 String requestURI = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                         .getRequest().getRequestURI();
 
-                System.out.println(requestURI);
-                // If the URL is related to a user, use UserInfo AuthenticationProvider
-                if (requestURI.startsWith("/auth/user")) {
+                // If the URL is related to a user, use UserService AuthenticationProvider
+                if (requestURI.startsWith("/user")) {
                     return userAuthenticationProvider().authenticate(authentication);
                 }
 
-                // If the URL is related to technician, use Technician AuthenticationProvider
-                if (requestURI.startsWith("/auth/tech")) {
+                // If the URL is related to technician, use TechnicianService AuthenticationProvider
+                if (requestURI.startsWith("/tech")) {
                     return technicianAuthenticationProvider().authenticate(authentication);
                 }
 
@@ -109,9 +103,4 @@ public class SecurityConfig {
             }
         };
     }
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager();
-//    }
 }
