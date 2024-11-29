@@ -5,16 +5,19 @@ import interfaces.ITechFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import filterpackage.*;
+import repositories.technicianRepository;
 
 import java.util.List;
 
 @Service
 public class filterTechnicianService {
     private final filterCriteriaFactory filterCriteriaFactory;
+    private final technicianRepository repository;
 
     @Autowired
-    public filterTechnicianService(filterpackage.filterCriteriaFactory filterCriteriaFactory) {
+    public filterTechnicianService(filterpackage.filterCriteriaFactory filterCriteriaFactory, technicianRepository repository) {
         this.filterCriteriaFactory = filterCriteriaFactory;
+        this.repository = repository;
     }
 
     public List<TechnicianDTO> filterTechnician (String filterType, String filterQuery)
