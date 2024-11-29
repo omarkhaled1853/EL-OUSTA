@@ -14,7 +14,7 @@ public class Technician {
    private int id;
    private String userName;
    private String domain;
-   private String Email;
+   private String emailAddress;
    private String fName;
    private String lName;
    @JsonFormat(pattern = "yyyy-MM-dd")
