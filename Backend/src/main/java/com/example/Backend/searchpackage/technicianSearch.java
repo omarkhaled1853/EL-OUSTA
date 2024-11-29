@@ -1,12 +1,15 @@
-package searchpackage;
+package com.example.Backend.searchpackage;
 
-import classes.Technician;
+import com.example.Backend.classes.Technician;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.text.similarity.JaroWinklerDistance;
+import org.springframework.stereotype.Service;
+
+@Service
 public class technicianSearch {
 
     public List<Technician>JaroSearch(String Query, List<Technician> searchSpace)

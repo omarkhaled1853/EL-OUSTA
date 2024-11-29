@@ -1,4 +1,4 @@
-package classes;
+package com.example.Backend.classes;
 
 
 import lombok.AllArgsConstructor;

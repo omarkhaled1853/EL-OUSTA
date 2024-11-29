@@ -1,11 +1,12 @@
-package services;
+package com.example.Backend.services;
 
-import classes.TechnicianDTO;
-import interfaces.ITechFilter;
+import com.example.Backend.classes.TechnicianDTO;
+import com.example.Backend.filterpackage.filterCriteriaFactory;
+import com.example.Backend.interfaces.ITechFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import filterpackage.*;
-import repositories.technicianRepository;
+import com.example.Backend.filterpackage.*;
+import com.example.Backend.repositories.technicianRepository;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class filterTechnicianService {
     private final technicianRepository repository;
 
     @Autowired
-    public filterTechnicianService(filterpackage.filterCriteriaFactory filterCriteriaFactory, technicianRepository repository) {
+    public filterTechnicianService(filterCriteriaFactory filterCriteriaFactory, technicianRepository repository) {
         this.filterCriteriaFactory = filterCriteriaFactory;
         this.repository = repository;
     }

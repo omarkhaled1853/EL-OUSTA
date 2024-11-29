@@ -1,7 +1,7 @@
-package sortpackage;
+package com.example.Backend.sortpackage;
 
-import classes.Technician;
-import interfaces.ITechSort;
+import com.example.Backend.classes.Technician;
+import com.example.Backend.interfaces.ITechSort;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,21 +1,23 @@
-package sortpackage;
+package com.example.Backend.sortpackage;
 
-import classes.Technician;
-import interfaces.ITechSort;
+import com.example.Backend.classes.Technician;
+import com.example.Backend.interfaces.ITechSort;
 import lombok.Getter;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 @Getter
-public class technicianExperienceSort implements ITechSort {
+public class technicianRateSort implements ITechSort {
 
     private boolean Ascending;
     @Override
     public List<Technician> sort(List<Technician> technicians) {
         if (technicians==null)
             return new ArrayList<>();
-        Collections.sort(technicians, (e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+        Collections.sort(technicians, (e1, e2) -> Integer.compare(Integer.parseInt(e1.getRate()), Integer.parseInt(e2.getRate())));
         if(!this.isAscending()) {
             Collections.reverse(technicians);
         }

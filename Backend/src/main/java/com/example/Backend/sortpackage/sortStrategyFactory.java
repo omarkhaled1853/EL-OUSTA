@@ -1,7 +1,9 @@
-package sortpackage;
+package com.example.Backend.sortpackage;
 
-import interfaces.ITechSort;
+import com.example.Backend.interfaces.ITechSort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class sortStrategyFactory {
     private technicianExperienceSort experienceSort=null;
     private technicianRateSort rateSort=null;

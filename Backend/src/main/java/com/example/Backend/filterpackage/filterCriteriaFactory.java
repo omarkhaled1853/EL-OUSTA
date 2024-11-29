@@ -1,7 +1,9 @@
-package filterpackage;
+package com.example.Backend.filterpackage;
 
-import interfaces.ITechFilter;
+import com.example.Backend.interfaces.ITechFilter;
+import org.springframework.stereotype.Service;
 
+@Service
 public class filterCriteriaFactory {
 
     private technicianRateFilter rateFilter=null;

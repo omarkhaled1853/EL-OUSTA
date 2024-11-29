@@ -1,9 +1,10 @@
-package services;
+package com.example.Backend.services;
 
-import classes.Technician;
+import com.example.Backend.classes.Technician;
+import com.example.Backend.searchpackage.technicianSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import searchpackage.*;
+import com.example.Backend.searchpackage.*;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class searchTechnicianService {
     private final technicianSearch technicianSearch;
 
     @Autowired
-    public searchTechnicianService(searchpackage.technicianSearch technicianSearch) {
+    public searchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch) {
         this.technicianSearch = technicianSearch;
     }
     List<Technician> searchTechnician(String searchQuery)

@@ -1,5 +1,5 @@
-package searchpackage;
-import classes.Technician;
+package com.example.Backend.searchpackage;
+import com.example.Backend.classes.Technician;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

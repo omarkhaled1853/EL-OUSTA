@@ -1,11 +1,12 @@
-package filterpackage;
+package com.example.Backend.filterpackage;
 
-import classes.Technician;
-import interfaces.ITechFilter;
+import com.example.Backend.classes.Technician;
+import com.example.Backend.interfaces.ITechFilter;
 
 import java.util.ArrayList;
 
-public class technicianRateFilter implements ITechFilter {
+public class technicianGovernorateFilter implements ITechFilter {
+
 
 
     @Override
@@ -14,7 +15,7 @@ public class technicianRateFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getRate().equals(query))
+            if(tech.getGovernorate().equals(query))
                 Answer.add(tech);
         }
         return Answer;

@@ -1,6 +1,6 @@
-package classes;
+package com.example.Backend.classes;
 
-import entities.technicianEntity;
+import com.example.Backend.entities.technicianEntity;
 
 public class technicianMapper {
 

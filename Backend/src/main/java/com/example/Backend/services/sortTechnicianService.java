@@ -1,8 +1,9 @@
-package services;
+package com.example.Backend.services;
 
-import classes.TechnicianDTO;
-import interfaces.ITechSort;
-import sortpackage.*;
+import com.example.Backend.classes.TechnicianDTO;
+import com.example.Backend.interfaces.ITechSort;
+import com.example.Backend.sortpackage.sortStrategyFactory;
+import com.example.Backend.sortpackage.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class sortTechnicianService {
     private final sortStrategyFactory sortStrategyFactory;
 
     @Autowired
-    public sortTechnicianService(sortpackage.sortStrategyFactory sortStrategyFactory) {
+    public sortTechnicianService(com.example.Backend.sortpackage.sortStrategyFactory sortStrategyFactory) {
         this.sortStrategyFactory = sortStrategyFactory;
     }
 

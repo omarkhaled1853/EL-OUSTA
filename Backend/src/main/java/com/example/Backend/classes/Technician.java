@@ -1,4 +1,4 @@
-package classes;
+package com.example.Backend.classes;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

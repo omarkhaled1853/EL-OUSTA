@@ -1,6 +1,6 @@
-package interfaces;
+package com.example.Backend.interfaces;
 
-import classes.Technician;
+import com.example.Backend.classes.Technician;
 
 import java.util.List;
 
