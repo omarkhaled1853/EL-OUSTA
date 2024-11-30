@@ -1,6 +1,8 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.AuthRequest;
+import com.example.springsecurity.entity.GoogleAuthRequest;
 import com.example.springsecurity.entity.Technician;
 import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.service.JwtService;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AuthenticationController {
     @Autowired
-    private UserInfoService service;
+    private UserInfoService userService;
 
     @Autowired
     private TechnicianService technicianService;
@@ -29,14 +31,14 @@ public class AuthenticationController {
 
     @PostMapping("/user/signUp")
     public String addNewUser(@RequestBody UserInfo userInfo){
-        return service.addUser(userInfo);
+        return userService.addUser(userInfo);
     }
 
     @PostMapping("/tech/signUp")
     public String addNewTech(@RequestBody Technician technician){return technicianService.addTechnician(technician);}
 
     @PostMapping("/user/signIn")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public String authenticateAndGetTokenUser(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
@@ -48,7 +50,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/tech/signIn")
-    public String authenticateAndGetToken2(@RequestBody AuthRequest authRequest) {
+    public String authenticateAndGetTokenTechnician(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
@@ -57,5 +59,26 @@ public class AuthenticationController {
         } else {
             throw new UsernameNotFoundException("Invalid Technician request!");
         }
+    }
+
+    @PostMapping("/user/signIn/google")
+    public String googleAuthenticationUser(@RequestBody GoogleAuthRequest googleAuthRequest){
+         Boolean isAuthenticated = userService.validAuthenticationWithGoogle(googleAuthRequest);
+
+        if(isAuthenticated){
+            String username = userService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
+            return jwtService.generateToken(username);
+        }
+        return ValidationStatus.INVALID_USERNAME.getMessage();
+    }
+    @PostMapping("/tech/signIn/google")
+    public String googleAuthenticationTech(@RequestBody GoogleAuthRequest googleAuthRequest){
+         Boolean isAuthenticated = technicianService.validAuthenticationWithGoogle(googleAuthRequest);
+
+        if(isAuthenticated){
+            String username = technicianService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
+            return jwtService.generateToken(username);
+        }
+        return ValidationStatus.INVALID_USERNAME.getMessage();
     }
 }

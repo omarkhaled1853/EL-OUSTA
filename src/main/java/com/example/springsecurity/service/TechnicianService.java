@@ -1,7 +1,9 @@
 package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
+import com.example.springsecurity.entity.GoogleAuthRequest;
 import com.example.springsecurity.entity.Technician;
+import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,5 +66,19 @@ public class TechnicianService implements UserDetailsService {
         }
         Optional<Technician> technician = technicianRepository.findByEmailAddress(emailAddress);
         return technician.isEmpty();
+    }
+
+    //In authentication with google we just check if email exist
+    public Boolean validAuthenticationWithGoogle(GoogleAuthRequest googleAuthRequest){
+        Optional<Technician> technician = technicianRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());
+        return technician.isPresent();
+    }
+    public Technician loadUserByEmailAddress(String emailAddress){
+        Optional<Technician> technician = technicianRepository.findByEmailAddress(emailAddress);
+
+        if(technician.isPresent()){
+            return technician.get();
+        }
+        throw new IllegalArgumentException("Invalid emailAddress");
     }
 }
