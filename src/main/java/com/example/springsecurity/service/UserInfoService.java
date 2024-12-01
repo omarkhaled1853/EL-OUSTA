@@ -35,17 +35,12 @@ public class UserInfoService implements UserDetailsService {
     }
 
     public String addUser(UserInfo userInfo){
-        String validateState = validateUser(userInfo);
-        if(!validateState.equals(ValidationStatus.VALID.getMessage())){
-            return validateState;
-        }
-
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         userRepository.save(userInfo);
 
         return ValidationStatus.VALID.getMessage();
     }
-    private String validateUser(UserInfo userInfo){
+    public String validateUniqueUsernameAndEmail(UserInfo userInfo){
         if(!validUsername(userInfo.getUsername())){
             return ValidationStatus.INVALID_USERNAME.getMessage();
         }

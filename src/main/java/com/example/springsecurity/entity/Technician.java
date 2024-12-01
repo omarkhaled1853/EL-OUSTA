@@ -24,8 +24,7 @@ public class Technician{
     private String lastName;
     private Date dob;
     private String phoneNumber;
-    private String governorate;
-    private String district;
+    private String city;
     private String roles;
     private String domain;
     private Date startDate;

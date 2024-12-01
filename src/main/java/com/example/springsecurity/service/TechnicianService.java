@@ -34,17 +34,12 @@ public class TechnicianService implements UserDetailsService {
 
 
     public String addTechnician(Technician technician){
-        String validateState = validateTechnician(technician);
-        if(!validateState.equals(ValidationStatus.VALID.getMessage())){
-            return validateState;
-        }
-
         technician.setPassword(encoder.encode(technician.getPassword()));
         technicianRepository.save(technician);
 
         return ValidationStatus.VALID.getMessage();
     }
-    private String validateTechnician(Technician technician){
+    public String validateUniqueUsernameAndEmail(Technician technician){
         if(!validUsername(technician.getUsername())){
             return ValidationStatus.INVALID_USERNAME.getMessage();
         }
