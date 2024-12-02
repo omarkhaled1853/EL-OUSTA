@@ -1,28 +1,44 @@
 package com.example.Backend.services;
 
 import com.example.Backend.classes.Technician;
+import com.example.Backend.classes.TechnicianDTO;
+import com.example.Backend.classes.technicianMapper;
+import com.example.Backend.entities.technicianEntity;
+import com.example.Backend.repositories.technicianRepository;
 import com.example.Backend.searchpackage.technicianSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.Backend.searchpackage.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class searchTechnicianService {
 
-    private final technicianSearch technicianSearch;
+    private final technicianSearch techSearch;
+    private final technicianMapper mapper;
+    private final technicianRepository repository;
 
     @Autowired
-    public searchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch) {
-        this.technicianSearch = technicianSearch;
+    public searchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch, technicianMapper technicianMappper, technicianRepository repository) {
+        this.techSearch = technicianSearch;
+        this.mapper = technicianMappper;
+        this.repository = repository;
     }
-    List<Technician> searchTechnician(String searchQuery)
+    List<TechnicianDTO> searchTechnician(String searchQuery)
     {
-        //Todo:Fetch from DataBase the technicians
-        //Todo:Make The TechnicianEntity a Technician
-        //Todo:search Technicians
-        //Todo:Return DTO
-        return this.technicianSearch.JaroSearch(searchQuery,null);
+        List<technicianEntity>dataBaseTechnicians=this.repository.findAll();
+        ArrayList<Technician> technicians=new ArrayList<>();
+        for (technicianEntity entity:dataBaseTechnicians) {
+            technicians.add(mapper.technicianEntityToTechnician(entity));
+        }
+        List<Technician> searchedList = techSearch.JaroSearch(searchQuery,technicians);
+
+        List<TechnicianDTO>DTOs=new ArrayList<>();
+        for (Technician tech: searchedList) {
+            DTOs.add(mapper.technicainToTechnicianDTO(tech));
+        }
+        return DTOs;
+
     }
 }

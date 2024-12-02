@@ -3,11 +3,13 @@ package com.example.Backend.sortpackage;
 import com.example.Backend.classes.Technician;
 import com.example.Backend.interfaces.ITechSort;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 @Getter
+@Setter
 public class technicianExperienceSort implements ITechSort {
 
     private boolean Ascending;

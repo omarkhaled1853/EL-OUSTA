@@ -1,7 +1,9 @@
 package com.example.Backend.classes;
 
 import com.example.Backend.entities.technicianEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class technicianMapper {
 
     public TechnicianDTO technicainToTechnicianDTO(Technician technician)

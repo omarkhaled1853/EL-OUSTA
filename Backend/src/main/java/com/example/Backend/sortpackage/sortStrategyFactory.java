@@ -16,12 +16,14 @@ public class sortStrategyFactory {
             case "experience":
                 if (experienceSort == null) {
                     experienceSort = new technicianExperienceSort();
+                    experienceSort.setAscending(false);
                 }
                 return experienceSort;
 
             case "rate":
                 if (rateSort == null) {
                     rateSort = new technicianRateSort();
+                    rateSort.setAscending(false);
                 }
                 return rateSort;
 
