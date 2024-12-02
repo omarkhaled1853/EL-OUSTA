@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Builder
-public class Domain {
+public class DomainEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,5 +18,5 @@ public class Domain {
 
 //    Each domain has many technician
     @OneToMany(mappedBy = "domain", cascade = CascadeType.ALL)
-    private List<Technician> technicians;
+    private List<TechnicianEntity> technicianEntities;
 }

@@ -1,7 +1,7 @@
 package com.ELOUSTA.Profile_backend.dto;
 
-import com.ELOUSTA.Profile_backend.entity.Domain;
-import com.ELOUSTA.Profile_backend.entity.Portfolio;
+import com.ELOUSTA.Profile_backend.entity.DomainEntity;
+import com.ELOUSTA.Profile_backend.entity.PortfolioEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +18,6 @@ import java.util.List;
 public class TechnicianDTO extends UserDTO{
     private Double rate;
     private int experience;
-    private List<Portfolio> portfolios;
-    private Domain domain;
+    private List<PortfolioEntity> portfolioEntities;
+    private DomainEntity domainEntity;
 }

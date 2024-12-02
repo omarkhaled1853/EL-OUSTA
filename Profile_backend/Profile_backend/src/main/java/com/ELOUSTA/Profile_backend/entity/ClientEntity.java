@@ -8,5 +8,5 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Data
 @SuperBuilder
-public class Client extends User{
+public class ClientEntity extends UserEntity {
 }

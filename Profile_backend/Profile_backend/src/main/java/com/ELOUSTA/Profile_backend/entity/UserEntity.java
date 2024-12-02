@@ -12,7 +12,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @SuperBuilder
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -7,7 +7,7 @@ import lombok.Data;
 @Entity
 @Data
 @Builder
-public class Portfolio {
+public class PortfolioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,5 +16,5 @@ public class Portfolio {
 //    Each portfolio of works assigned to exactly one technician
     @ManyToOne
     @JoinColumn(name = "technician_id")
-    private Technician technician;
+    private TechnicianEntity technicianEntity;
 }
