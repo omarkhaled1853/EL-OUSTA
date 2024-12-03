@@ -45,4 +45,15 @@ public class ClientServiceImplTTest {
 
         assertEquals(Optional.of(clientDTO), result);
     }
+
+    @Test
+    public void testThatFindByIdReturnsEmptyWhenNoClient() {
+        final Integer id = 20;
+
+        when(clientRepository.findById(eq(id))).thenReturn(Optional.empty());
+        
+        final Optional<ClientDTO> result = clientService.getClient(id);
+
+        assertEquals(Optional.empty(), result);
+    }
 }
