@@ -18,7 +18,7 @@ public class UserDTO {
     private Integer id;
     private String firstName;
     private String lastName;
-    private String profilePicture;
+    private byte[] profilePicture;
     private int requests;
     private int cancelled;
     private int accepted;

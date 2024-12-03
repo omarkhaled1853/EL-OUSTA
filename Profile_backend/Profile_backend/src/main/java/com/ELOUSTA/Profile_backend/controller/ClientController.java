@@ -28,12 +28,4 @@ public class ClientController {
         return clientDTO.map(client -> new ResponseEntity<ClientDTO>(client, HttpStatus.OK))
                 .orElse(new ResponseEntity<ClientDTO>(HttpStatus.NOT_FOUND));
     }
-
-    @GetMapping("profile_photo/{profilePhoto}")
-    public ResponseEntity<byte[]> getProfilePhoto(@PathVariable String profilePhoto) throws IOException {
-        byte[] profilePhotoData = clientService.getProfilePhoto(profilePhoto);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(profilePhotoData);
-    }
 }

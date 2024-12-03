@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import static com.ELOUSTA.Profile_backend.TestData.testClientDTO;
@@ -35,7 +36,7 @@ public class ClientServiceImplTTest {
     }
 
     @Test
-    public void testThatFindByIdReturnsClientWhenExists() {
+    public void testThatFindByIdReturnsClientWhenExists() throws IOException {
         final ClientDTO clientDTO = testClientDTO();
         final ClientEntity clientEntity = testClientEntity();
 

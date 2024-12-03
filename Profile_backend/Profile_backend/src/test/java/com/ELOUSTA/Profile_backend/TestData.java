@@ -3,18 +3,29 @@ package com.ELOUSTA.Profile_backend;
 import com.ELOUSTA.Profile_backend.dto.ClientDTO;
 import com.ELOUSTA.Profile_backend.entity.ClientEntity;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.Date;
 
 public final class TestData {
     public TestData() {
     }
+    private static final String path = "C:\\images\\profile\\";
 
-    public static ClientDTO testClientDTO() {
+
+    private static byte[] getProfilePhoto(String filename) throws IOException {
+        String filePath = path + filename;
+        return Files.readAllBytes(new File(filePath).toPath());
+    }
+
+    public static ClientDTO testClientDTO() throws IOException {
+        byte[] profilePhoto = getProfilePhoto("johndoe.png");
         return ClientDTO.builder()
                 .id(1)
                 .firstName("John")
                 .lastName("Doe")
-                .profilePicture("/images/profile/johndoe.png")
+                .profilePicture(profilePhoto)
                 .requests(0)
                 .cancelled(0)
                 .accepted(0)
@@ -39,7 +50,7 @@ public final class TestData {
                 .userName("johndoe")
                 .district("Los Angeles")
                 .governorate("California")
-                .profilePicture("/images/profile/johndoe.png")
+                .profilePicture("johndoe.png")
                 .build();
 
     }
