@@ -27,6 +27,5 @@ public class UserEntity {
     private Date signUpDate;
     private String governorate;
     private String district;
-    private String roles;
     private String profilePicture;
 }

@@ -33,8 +33,7 @@ public class ClientServiceImpl implements ClientService {
                 .phoneNumber(clientEntity.getPhoneNumber())
                 .email(clientEntity.getEmail())
                 .location(clientEntity.getGovernorate() + " "
-                + clientEntity.getDistrict() + " "
-                + clientEntity.getRoles())
+                + clientEntity.getDistrict())
                 .build();
     }
 }

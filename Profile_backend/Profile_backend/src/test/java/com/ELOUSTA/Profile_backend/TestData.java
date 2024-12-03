@@ -39,7 +39,6 @@ public final class TestData {
                 .district("Los Angeles")
                 .governorate("California")
                 .profilePicture("/images/profile/johndoe.png")
-                .roles("USER")
                 .build();
 
     }
