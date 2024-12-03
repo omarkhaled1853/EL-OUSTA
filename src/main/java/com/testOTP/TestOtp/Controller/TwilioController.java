@@ -22,13 +22,17 @@ public class TwilioController {
         twilioServiceHandler.sendsms(twilioSmsRequest);
         return "send massage succesfully";
     }
+//    editing                  //////////////////////////
     @PostMapping("/verification")
     public boolean verificationotp(@RequestBody OtpBody otpBody)
     {
-        if(twilioServiceHandler.verifaying(otpBody))
+        if(twilioServiceHandler.verifaying(otpBody)) {
             System.out.println("successfully verification");
+            TwilioSendSms.otpmap.put(otpBody.getUserphonenumber(),null);
+            return true;
+        }
         else System.out.println("not correct otp try again");
-        return  twilioServiceHandler.verifaying(otpBody);
+        return  false;
     }
 
 }

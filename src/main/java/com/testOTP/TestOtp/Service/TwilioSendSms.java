@@ -20,7 +20,7 @@ public class TwilioSendSms {
     private final Logger LOGGER = LoggerFactory.getLogger(TwilioSendSms.class);
     private final TwilioConfiguration twilioConfiguration;
 
-    Map<String,String> otpmap = new HashMap<String,String>();
+    public static Map<String,String> otpmap = new HashMap<String,String>();
     @Autowired
     public TwilioSendSms(TwilioConfiguration twilioConfiguration)
     {
@@ -45,8 +45,9 @@ public class TwilioSendSms {
         return String.valueOf(otp);
     }
     public boolean verification(OtpBody otpBody) {
+        System.out.println(this.otpmap.get(otpBody.getUserphonenumber()));
+        System.out.println(otpBody.getOtp());
         if(this.otpmap.get(otpBody.getUserphonenumber()).equals(otpBody.getOtp())) {
-            otpmap.put(otpBody.getUserphonenumber(),null);
             return true;
         }
         return false;
