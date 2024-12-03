@@ -8,7 +8,9 @@ import com.ELOUSTA.Profile_backend.entity.ClientEntity;
 import com.ELOUSTA.Profile_backend.entity.DomainEntity;
 import com.ELOUSTA.Profile_backend.entity.PortfolioEntity;
 import com.ELOUSTA.Profile_backend.entity.TechnicianEntity;
+import com.ELOUSTA.Profile_backend.repository.TechnicianRepository;
 import com.ELOUSTA.Profile_backend.service.TechnicianService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +18,15 @@ import java.util.stream.Collectors;
 
 public class TechnicianServiceImpl implements TechnicianService {
 
+    @Autowired
+    private TechnicianRepository technicianRepository;
+    
     @Override
     public Optional<TechnicianDTO> getTechnician(Integer id) {
-        return Optional.empty();
+        Optional<TechnicianEntity> technicianEntity =  technicianRepository.findTechnicianWithDomainAndPortfolio(id);
+        return technicianEntity.map(this::technicianEntityToTechnicianDto);
     }
-    
+
 
     private TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
