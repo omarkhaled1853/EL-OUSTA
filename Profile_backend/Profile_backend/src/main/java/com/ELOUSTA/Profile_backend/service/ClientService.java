@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface ClientService {
     public Optional<ClientDTO> getClient(Integer id);
-    public byte[] getProfilePhoto(String path) throws IOException;
+    public byte[] getProfilePhoto(String profilePhoto) throws IOException;
 }

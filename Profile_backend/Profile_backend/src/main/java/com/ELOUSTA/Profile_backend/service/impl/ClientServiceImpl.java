@@ -23,7 +23,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public byte[] getProfilePhoto(String path) throws IOException {
+    public byte[] getProfilePhoto(String profilePhoto) throws IOException {
+        String path = "C:\\images\\profile\\" + profilePhoto;
         return Files.readAllBytes(new File(path).toPath());
     }
 
