@@ -16,7 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserDTO {
     private Integer id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String profilePicture;
     private int requests;
     private int cancelled;

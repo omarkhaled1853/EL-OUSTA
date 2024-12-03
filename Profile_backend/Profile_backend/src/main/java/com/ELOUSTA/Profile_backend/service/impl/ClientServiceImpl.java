@@ -25,8 +25,8 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientDTO clientEntityToClientDTO(ClientEntity clientEntity) {
         return ClientDTO.builder()
-                .name(clientEntity.getFirstName() + " "
-                + clientEntity.getLastName())
+                .firstName(clientEntity.getFirstName())
+                .lastName(clientEntity.getLastName())
                 .profilePicture(clientEntity.getProfilePicture())
                 .dob(clientEntity.getDob())
                 .userName(clientEntity.getUserName())

@@ -12,7 +12,8 @@ public final class TestData {
     public static ClientDTO testClientDTO() {
         return ClientDTO.builder()
                 .id(4)
-                .name("John Doe")
+                .firstName("John")
+                .lastName("Doe")
                 .profilePicture("/images/profile/johndoe.png")
                 .requests(3)
                 .cancelled(1)
