@@ -1,3 +1,5 @@
+import 'package:flutter/rendering.dart';
+
 class User {
   final String username;
   final String password;
@@ -34,6 +36,36 @@ class User {
       'phoneNumber': phoneNumber,
       'city': city,
       'roles': roles,
+    };
+  }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return switch (json) {
+      {
+      'id': int id,
+      'username': String username,
+      'password': String password,
+      'emailAddress': String emailAddress,
+      'firstName': String firstName,
+      'lastName': String lastName,
+      'dob': String dob,
+      'phoneNumber': String phoneNumber,
+      'city': String city,
+      'roles': String roles,
+      } =>
+          User(
+              username: username,
+              password: password,
+              emailAddress: emailAddress,
+              firstName: firstName,
+              lastName: lastName,
+              dob: DateTime.parse(json['dob'] as String),
+              phoneNumber: phoneNumber,
+              city: city,
+              roles: roles,
+          ),
+      _ => throw const FormatException('Failed to load User.'),
     };
   }
 }

@@ -1,9 +1,19 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:el_ousta/common/userTech.dart';
+import 'package:http/http.dart' as http;
 
+import 'TechnicianHomeScreen.dart';
+import 'homeClientScreen.dart';
 class Resetpasswordscreen extends StatefulWidget {
-  const Resetpasswordscreen({super.key});
+  final dynamic type;
+  final dynamic user;
+
+  const Resetpasswordscreen({super.key, required this.type, required this.user});
 
   @override
   State<Resetpasswordscreen> createState() => _ResetpasswordscreenState();
@@ -17,6 +27,8 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
   late bool _passwordVisible = true;
   String? _passwordErrorText = null;
   String? _confirmPasswordErrorText = null;
+  bool _isPasswordValid = false;
+  bool _isConfirmPasswordValid = false;
   bool isFormValid = false;
   bool loggedIn = false;
 
@@ -24,11 +36,13 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
     if(_passwordController.text.length < 8) {
       setState(() {
         _passwordErrorText = "password length must be at least 8 characters";
+        _isPasswordValid = false;
       });
     }
     else {
       setState(() {
         _passwordErrorText = null;
+        _isPasswordValid = true;
       });
     }
     validateForm();
@@ -38,11 +52,13 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
     if(_passwordController.text != _confirmPasswordController.text) {
       setState(() {
         _confirmPasswordErrorText = "password must be as above";
+        _isConfirmPasswordValid = false;
       });
     }
     else {
       setState(() {
         _confirmPasswordErrorText = null;
+        _isConfirmPasswordValid = true;
       });
     }
     validateForm();
@@ -59,60 +75,58 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
     _passwordController.dispose();
     super.dispose();
   }
-  // Future<void> _submitForm() async {
-  //   dynamic result = true;
-  //   if(isFormValid) {
-  //     var url;
-  //     if(widget.type == Type.USER)
-  //       url = Uri.parse('http://192.168.1.6:8080/user/signIn');
-  //     else
-  //       url = Uri.parse('http://192.168.1.6:8080/tech/signIn');
-  //     // make http get request
-  //     var response = await http.post(
-  //       url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: jsonEncode({
-  //         'username': _usernameController.text,
-  //         'password': _passwordController.text,
-  //       }),
-  //     );
-  //     if(response.statusCode == 200) {
-  //       log(response.body);
-  //       // Storing the token
-  //       if(response.body != 'fail') {
-  //         await secureStorage.write(key: 'auth_token', value: response.body);
-  //         result = Navigator.of(context).push(
-  //             MaterialPageRoute(
-  //                 builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
-  //             )
-  //         );
-  //       }
-  //       else {
-  //         setState(() {
-  //           usernameErrorText = "";
-  //           _passwordErrorText = "";
-  //         });
-  //         ScaffoldMessenger.of(context).clearSnackBars();
-  //         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
-  //       }
-  //     }
-  //     else {
-  //       log("Sign in failed with status: ${response.statusCode}.");
-  //       setState(() {
-  //         usernameErrorText = "";
-  //         _passwordErrorText = "";
-  //       });
-  //       ScaffoldMessenger.of(context).clearSnackBars();
-  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
-  //     }
-  //   }
-  // }
+  void _submitForm() async {
+
+    if(isFormValid) {
+      var url;
+      if(widget.type == Type.USER) {
+        url = Uri.parse('http://192.168.1.6:8080/user/resetPassword');
+      } else {
+        url = Uri.parse('http://192.168.1.6:8080/tech/resetPassword');
+      }
+      // make http get request
+      var response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'username': widget.user.username,
+          'password': _passwordController.text,
+        }),
+      );
+      if(response.statusCode == 200) {
+        log(response.body);
+        // Storing the token
+        if(response.body != 'fail') {
+          await secureStorage.write(key: 'auth_token', value: response.body);
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
+              )
+          );
+        }
+        else {
+          setState(() {
+            _passwordErrorText = "";
+          });
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
+        }
+      }
+      else {
+        log("Sign in failed with status: ${response.statusCode}.");
+        setState(() {
+          _passwordErrorText = "";
+        });
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
+      }
+    }
+  }
   void validateForm() {
-    setState(() {
-      isFormValid = _formKey.currentState?.validate() ?? false;
-    });
+    // isFormValid = _formKey.currentState?.validate() ?? false;
+    isFormValid = _isPasswordValid && _isConfirmPasswordValid;
   }
   @override
   Widget build(BuildContext context) {
@@ -202,7 +216,7 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-
+                            _submitForm();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: isFormValid

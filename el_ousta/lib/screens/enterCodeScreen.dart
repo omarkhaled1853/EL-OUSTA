@@ -1,12 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:el_ousta/screens/resetPasswordScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:http/http.dart' as http;
 class EnterCodeScreen extends StatefulWidget {
   final dynamic type;
   final dynamic method;
 
-  const EnterCodeScreen({super.key, required this.type, required this.method});
+  final dynamic user;
+
+  const EnterCodeScreen({super.key, required this.type, required this.method, required this.user});
 
   @override
   _EnterCodeScreenState createState() => _EnterCodeScreenState();
@@ -15,7 +20,24 @@ class EnterCodeScreen extends StatefulWidget {
 class _EnterCodeScreenState extends State<EnterCodeScreen> {
   final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
-
+  bool _isOTPValid = false;
+  String _otp = "";
+  bool _validateOTP() {
+    _otp = "";
+    for(var controller in _controllers) {
+      _otp += controller.text;
+      if(controller.text.isEmpty) {
+        setState(() {
+          _isOTPValid = false;
+        });
+        return false;
+      }
+    }
+    setState(() {
+      _isOTPValid = true;
+    });
+    return true;
+  }
   @override
   void dispose() {
     // Clean up controllers and focus nodes
@@ -59,7 +81,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
         controller: _controllers[index],
         focusNode: _focusNodes[index],
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         keyboardType: TextInputType.number,
         maxLength: 1,
         decoration: const InputDecoration(
@@ -67,7 +89,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
           border: InputBorder.none,
         ),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        onChanged: (value) => _handleInput(value, index),
+        onChanged: (value) => {_handleInput(value, index), _validateOTP()},
         onSubmitted: (_) => _handleInput(_controllers[index].text, index),
         onTapOutside: (event) => _focusNodes[index].unfocus(),
         onEditingComplete: () {
@@ -85,14 +107,44 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
       appBar: AppBar(
         actions: <Widget>[
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                      builder: (ctx) => const Resetpasswordscreen()
-                  )
+            onPressed: (_validateOTP())
+              ? () async {
+              var url = Uri.parse('http://192.168.1.6:8083/mail/verification/${widget.user.emailAddress}/${_otp}');
+              var response = await http.post(
+                url,
+                headers: {
+                  'Content-Type': 'application/json', // Explicitly set JSON Content-Type
+                },
+                body: jsonEncode({
+                  "subject": "test send email",
+                  "message": "this test message"
+                }),
               );
-            },
-            child: const Text("send", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold, fontSize: 18),),
+              if(response.statusCode == 200) {
+                log(response.body);
+                if(response.body == 'true') {
+                  // Navigate to email verification screen
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (ctx) => Resetpasswordscreen(type: widget.type, user: widget.user, )
+                      )
+                  );
+                }
+                else {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Invalid Code")));
+                  Navigator.pop(context);
+                }
+              }
+              else {
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
+                Navigator.pop(context);
+              }
+            }
+            : null,
+            child: (_isOTPValid) ? const Text("send", style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold, fontSize: 18),)
+                : Text("send", style: TextStyle(color: Colors.deepPurple[100], fontWeight: FontWeight.bold, fontSize: 18),)
           ),
         ],
       ),

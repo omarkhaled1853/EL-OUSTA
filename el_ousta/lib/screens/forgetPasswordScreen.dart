@@ -1,9 +1,22 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class ForgetPasswordScreen extends StatelessWidget {
-  const ForgetPasswordScreen({super.key, required this.type});
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen(
+      {super.key, required this.type, required this.user});
   final dynamic type;
+  final dynamic user;
+
+  @override
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
+}
+
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  bool isLoading = false; // Tracks loading state
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,29 +41,74 @@ class ForgetPasswordScreen extends StatelessWidget {
             const SizedBox(height: 40),
             // Email Option
             GestureDetector(
-              onTap: () {
-                // Navigate to email verification screen
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (ctx) => EnterCodeScreen(type: type, method: 'mail',)
-                    )
-                );
+              onTap: () async {
+                setState(() {
+                  isLoading = true; // Show loading indicator
+                });
+
+                var url = Uri.parse(
+                    'http://192.168.1.6:8083/mail/send/${widget.user.emailAddress}');
+                try {
+                  var response = await http.post(
+                    url,
+                    headers: {
+                      'Content-Type':
+                          'application/json', // Explicitly set JSON Content-Type
+                    },
+                    body: jsonEncode({
+                      "subject": "test send email",
+                      "message": "this test message"
+                    }),
+                  );
+
+                  if (response.statusCode == 200) {
+                    log(response.body);
+                    // Navigate to email verification screen
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) => EnterCodeScreen(
+                          type: widget.type,
+                          method: 'mail',
+                          user: widget.user,
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                              Text("Something went wrong, please try again")),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Error: $e")),
+                  );
+                } finally {
+                  setState(() {
+                    isLoading = false; // Hide loading indicator
+                  });
+                }
               },
               child: Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
                       Icon(Icons.email, color: Colors.deepPurple, size: 40),
-                      SizedBox(width: 16),
-                      Text(
-                        "Send code via Email",
-                        style: TextStyle(fontSize: 18),
-                      ),
+                      const SizedBox(width: 16),
+                      isLoading
+                          ? const CircularProgressIndicator() // Show spinner if loading
+                          : const Text(
+                              "Send code via Email",
+                              style: TextStyle(fontSize: 18),
+                            ),
                     ],
                   ),
                 ),
@@ -61,11 +119,12 @@ class ForgetPasswordScreen extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // Navigate to SMS verification screen
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                        builder: (ctx) => EnterCodeScreen(type: type, method: 'sms', )
-                    )
-                );
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (ctx) => EnterCodeScreen(
+                          type: widget.type,
+                          method: 'sms',
+                          user: widget.user,
+                        )));
               },
               child: Card(
                 elevation: 4,
