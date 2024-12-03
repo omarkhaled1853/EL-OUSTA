@@ -80,9 +80,14 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
+
     @Bean
     public AuthenticationManager customAuthenticationManager(HttpSecurity http) throws Exception {
         return new AuthenticationManager() {
+            // Override the authentication method to use the correct authentication provider.
+            // We differentiate between two types of services: one for users and one for technicians,
+            // so we ensure the appropriate provider is used based on the service type.
+
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
                 String requestURI = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())

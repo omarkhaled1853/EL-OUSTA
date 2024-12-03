@@ -32,7 +32,7 @@ public class AuthenticationController {
     public String addNewUser(@RequestBody UserInfo userInfo){
         String validationStatus = userService.validateUniqueUsernameAndEmail(userInfo);
         if(validationStatus.equals(ValidationStatus.VALID.getMessage())){
-            userService.addUser(userInfo);
+            return userService.addUser(userInfo);
         }
         return validationStatus;
     }
@@ -41,7 +41,7 @@ public class AuthenticationController {
     public String addNewTech(@RequestBody Technician technician){
         String validationStatus = technicianService.validateUniqueUsernameAndEmail(technician);
         if(validationStatus.equals(ValidationStatus.VALID.getMessage())){
-            technicianService.addTechnician(technician);
+            return technicianService.addTechnician(technician);
         }
         return validationStatus;
     }
