@@ -7,6 +7,9 @@ import com.ELOUSTA.Profile_backend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 @Service
@@ -17,6 +20,11 @@ public class ClientServiceImpl implements ClientService {
     public Optional<ClientDTO> getClient(Integer id) {
         Optional<ClientEntity> clientEntity = clientRepository.findById(id);
         return clientEntity.map(this::clientEntityToClientDTO);
+    }
+
+    @Override
+    public byte[] getProfilePhoto(String path) throws IOException {
+        return Files.readAllBytes(new File(path).toPath());
     }
 
     private ClientDTO clientEntityToClientDTO(ClientEntity clientEntity) {
