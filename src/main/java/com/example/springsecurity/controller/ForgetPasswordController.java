@@ -17,13 +17,12 @@ public class ForgetPasswordController {
     @Autowired
     private TechnicianService technicianService;
 
-    @GetMapping("/user/fetchUser/{UserName}")
-    public UserInfo fetchUser(@PathVariable String UserName){
+    @GetMapping("/user/fetchUser")
+    public UserInfo fetchUser(@RequestParam String UserName){
         return userInfoService.loadUserByUsernameAsUserInfo(UserName);
     }
-
-    @GetMapping("/tech/fetchTch/{UserName}")
-    public Technician fetchTechnician(@PathVariable String UserName){
+    @PostMapping("/tech/fetchTch")
+    public Technician fetchTechnician(@RequestParam String UserName){
         return technicianService.loadUserByUsernameAsTechnician(UserName);
     }
     @PostMapping("/user/resetPassword")

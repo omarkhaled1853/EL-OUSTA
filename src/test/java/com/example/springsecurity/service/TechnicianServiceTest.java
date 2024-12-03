@@ -4,7 +4,6 @@ import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
 import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.Technician;
-import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,6 @@ class TechnicianServiceTest {
     private TechnicianRepository technicianRepository;
     @InjectMocks
     private TechnicianService technicianService;
-
     @Mock
     private PasswordEncoder encoder;
 
@@ -83,6 +81,26 @@ class TechnicianServiceTest {
         when(encoder.encode(technician.getPassword())).thenReturn("encodedPassword");
         String validationStatus = technicianService.addTechnician(technician);
         assertEquals(ValidationStatus.VALID.getMessage(), validationStatus);
+    }
+    @Test
+    void resetPasswordTest_userNotExist(){
+        when(technicianRepository.findByUsername("NotExistUsername")).thenReturn(Optional.empty());
+        ResetPasswordRequest request = new ResetPasswordRequest("NotExistUsername", "new password");
+
+        assertEquals(ValidationStatus.FAIL.getMessage(), technicianService.resetPassword(request));
+    }
+    @Test
+    void resetPasswordTest_userExist(){
+        when(technicianRepository.findByUsername("testUser")).thenReturn(Optional.of(technician));
+
+        String encodedPassword = "encodedNewPassword";
+        when(encoder.encode("new password")).thenReturn(encodedPassword);
+
+        ResetPasswordRequest request = new ResetPasswordRequest("testUser", "new password");
+        String result = technicianService.resetPassword(request);
+
+        assertEquals(ValidationStatus.VALID.getMessage(), result);
+        assertEquals(encodedPassword, technician.getPassword());
     }
     @Test
     void validateUniqueUsernameAndEmailTest_ValidSignUp(){
