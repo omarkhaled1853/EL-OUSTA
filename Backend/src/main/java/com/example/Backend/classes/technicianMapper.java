@@ -35,6 +35,7 @@ public class technicianMapper {
                 .governorate(entity.getGovernorate())
                 .district(entity.getDistrict())
                 .startDate(entity.getStartDate())
+                .rate(entity.getRate())
                 .build();
         return technician;
     }

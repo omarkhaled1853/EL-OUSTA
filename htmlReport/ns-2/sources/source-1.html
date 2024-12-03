@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > technicianMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.Backend.classes</a>
+</div>
+
+<h1>Coverage Summary for Class: technicianMapper (com.example.Backend.classes)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">technicianMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (28/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.Backend.classes;
+&nbsp;
+&nbsp;import com.example.Backend.entities.technicianEntity;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class technicianMapper {</b>
+&nbsp;
+&nbsp;    public TechnicianDTO technicainToTechnicianDTO(Technician technician)
+&nbsp;    {
+<b class="fc">&nbsp;        TechnicianDTO dto=new TechnicianDTO.TechnicianDTOBuilder()</b>
+<b class="fc">&nbsp;                .id(technician.getId())</b>
+<b class="fc">&nbsp;                .domain(technician.getDomain())</b>
+<b class="fc">&nbsp;                .fName(technician.getFName())</b>
+<b class="fc">&nbsp;                .lName(technician.getLName())</b>
+<b class="fc">&nbsp;                .governorate(technician.getGovernorate())</b>
+<b class="fc">&nbsp;                .district(technician.getDistrict())</b>
+<b class="fc">&nbsp;                .startDate(technician.getStartDate())</b>
+<b class="fc">&nbsp;                .rate(technician.getRate())</b>
+<b class="fc">&nbsp;                .build();</b>
+<b class="fc">&nbsp;        return dto;</b>
+&nbsp;    }
+&nbsp;    public Technician technicianEntityToTechnician(technicianEntity entity)
+&nbsp;    {
+<b class="fc">&nbsp;        Technician technician= Technician.builder()</b>
+<b class="fc">&nbsp;                .id(entity.getId())</b>
+<b class="fc">&nbsp;                .userName(entity.getUsername())</b>
+<b class="fc">&nbsp;                .domain(entity.getDomain())</b>
+<b class="fc">&nbsp;                .emailAddress(entity.getEmailAddress())</b>
+<b class="fc">&nbsp;                .fName(entity.getFName())</b>
+<b class="fc">&nbsp;                .lName(entity.getLName())</b>
+<b class="fc">&nbsp;                .dob(entity.getDob())</b>
+<b class="fc">&nbsp;                .phoneNumber(entity.getPhoneNumber())</b>
+<b class="fc">&nbsp;                .authProvider(entity.getAuthProvider())</b>
+<b class="fc">&nbsp;                .governorate(entity.getGovernorate())</b>
+<b class="fc">&nbsp;                .district(entity.getDistrict())</b>
+<b class="fc">&nbsp;                .startDate(entity.getStartDate())</b>
+<b class="fc">&nbsp;                .rate(entity.getRate())</b>
+<b class="fc">&nbsp;                .build();</b>
+<b class="fc">&nbsp;        return technician;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-03 18:31</div>
+</div>
+</body>
+</html>

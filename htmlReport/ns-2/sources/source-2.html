@@ -1,0 +1,102 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Technician</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.Backend.classes</a>
+</div>
+
+<h1>Coverage Summary for Class: Technician (com.example.Backend.classes)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">Technician$TechnicianBuilder</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.Backend.classes;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonFormat;
+&nbsp;import lombok.*;
+&nbsp;
+&nbsp;import java.util.Date;
+&nbsp;
+&nbsp;@NoArgsConstructor
+&nbsp;@AllArgsConstructor
+&nbsp;@Builder
+&nbsp;@Getter
+&nbsp;@ToString
+&nbsp;@Setter
+&nbsp;public class Technician {
+&nbsp;   private int id;
+&nbsp;   private String userName;
+&nbsp;   private String domain;
+&nbsp;   private String emailAddress;
+&nbsp;   private String fName;
+&nbsp;   private String lName;
+&nbsp;   @JsonFormat(pattern = &quot;yyyy-MM-dd&quot;)
+&nbsp;   private Date dob;
+&nbsp;   private String phoneNumber;
+&nbsp;   private String authProvider;
+&nbsp;   private String governorate;
+&nbsp;   private String district;
+&nbsp;   @JsonFormat(pattern = &quot;yyyy-MM-dd&quot;)
+&nbsp;   private Date startDate;
+&nbsp;   private String rate;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-03 18:31</div>
+</div>
+</body>
+</html>

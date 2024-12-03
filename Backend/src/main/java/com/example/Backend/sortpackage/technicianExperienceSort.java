@@ -17,7 +17,7 @@ public class technicianExperienceSort implements ITechSort {
     public List<Technician> sort(List<Technician> technicians) {
         if (technicians==null)
             return new ArrayList<>();
-        Collections.sort(technicians, (e1, e2) -> e1.getStartDate().compareTo(e2.getStartDate()));
+        Collections.sort(technicians, (e1, e2) -> e2.getStartDate().compareTo(e1.getStartDate()));
         if(!this.isAscending()) {
             Collections.reverse(technicians);
         }

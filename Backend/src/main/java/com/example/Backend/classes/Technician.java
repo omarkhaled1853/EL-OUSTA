@@ -10,6 +10,7 @@ import java.util.Date;
 @Builder
 @Getter
 @ToString
+@Setter
 public class Technician {
    private int id;
    private String userName;

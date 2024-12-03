@@ -33,4 +33,5 @@ public class technicianEntity {
     private String governorate;
     private String district;
     private Date startDate;
+    private String rate;
 }

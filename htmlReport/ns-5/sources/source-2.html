@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > searchTechnicianService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.Backend.services</a>
+</div>
+
+<h1>Coverage Summary for Class: searchTechnicianService (com.example.Backend.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">searchTechnicianService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (15/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.Backend.services;
+&nbsp;
+&nbsp;import com.example.Backend.classes.Technician;
+&nbsp;import com.example.Backend.classes.TechnicianDTO;
+&nbsp;import com.example.Backend.classes.technicianMapper;
+&nbsp;import com.example.Backend.entities.technicianEntity;
+&nbsp;import com.example.Backend.repositories.technicianRepository;
+&nbsp;import com.example.Backend.searchpackage.technicianSearch;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class searchTechnicianService {
+&nbsp;
+&nbsp;    private final technicianSearch techSearch;
+&nbsp;    private final technicianMapper mapper;
+&nbsp;    private final technicianRepository repository;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public searchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch, technicianMapper technicianMappper, technicianRepository repository) {</b>
+<b class="fc">&nbsp;        this.techSearch = technicianSearch;</b>
+<b class="fc">&nbsp;        this.mapper = technicianMappper;</b>
+<b class="fc">&nbsp;        this.repository = repository;</b>
+&nbsp;    }
+&nbsp;    public List&lt;TechnicianDTO&gt; searchTechnician(String searchQuery)
+&nbsp;    {
+<b class="fc">&nbsp;        List&lt;technicianEntity&gt;dataBaseTechnicians=this.repository.findAll();</b>
+<b class="fc">&nbsp;        ArrayList&lt;Technician&gt; technicians=new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (technicianEntity entity:dataBaseTechnicians) {</b>
+<b class="fc">&nbsp;            technicians.add(mapper.technicianEntityToTechnician(entity));</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        List&lt;Technician&gt; searchedList = techSearch.JaroSearch(searchQuery,technicians);</b>
+<b class="fc">&nbsp;        List&lt;TechnicianDTO&gt;DTOs=new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        for (Technician tech: searchedList) {</b>
+<b class="fc">&nbsp;            DTOs.add(mapper.technicainToTechnicianDTO(tech));</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return DTOs;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-03 18:31</div>
+</div>
+</body>
+</html>

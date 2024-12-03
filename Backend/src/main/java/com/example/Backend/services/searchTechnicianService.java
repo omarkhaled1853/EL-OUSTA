@@ -25,7 +25,7 @@ public class searchTechnicianService {
         this.mapper = technicianMappper;
         this.repository = repository;
     }
-    List<TechnicianDTO> searchTechnician(String searchQuery)
+    public List<TechnicianDTO> searchTechnician(String searchQuery)
     {
         List<technicianEntity>dataBaseTechnicians=this.repository.findAll();
         ArrayList<Technician> technicians=new ArrayList<>();
@@ -33,7 +33,6 @@ public class searchTechnicianService {
             technicians.add(mapper.technicianEntityToTechnician(entity));
         }
         List<Technician> searchedList = techSearch.JaroSearch(searchQuery,technicians);
-
         List<TechnicianDTO>DTOs=new ArrayList<>();
         for (Technician tech: searchedList) {
             DTOs.add(mapper.technicainToTechnicianDTO(tech));
