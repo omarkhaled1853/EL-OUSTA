@@ -14,6 +14,6 @@ import java.util.List;
 public class TechnicianDTO extends UserDTO{
     private Double rate;
     private int experience;
-    private List<PortfolioEntity> portfolioEntities;
-    private DomainEntity domainEntity;
+    private List<PortfolioDto> portfolioDto;
+    private DomainDTO domainDTO;
 }
