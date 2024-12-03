@@ -1,78 +1,43 @@
-import 'package:flutter/material.dart';
-import 'user_profile.dart'; // Import the User Profile page
-import 'technician_page.dart'; // Import the Technician Profile page
-import 'homeclient.dart';
-import 'techinican_home.dart';
-import 'catchback.dart';
 
-void main() {
-  runApp(const MyApp());
+
+import 'package:el_ousta/screens/homeClientScreen.dart';
+import 'package:el_ousta/screens/userTechScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+const secureStorage = FlutterSecureStorage();
+
+// Function to check if the token exists
+Future<bool> isUserLoggedIn() async {
+  String? token = await secureStorage.read(key: 'auth_token');
+  print(token);
+  return token != null;
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Ensures async operations before `runApp`
+  dynamic isLoggedIn = await isUserLoggedIn();
+  runApp(MyApp(isLoggedIn: isLoggedIn,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+  const MyApp({super.key, required this.isLoggedIn});
+  final bool isLoggedIn;
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Profile Navigation',
+      title: 'elousta',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: (isLoggedIn)
+          ? const ClientPage()
+          : const UserTechScreen(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Button to navigate to User Profile Page
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => const ProfilePage()),
-            //     );
-            //   },
-            //   child: const Text('Go to User Profile'),
-            // ),
-            const SizedBox(height: 20),
-            // Button to navigate to Technician Profile Page
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const TechnicianHome()),
-                );
-              },
-              child: const Text('Go to Technician Home'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ClientPage()),
-                );
-              },
-              child: const Text('Go to client Home '),
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-}
