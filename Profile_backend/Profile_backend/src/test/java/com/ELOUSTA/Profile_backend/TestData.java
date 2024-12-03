@@ -11,13 +11,13 @@ public final class TestData {
 
     public static ClientDTO testClientDTO() {
         return ClientDTO.builder()
-                .id(4)
+                .id(1)
                 .firstName("John")
                 .lastName("Doe")
                 .profilePicture("/images/profile/johndoe.png")
-                .requests(3)
-                .cancelled(1)
-                .accepted(4)
+                .requests(0)
+                .cancelled(0)
+                .accepted(0)
                 .dob(Date.valueOf("1990-01-15"))
                 .userName("johndoe")
                 .phoneNumber("1234567890")
@@ -28,7 +28,7 @@ public final class TestData {
 
     public static ClientEntity testClientEntity() {
         return ClientEntity.builder()
-                .id(4)
+                .id(1)
                 .dob(Date.valueOf("1990-01-15"))
                 .email("johndoe@example.com")
                 .firstName("John")

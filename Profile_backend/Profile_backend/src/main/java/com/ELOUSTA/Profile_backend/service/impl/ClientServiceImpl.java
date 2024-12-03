@@ -11,12 +11,8 @@ import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    private final ClientRepository clientRepository;
-
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
+    private ClientRepository clientRepository;
 
     public Optional<ClientDTO> getClient(Integer id) {
         Optional<ClientEntity> clientEntity = clientRepository.findById(id);
@@ -25,6 +21,7 @@ public class ClientServiceImpl implements ClientService {
 
     private ClientDTO clientEntityToClientDTO(ClientEntity clientEntity) {
         return ClientDTO.builder()
+                .id(clientEntity.getId())
                 .firstName(clientEntity.getFirstName())
                 .lastName(clientEntity.getLastName())
                 .profilePicture(clientEntity.getProfilePicture())

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@ToString(callSuper = true)
 @Table(name = "technician")
 public class TechnicianEntity extends UserEntity {
     private Double rate;

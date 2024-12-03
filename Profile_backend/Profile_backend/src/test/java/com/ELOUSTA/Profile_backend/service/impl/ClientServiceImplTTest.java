@@ -3,11 +3,14 @@ package com.ELOUSTA.Profile_backend.service.impl;
 import com.ELOUSTA.Profile_backend.dto.ClientDTO;
 import com.ELOUSTA.Profile_backend.entity.ClientEntity;
 import com.ELOUSTA.Profile_backend.repository.ClientRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 import java.util.Optional;
 
@@ -17,14 +20,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class ClientServiceImplTest {
+public class ClientServiceImplTTest {
+    @InjectMocks
+    private ClientServiceImpl clientService;
 
     @Mock
     private ClientRepository clientRepository;
 
-    @InjectMocks
-    private ClientServiceImpl underTest;
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void testThatFindByIdReturnsClientWhenExists() {
@@ -33,7 +41,7 @@ public class ClientServiceImplTest {
 
         when(clientRepository.findById(eq(clientDTO.getId()))).thenReturn(Optional.of(clientEntity));
 
-        final Optional<ClientDTO> result = underTest.getClient(clientDTO.getId());
+        final Optional<ClientDTO> result = clientService.getClient(clientDTO.getId());
 
         assertEquals(Optional.of(clientDTO), result);
     }
