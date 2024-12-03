@@ -2,6 +2,7 @@ package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
+import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.UserInfoRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -81,6 +82,27 @@ class UserInfoServiceTest {
         when(encoder.encode(userInfo.getPassword())).thenReturn("encodedPassword");
         String validationStatus = userInfoService.addUser(userInfo);
         assertEquals(ValidationStatus.VALID.getMessage(), validationStatus);
+    }
+
+    @Test
+    void resetPasswordTest_userNotExist(){
+        when(userInfoRepository.findByUsername("NotExistUsername")).thenReturn(Optional.empty());
+        ResetPasswordRequest request = new ResetPasswordRequest("NotExistUsername", "new password");
+
+        assertEquals(ValidationStatus.FAIL.getMessage(), userInfoService.resetPassword(request));
+    }
+    @Test
+    void resetPasswordTest_userExist(){
+        when(userInfoRepository.findByUsername("testUser")).thenReturn(Optional.of(userInfo));
+
+        String encodedPassword = "encodedNewPassword";
+        when(encoder.encode("new password")).thenReturn(encodedPassword);
+
+        ResetPasswordRequest request = new ResetPasswordRequest("testUser", "new password");
+        String result = userInfoService.resetPassword(request);
+
+        assertEquals(ValidationStatus.VALID.getMessage(), result);
+        assertEquals(encodedPassword, userInfo.getPassword());
     }
 
     @Test

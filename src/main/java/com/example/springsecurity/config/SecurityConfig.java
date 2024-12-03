@@ -84,7 +84,6 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-
     @Bean
     public AuthenticationManager customAuthenticationManager(HttpSecurity http) throws Exception {
         return new AuthenticationManager() {
