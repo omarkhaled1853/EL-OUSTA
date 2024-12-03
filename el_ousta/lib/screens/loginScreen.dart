@@ -5,7 +5,7 @@ import 'dart:ffi';
 // import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/screens/TechnicianHomeScreen.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
-import 'package:el_ousta/screens/testScreen.dart';
+import 'package:el_ousta/screens/forgetPasswordScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -267,7 +267,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       // const SizedBox(height: 16.0),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (ctx) => ForgetPasswordScreen(type: widget.type)
+                                )
+                            );
+                          },
                           child: const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -278,6 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 16.0
                               ),
                             ),
+
                           )
                       ),
                       SizedBox(

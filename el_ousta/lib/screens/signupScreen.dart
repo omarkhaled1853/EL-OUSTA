@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:ffi';
-
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/loginScreen.dart';
-import 'package:el_ousta/screens/testScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
