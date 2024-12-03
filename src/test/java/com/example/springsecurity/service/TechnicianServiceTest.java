@@ -2,7 +2,9 @@ package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
+import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.Technician;
+import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -82,7 +84,6 @@ class TechnicianServiceTest {
         String validationStatus = technicianService.addTechnician(technician);
         assertEquals(ValidationStatus.VALID.getMessage(), validationStatus);
     }
-
     @Test
     void validateUniqueUsernameAndEmailTest_ValidSignUp(){
         when(technicianRepository.findByUsername("notExistUsername")).thenReturn(Optional.empty());

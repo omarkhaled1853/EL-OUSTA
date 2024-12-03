@@ -2,6 +2,7 @@ package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
+import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,15 @@ public class UserInfoService implements UserDetailsService {
         userRepository.save(userInfo);
 
         return ValidationStatus.VALID.getMessage();
+    }
+    public String resetPassword(ResetPasswordRequest request){
+        Optional<UserInfo> userInfo = userRepository.findByUsername(request.getUsername());
+
+        if(userInfo.isEmpty()){
+            return ValidationStatus.FAIL.getMessage();
+        }
+        userInfo.get().setPassword(request.getPassword());
+        return addUser(userInfo.get());
     }
     // Check the uniqueness of the user (there is no user in DB with the same email or username)
     public String validateUniqueUsernameAndEmail(UserInfo userInfo){

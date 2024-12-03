@@ -2,8 +2,8 @@ package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
+import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.Technician;
-import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,6 +46,17 @@ public class TechnicianService implements UserDetailsService {
 
         return ValidationStatus.VALID.getMessage();
     }
+
+    public String resetPassword(ResetPasswordRequest request){
+        Optional<Technician> technician = technicianRepository.findByUsername(request.getUsername());
+
+        if(technician.isEmpty()){
+            return ValidationStatus.FAIL.getMessage();
+        }
+        technician.get().setPassword(request.getPassword());
+        return addTechnician(technician.get());
+    }
+
     public String validateUniqueUsernameAndEmail(Technician technician){
         if(!validUsername(technician.getUsername())){
             return ValidationStatus.INVALID_USERNAME.getMessage();
