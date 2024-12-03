@@ -5,6 +5,8 @@ import 'dart:ffi';
 // import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/screens/TechnicianHomeScreen.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
+import 'package:el_ousta/screens/enterCodeScreen.dart';
+import 'package:el_ousta/screens/enterUsernameScreen.dart';
 import 'package:el_ousta/screens/forgetPasswordScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -194,6 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void validateForm() {
     setState(() {
       isFormValid = _formKey.currentState?.validate() ?? false;
+      isFormValid = _isUsernameValid && _validatePassword(_passwordController.text);
     });
   }
   @override
@@ -270,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (ctx) => ForgetPasswordScreen(type: widget.type)
+                                    builder: (ctx) => EnterusernameScreen(type: widget.type)
                                 )
                             );
                           },
