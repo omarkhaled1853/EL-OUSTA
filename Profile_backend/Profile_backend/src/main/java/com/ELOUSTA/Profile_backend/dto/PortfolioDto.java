@@ -9,5 +9,5 @@ import lombok.ToString;
 @ToString
 public class PortfolioDto {
     private Integer id;
-    private String photo;
+    private byte[] photo;
 }

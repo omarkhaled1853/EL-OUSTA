@@ -10,5 +10,5 @@ import lombok.ToString;
 public class DomainDTO {
     private Integer id;
     private String name;
-    private String photo;
+    private byte[] photo;
 }
