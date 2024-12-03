@@ -10,8 +10,6 @@ import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class RequestDTO {
     private int userID;
     private int technicianID;
@@ -21,4 +19,13 @@ public class RequestDTO {
     private Date startDate;
     private Date endDate;
 
+    public RequestDTO(int userID, int technicianID, int ID, List<Byte> attachment, String state, Date startDate, Date endDate) {
+        this.userID = userID;
+        this.technicianID = technicianID;
+        this.ID = ID;
+        Attachment = attachment;
+        this.state = state;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

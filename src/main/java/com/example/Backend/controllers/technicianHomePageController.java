@@ -16,10 +16,10 @@ public class technicianHomePageController {
     public List<RequestDTO> getRequests()
     {
          List<RequestDTO>DTOs=new ArrayList<>();
-         DTOs.add(new RequestDTO(5,10,15,null,"On going",new Date(2024,10,15),new Date(2024,11,13)));
-         DTOs.add(new RequestDTO(10,10,15,null,"On going",new Date(2024,10,15),new Date(2024,11,13)));
-         DTOs.add(new RequestDTO(15,10,15,null,"On going",new Date(2024,10,15),new Date(2024,11,13)));
-         DTOs.add(new RequestDTO(20,10,15,null,"On going",new Date(2024,10,15),new Date(2024,11,13)));
+         DTOs.add(new RequestDTO(5,10,15,null,"On going",  new Date(2024,10,15),new Date(2024,11,13)));
+         DTOs.add(new RequestDTO(10,10,15,null,"On going", new Date(2024,10,15),new Date(2024,11,13)));
+         DTOs.add(new RequestDTO(15,10,15,null,"On going", new Date(2024,10,15),new Date(2024,11,13)));
+         DTOs.add(new RequestDTO(20,10,15,null,"On going", new Date(2024,10,15),new Date(2024,11,13)));
          return DTOs;
     }
 }
