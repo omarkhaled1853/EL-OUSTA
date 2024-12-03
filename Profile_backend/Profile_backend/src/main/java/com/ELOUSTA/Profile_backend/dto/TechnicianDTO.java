@@ -13,8 +13,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class TechnicianDTO extends UserDTO{
     private Double rate;
     private int experience;

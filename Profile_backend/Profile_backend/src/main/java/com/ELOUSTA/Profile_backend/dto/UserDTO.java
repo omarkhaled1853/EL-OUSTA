@@ -1,5 +1,6 @@
 package com.ELOUSTA.Profile_backend.dto;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,11 +9,13 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
+@MappedSuperclass
 @SuperBuilder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Integer id;
     private String name;
     private String profilePicture;
     private int requests;

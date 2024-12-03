@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Builder
+@Table(name = "domain")
 public class DomainEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,6 @@ public class DomainEntity {
     private String photo;
 
 //    Each domain has many technician
-    @OneToMany(mappedBy = "domain", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "domainEntity", cascade = CascadeType.ALL)
     private List<TechnicianEntity> technicianEntities;
 }
