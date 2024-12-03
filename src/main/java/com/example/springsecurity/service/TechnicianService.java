@@ -3,6 +3,7 @@ package com.example.springsecurity.service;
 import com.example.springsecurity.Enums.ValidationStatus;
 import com.example.springsecurity.entity.GoogleAuthRequest;
 import com.example.springsecurity.entity.Technician;
+import com.example.springsecurity.entity.UserInfo;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,14 @@ public class TechnicianService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("User not found");
     }
+    public Technician loadUserByUsernameAsTechnician(String username){
+        Optional<Technician> technician = technicianRepository.findByUsername(username);
 
+        if(technician.isPresent()){
+            return technician.get();
+        }
+        throw new IllegalArgumentException("Invalid username");
+    }
 
     public String addTechnician(Technician technician){
         technician.setPassword(encoder.encode(technician.getPassword()));

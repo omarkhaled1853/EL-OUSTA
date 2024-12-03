@@ -61,7 +61,20 @@ class TechnicianServiceTest {
                 () -> {technicianService.loadUserByUsername("nonExistUserName");});
     }
 
-    // this message a
+    @Test
+    void loadUserByUsernameAsTechnician_userExist(){
+        when(technicianRepository.findByUsername("ExistUsername")).thenReturn(Optional.of(technician));
+
+        assertEquals(technician, technicianService.loadUserByUsernameAsTechnician("ExistUsername"));
+    }
+   @Test
+    void loadUserByUsernameAsTechnician_userNotExist(){
+        when(technicianRepository.findByUsername("NotExistUsername")).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> {technicianService.loadUserByUsernameAsTechnician("NotExistUsername");});
+    }
+
     @Test
     void addTechnician(){
         when(technicianRepository.save(technician)).thenReturn(technician);

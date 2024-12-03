@@ -33,6 +33,14 @@ public class UserInfoService implements UserDetailsService {
 
         throw new UsernameNotFoundException("No user with name: " + username);
     }
+    public UserInfo loadUserByUsernameAsUserInfo(String username){
+        Optional<UserInfo> userInfo = userRepository.findByUsername(username);
+
+        if(userInfo.isPresent()){
+            return userInfo.get();
+        }
+        throw new IllegalArgumentException("Invalid username");
+    }
 
     public String addUser(UserInfo userInfo){
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
