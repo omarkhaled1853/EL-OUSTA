@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Data
 @SuperBuilder
+@AllArgsConstructor
 @Table(name = "client")
 public class ClientEntity extends UserEntity {
 }

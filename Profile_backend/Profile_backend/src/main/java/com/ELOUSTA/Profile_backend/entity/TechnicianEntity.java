@@ -1,6 +1,7 @@
 package com.ELOUSTA.Profile_backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Data
 @SuperBuilder
+@AllArgsConstructor
 @Table(name = "technician")
 public class TechnicianEntity extends UserEntity {
     private Double rate;

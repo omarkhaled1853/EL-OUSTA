@@ -9,5 +9,5 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data
-public class ClientDTO extends TechnicianDTO{
+public class ClientDTO extends UserDTO{
 }
