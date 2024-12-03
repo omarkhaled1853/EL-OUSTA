@@ -20,7 +20,7 @@ public class TechnicianServiceImpl implements TechnicianService {
 
     @Autowired
     private TechnicianRepository technicianRepository;
-    
+
     @Override
     public Optional<TechnicianDTO> getTechnician(Integer id) {
         Optional<TechnicianEntity> technicianEntity =  technicianRepository.findTechnicianWithDomainAndPortfolio(id);
