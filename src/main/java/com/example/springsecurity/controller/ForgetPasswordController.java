@@ -1,5 +1,6 @@
 package com.example.springsecurity.controller;
 
+import com.example.springsecurity.entity.FetchUserRequest;
 import com.example.springsecurity.entity.ResetPasswordRequest;
 import com.example.springsecurity.entity.Technician;
 import com.example.springsecurity.entity.UserInfo;
@@ -17,13 +18,15 @@ public class ForgetPasswordController {
     @Autowired
     private TechnicianService technicianService;
 
-    @GetMapping("/user/fetchUser")
-    public UserInfo fetchUser(@RequestParam String UserName){
-        return userInfoService.loadUserByUsernameAsUserInfo(UserName);
+
+    @PostMapping("/user/fetchUser")
+    public UserInfo fetchUser(@RequestBody FetchUserRequest UserName){
+        return userInfoService.loadUserByUsernameAsUserInfo(UserName.getUsername());
     }
+
     @PostMapping("/tech/fetchTch")
-    public Technician fetchTechnician(@RequestParam String UserName){
-        return technicianService.loadUserByUsernameAsTechnician(UserName);
+    public Technician fetchTechnician(@RequestBody FetchUserRequest UserName){
+        return technicianService.loadUserByUsernameAsTechnician(UserName.getUsername());
     }
     @PostMapping("/user/resetPassword")
     public String userResetPassword(@RequestBody ResetPasswordRequest request){
