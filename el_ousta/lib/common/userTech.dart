@@ -1,4 +1,0 @@
-enum Type {
-  USER,
-  TECHNICIAN
-}

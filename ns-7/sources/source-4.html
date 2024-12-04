@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1256"> 
+  <title>Coverage Report > TechnicianService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springsecurity.service</a>
+</div>
+
+<h1>Coverage Summary for Class: TechnicianService (com.example.springsecurity.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TechnicianService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springsecurity.service;
+&nbsp;
+&nbsp;import com.example.springsecurity.Enums.ValidationStatus;
+&nbsp;import com.example.springsecurity.entity.GoogleAuthRequest;
+&nbsp;import com.example.springsecurity.entity.ResetPasswordRequest;
+&nbsp;import com.example.springsecurity.entity.Technician;
+&nbsp;import com.example.springsecurity.repository.TechnicianRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.security.core.userdetails.UserDetails;
+&nbsp;import org.springframework.security.core.userdetails.UserDetailsService;
+&nbsp;import org.springframework.security.core.userdetails.UsernameNotFoundException;
+&nbsp;import org.springframework.security.crypto.password.PasswordEncoder;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class TechnicianService implements UserDetailsService {</b>
+&nbsp;    @Autowired
+&nbsp;    private TechnicianRepository technicianRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PasswordEncoder encoder;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByUsername(username);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(technician.isPresent()){</b>
+<b class="fc">&nbsp;            return new TechnicianDetails(technician.get());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        throw new UsernameNotFoundException(&quot;User not found&quot;);</b>
+&nbsp;    }
+&nbsp;    public Technician loadUserByUsernameAsTechnician(String username){
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByUsername(username);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(technician.isPresent()){</b>
+<b class="fc">&nbsp;            return technician.get();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;Invalid username&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String addTechnician(Technician technician){
+<b class="fc">&nbsp;        technician.setPassword(encoder.encode(technician.getPassword()));</b>
+<b class="fc">&nbsp;        technicianRepository.save(technician);</b>
+&nbsp;
+<b class="fc">&nbsp;        return ValidationStatus.VALID.getMessage();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String resetPassword(ResetPasswordRequest request){
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByUsername(request.getUsername());</b>
+&nbsp;
+<b class="fc">&nbsp;        if(technician.isEmpty()){</b>
+<b class="fc">&nbsp;            return ValidationStatus.FAIL.getMessage();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        technician.get().setPassword(request.getPassword());</b>
+<b class="fc">&nbsp;        return addTechnician(technician.get());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String validateUniqueUsernameAndEmail(Technician technician){
+<b class="fc">&nbsp;        if(!validUsername(technician.getUsername())){</b>
+<b class="fc">&nbsp;            return ValidationStatus.INVALID_USERNAME.getMessage();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if(!validEmailAddress(technician.getEmailAddress())){</b>
+<b class="fc">&nbsp;            return ValidationStatus.INVALID_EMAIL.getMessage();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return ValidationStatus.VALID.getMessage();</b>
+&nbsp;    }
+&nbsp;    private Boolean validUsername(String username){
+<b class="fc">&nbsp;        if(username == null){</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByUsername(username);</b>
+<b class="fc">&nbsp;        return technician.isEmpty();</b>
+&nbsp;    }
+&nbsp;    private Boolean validEmailAddress(String emailAddress){
+<b class="fc">&nbsp;        if (emailAddress == null){</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByEmailAddress(emailAddress);</b>
+<b class="fc">&nbsp;        return technician.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //In authentication with Google we just check if email exist
+&nbsp;    public Boolean validAuthenticationWithGoogle(GoogleAuthRequest googleAuthRequest){
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());</b>
+<b class="fc">&nbsp;        return technician.isPresent();</b>
+&nbsp;    }
+&nbsp;    public Technician loadUserByEmailAddress(String emailAddress){
+<b class="fc">&nbsp;        Optional&lt;Technician&gt; technician = technicianRepository.findByEmailAddress(emailAddress);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(technician.isPresent()){</b>
+<b class="fc">&nbsp;            return technician.get();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;Invalid emailAddress&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-04 07:29</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1256"> 
+  <title>Coverage Report > TechnicianRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.springsecurity.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: TechnicianRepository (com.example.springsecurity.repository)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$Pp7aolN7</td>
+  </tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$Pp7aolN7$auxiliary$8b7a2Nhc</td>
+  </tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$Pp7aolN7$auxiliary$WcxwmTHP</td>
+  </tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$suV79c3V</td>
+  </tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$suV79c3V$auxiliary$dcfm9ElD</td>
+  </tr>
+  <tr>
+    <td class="name">TechnicianRepository$MockitoMock$suV79c3V$auxiliary$zVBqY7ge</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.springsecurity.repository;
+&nbsp;
+&nbsp;import com.example.springsecurity.entity.Technician;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;public interface TechnicianRepository extends JpaRepository&lt;Technician, Integer&gt; {
+&nbsp;    Optional&lt;Technician&gt; findByUsername(String username);
+&nbsp;    Optional&lt;Technician&gt; findByEmailAddress(String emailAddress);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-04 07:29</div>
+</div>
+</body>
+</html>
