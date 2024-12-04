@@ -11,6 +11,7 @@ import com.ELOUSTA.Profile_backend.entity.TechnicianEntity;
 import com.ELOUSTA.Profile_backend.repository.TechnicianRepository;
 import com.ELOUSTA.Profile_backend.service.TechnicianService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class TechnicianServiceImpl implements TechnicianService {
 
     @Autowired
