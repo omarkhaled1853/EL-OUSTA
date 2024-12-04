@@ -64,21 +64,29 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .build();
     }
 
-    private DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) {
+    private DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) throws IOException {
+        byte[] domainPhoto = getProfilePhoto(domainEntity.getPhoto());
         return DomainDTO.builder()
                 .id(domainEntity.getId())
                 .name(domainEntity.getName())
-                .photo(domainEntity.getPhoto())
+                .photo(domainPhoto)
                 .build();
     }
 
-    private List<PortfolioDto> portfolioEntityListToPortfolioDtoList (List<PortfolioEntity> portfolioEntityList) {
+    private List<PortfolioDto> portfolioEntityListToPortfolioDtoList(List<PortfolioEntity> portfolioEntityList) {
         return portfolioEntityList.stream()
-                .map(portfolioEntity -> PortfolioDto.builder()
-                        .id(portfolioEntity.getId())
-                        .photo(portfolioEntity.getPhoto())
-                        .build())
+                .map(portfolioEntity -> {
+                    byte[] photoBytes = null;
+                    try {
+                        photoBytes = getProfilePhoto(portfolioEntity.getPhoto());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return PortfolioDto.builder()
+                            .id(portfolioEntity.getId())
+                            .photo(photoBytes)
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
-
 }
