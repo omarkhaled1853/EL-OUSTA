@@ -62,9 +62,9 @@ public final class TestData {
 
     }
 
-    public TechnicianEntity testTechnicianEntity() {
+    public static TechnicianEntity testTechnicianEntity() {
         return TechnicianEntity.builder()
-                .id(3)
+                .id(1)
                 .firstName("John")
                 .lastName("Doe")
                 .dob(Date.valueOf("1985-07-15"))
@@ -84,7 +84,7 @@ public final class TestData {
                 .build();
     }
 
-    public DomainEntity testDomainEntity() {
+    public static DomainEntity testDomainEntity() {
         return DomainEntity.builder()
                 .id(1)
                 .name("Electrician")
@@ -92,34 +92,34 @@ public final class TestData {
                 .build();
     }
 
-    public PortfolioEntity testPortfolioEntity() {
+    public static PortfolioEntity testPortfolioEntity() {
         return PortfolioEntity.builder()
-                .id(7) // Assuming the portfolio ID is 1
-                .technicianEntity(TechnicianEntity.builder().id(3).build())
+                .id(3)
+                .technicianEntity(TechnicianEntity.builder().id(1).build())
                 .photo("portfolio1.png")
                 .build();
     }
 
-    public List<PortfolioEntity> testPortfolioEntityList() {
+    public static List<PortfolioEntity> testPortfolioEntityList() {
         return List.of(
                 PortfolioEntity.builder()
-                        .id(7) // Assuming the portfolio ID is 1
-                        .technicianEntity(TechnicianEntity.builder().id(3).build())
+                        .id(3) // Assuming the portfolio ID is 1
+                        .technicianEntity(TechnicianEntity.builder().id(1).build())
                         .photo("portfolio1.png")
                         .build(),
                 PortfolioEntity.builder()
-                        .id(8) // Assuming the portfolio ID is 1
-                        .technicianEntity(TechnicianEntity.builder().id(3).build())
+                        .id(4) // Assuming the portfolio ID is 1
+                        .technicianEntity(TechnicianEntity.builder().id(1).build())
                         .photo("portfolio2.png")
                         .build()
         );
     }
 
 
-    public TechnicianDTO testTechnicianDto() throws IOException {
+    public static TechnicianDTO testTechnicianDto() throws IOException {
         byte[] profilePhoto = getProfilePhoto("john.png", profilePath);
         return TechnicianDTO.builder()
-                .id(3)
+                .id(1)
                 .firstName("John")
                 .lastName("Doe")
                 .dob(Date.valueOf("1985-07-15"))
@@ -130,12 +130,12 @@ public final class TestData {
                 .profilePicture(profilePhoto)
                 .rate(4.5)
                 .description("This is description")
-                .portfolioDto()
-                .domainDTO()
+                .portfolioDto(testPortfolioDtoList())
+                .domainDTO(testDomainDto())
                 .build();
     }
 
-    public DomainDTO testDomainDto() throws IOException {
+    public static DomainDTO testDomainDto() throws IOException {
         byte[] photo = getProfilePhoto("electrician.png", domainPath);
         return DomainDTO.builder()
                 .id(1)
@@ -144,24 +144,24 @@ public final class TestData {
                 .build();
     }
 
-    public PortfolioDto testPortfolioDto() throws IOException {
+    public static PortfolioDto testPortfolioDto() throws IOException {
         byte[] photo = getProfilePhoto("portfolio1.png", portfolioPath);
         return PortfolioDto.builder()
-                .id(7) // Assuming the portfolio ID is 1
+                .id(3)
                 .photo(photo)
                 .build();
     }
 
-    public List<PortfolioDto> testPortfolioDtoList() throws IOException {
+    public static List<PortfolioDto> testPortfolioDtoList() throws IOException {
         byte[] photo1 = getProfilePhoto("portfolio1.png", portfolioPath);
         byte[] photo2 = getProfilePhoto("portfolio2.png", portfolioPath);
         return List.of(
                 PortfolioDto.builder()
-                        .id(7)
+                        .id(3)
                         .photo(photo1)
                         .build(),
                 PortfolioDto.builder()
-                        .id(8)
+                        .id(4)
                         .photo(photo2)
                         .build()
         );
