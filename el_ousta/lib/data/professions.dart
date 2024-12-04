@@ -1,0 +1,17 @@
+final List<String> professions = [
+  'Electrician',
+  'Plumber',
+  'Carpenter',
+  'Painter',
+  'Mechanic',
+  'Welder',
+  'Mason',
+  'Gardener',
+  'Cleaner',
+  'Cook',
+  'Driver',
+  'Technician',
+  'Tailor',
+  'Delivery Person',
+  'Security Guard',
+];
