@@ -1,0 +1,195 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TechnicianServiceImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ELOUSTA.Profile_backend.service.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: TechnicianServiceImpl (com.ELOUSTA.Profile_backend.service.impl)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TechnicianServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.9%
+  </span>
+  <span class="absValue">
+    (40/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ELOUSTA.Profile_backend.service.impl;
+&nbsp;
+&nbsp;import com.ELOUSTA.Profile_backend.dto.DomainDTO;
+&nbsp;import com.ELOUSTA.Profile_backend.dto.PortfolioDto;
+&nbsp;import com.ELOUSTA.Profile_backend.dto.TechnicianDTO;
+&nbsp;import com.ELOUSTA.Profile_backend.entity.DomainEntity;
+&nbsp;import com.ELOUSTA.Profile_backend.entity.PortfolioEntity;
+&nbsp;import com.ELOUSTA.Profile_backend.entity.TechnicianEntity;
+&nbsp;import com.ELOUSTA.Profile_backend.repository.TechnicianRepository;
+&nbsp;import com.ELOUSTA.Profile_backend.service.TechnicianService;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.IOException;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;import static com.ELOUSTA.Profile_backend.utils.ImageHandler.getProfilePhoto;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;public class TechnicianServiceImpl implements TechnicianService {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TechnicianRepository technicianRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final String profilePath = &quot;C:\\images\\profile\\&quot;;</b>
+<b class="fc">&nbsp;    private final String domainPath = &quot;C:\\images\\domain\\&quot;;</b>
+<b class="fc">&nbsp;    private final String portfolioPath = &quot;C:\\images\\portfolio\\&quot;;</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Optional&lt;TechnicianDTO&gt; getTechnician(Integer id) {
+<b class="fc">&nbsp;        Optional&lt;TechnicianEntity&gt; technicianEntity =  technicianRepository.findTechnicianWithDomainAndPortfolio(id);</b>
+<b class="fc">&nbsp;        return technicianEntity.map(entity -&gt; {</b>
+&nbsp;            try {
+<b class="fc">&nbsp;                return technicianEntityToTechnicianDto(entity);</b>
+<b class="nc">&nbsp;            } catch (IOException e) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(e);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    private TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
+<b class="fc">&nbsp;        DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());</b>
+<b class="fc">&nbsp;        List&lt;PortfolioDto&gt; portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());</b>
+<b class="fc">&nbsp;        byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);</b>
+<b class="fc">&nbsp;        return TechnicianDTO.builder()</b>
+<b class="fc">&nbsp;                .id(technicianEntity.getId())</b>
+<b class="fc">&nbsp;                .firstName(technicianEntity.getFirstName())</b>
+<b class="fc">&nbsp;                .lastName(technicianEntity.getLastName())</b>
+<b class="fc">&nbsp;                .profilePicture(profilePhoto)</b>
+<b class="fc">&nbsp;                .dob(technicianEntity.getDob())</b>
+<b class="fc">&nbsp;                .userName(technicianEntity.getUserName())</b>
+<b class="fc">&nbsp;                .phoneNumber(technicianEntity.getPhoneNumber())</b>
+<b class="fc">&nbsp;                .email(technicianEntity.getEmail())</b>
+<b class="fc">&nbsp;                .location(technicianEntity.getGovernorate() + &quot; &quot;</b>
+<b class="fc">&nbsp;                        + technicianEntity.getDistrict())</b>
+<b class="fc">&nbsp;                .rate(technicianEntity.getRate())</b>
+<b class="fc">&nbsp;                .description(technicianEntity.getDescription())                .domainDTO(domainDTO)</b>
+<b class="fc">&nbsp;                .portfolioDto(portfolioDtoList)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) throws IOException {
+<b class="fc">&nbsp;        byte[] domainPhoto = getProfilePhoto(domainEntity.getPhoto(), domainPath);</b>
+<b class="fc">&nbsp;        return DomainDTO.builder()</b>
+<b class="fc">&nbsp;                .id(domainEntity.getId())</b>
+<b class="fc">&nbsp;                .name(domainEntity.getName())</b>
+<b class="fc">&nbsp;                .photo(domainPhoto)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private List&lt;PortfolioDto&gt; portfolioEntityListToPortfolioDtoList(List&lt;PortfolioEntity&gt; portfolioEntityList) {
+<b class="fc">&nbsp;        return portfolioEntityList.stream()</b>
+<b class="fc">&nbsp;                .map(portfolioEntity -&gt; {</b>
+<b class="fc">&nbsp;                    byte[] photoBytes = null;</b>
+&nbsp;                    try {
+<b class="fc">&nbsp;                        photoBytes = getProfilePhoto(portfolioEntity.getPhoto(), portfolioPath);</b>
+<b class="nc">&nbsp;                    } catch (IOException e) {</b>
+<b class="nc">&nbsp;                        throw new RuntimeException(e);</b>
+&nbsp;                    }
+<b class="fc">&nbsp;                    return PortfolioDto.builder()</b>
+<b class="fc">&nbsp;                            .id(portfolioEntity.getId())</b>
+<b class="fc">&nbsp;                            .photo(photoBytes)</b>
+<b class="fc">&nbsp;                            .build();</b>
+&nbsp;                })
+<b class="fc">&nbsp;                .collect(Collectors.toList());</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-04 04:52</div>
+</div>
+</body>
+</html>
