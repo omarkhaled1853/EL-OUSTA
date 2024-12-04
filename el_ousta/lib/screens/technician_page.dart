@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -36,11 +39,13 @@ class _TechnicianPageState extends State<TechnicianPage> {
 
   Future<void> fetchClientData() async {
     try {
-      final response = await http.get(Uri.parse('https://example.com/api/client'));
+      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/technician/1'));
       if (response.statusCode == 200) {
+
         setState(() {
           technicianData = json.decode(response.body); // Parse the fetched data
           isLoading = false; // Loading completed
+          print(technicianData);
         });
       } else {
         throw Exception('Failed to load Technician data');
@@ -72,123 +77,49 @@ class _TechnicianPageState extends State<TechnicianPage> {
     _descriptionController.dispose();
     super.dispose();
   }
-  void _resetPassword(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        String? newPassword;
-        String? confirmPassword;
 
-        return Padding(
-          padding: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Reset Password',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'New Password',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) {
-                  newPassword = value;
-                },
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm Password',
-                  border: OutlineInputBorder(),
-                ),
-                onChanged: (value) {
-                  confirmPassword = value;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (newPassword == null ||
-                      newPassword!.length < 6 ||
-                      newPassword != confirmPassword) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Passwords must match and be at least 6 characters long!',
-                        ),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  } else {
-                    print('Password reset successfully: $newPassword');
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Password reset successfully!'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text('Reset Password'),
-              ),
-            ],
+
+
+  Future<void> _updateDescription() async {
+    final newDescription = _descriptionController.text;
+
+    final confirm = await _showConfirmDialog(
+      'Update Description',
+      'Are you sure you want to update your description?',
+    );
+
+    if (confirm) {
+      try {
+        final response = await http.post(
+          Uri.parse('http://192.168.1.6:8080/update-description'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'description': newDescription}),
+        );
+
+        if (response.statusCode == 200) {
+          setState(() {
+            technicianData['description'] = newDescription;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Description updated successfully!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else {
+          throw Exception('Failed to update description.');
+        }
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error updating description: $error'),
+            backgroundColor: Colors.red,
           ),
         );
-      },
-    );
-  }
-
-  Future<void> _changeProfilePhoto() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _profilePhoto = File(pickedFile.path);
-        technicianData['profilePhoto'] = pickedFile.path;
-      });
-      print('Profile photo sent to backend: ${pickedFile.path}');
+      }
     }
   }
 
-  // Publish a new photo
-  Future<void> _publishPhoto() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _newPhoto = File(pickedFile.path);
-        technicianData['photos'].add(pickedFile.path);
-      });
-      print('Photo published and sent to backend: ${pickedFile.path}');
-    }
-  }
-
-  void _updateDescription() {
-    setState(() {
-      technicianData['description'] = _descriptionController.text;
-    });
-    print('Updated description sent to backend: ${technicianData['description']}');
-  }
   int _currentIndex = 3;
 
   void onTabTapped(int index) {
@@ -206,13 +137,40 @@ class _TechnicianPageState extends State<TechnicianPage> {
   }
   // API simulation for updating backend
   Future<void> _updatePhotoListToBackend() async {
-    // Simulate sending the new list of photos to the backend
-    print('Sending updated photo list to backend: ${technicianData['photos']}');
-    // Make the API call here, e.g., using http.post() or other methods
+    try {
+      // Make the API call to send the full list of photos to the backend
+      final response = await http.post(
+        Uri.parse('http://192.168.1.6:8080/update-photos'), // Replace with your actual endpoint
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'photos': technicianData['photos']}), // Send the full photo list
+      );
+
+      if (response.statusCode == 200) {
+        // Success response
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Photo list updated successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        // Handle non-200 responses
+        throw Exception('Failed to update photo list. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Handle errors and show failure message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error updating photo list: $error'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      print('Error updating photo list: $error'); // Log the error for debugging
+    }
   }
 
   // Show full screen photo view
-  void _viewPhotoFullScreen(String photoPath) {
+  void _viewPhotoFullScreen(String base64Photo) {
     showDialog(
       context: context,
       builder: (context) {
@@ -220,8 +178,8 @@ class _TechnicianPageState extends State<TechnicianPage> {
           child: Stack(
             children: [
               Center(
-                child: Image.file(
-                  File(photoPath),
+                child: Image(
+                  image: MemoryImage(base64Decode(base64Photo)),
                   fit: BoxFit.contain,
                   height: MediaQuery.of(context).size.height * 0.8,
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -255,11 +213,9 @@ class _TechnicianPageState extends State<TechnicianPage> {
                     const SizedBox(width: 10), // Small gap between the buttons
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            technicianData['photos'].remove(photoPath);
-                            _updatePhotoListToBackend(); // Send the updated list to backend
-                          });
+                        onPressed: () async {
+                          // Call the _removePhoto function
+                          await _removePhoto(base64Photo);
                           Navigator.of(context).pop(); // Close the dialog
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -305,8 +261,9 @@ class _TechnicianPageState extends State<TechnicianPage> {
                       radius: 50,
                       backgroundImage: _profilePhoto != null
                           ? FileImage(_profilePhoto!)
-                          : (technicianData['profilePhoto'] != null
-                          ? FileImage(File(technicianData['profilePhoto']))
+                          : (technicianData['profilePicture'] != null
+                          ? MemoryImage(base64Decode(
+                          technicianData['profilePicture']))
                           : const AssetImage('assets/default_user.png')) as ImageProvider,
                       child: _profilePhoto == null
                           ? const Align(
@@ -318,7 +275,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    technicianData['name'],
+                    technicianData['firstName']+' '+technicianData['lastName'],
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -335,8 +292,9 @@ class _TechnicianPageState extends State<TechnicianPage> {
                   const SizedBox(height: 20),
                   Row(
                     children: [
+
                       Text(
-                        'Start Date: ${technicianData['startDate']}',
+                        'Experience: ${technicianData['experience']}',
                         style: const TextStyle(fontSize: 16),
                       ),
                       const Spacer(),
@@ -344,6 +302,15 @@ class _TechnicianPageState extends State<TechnicianPage> {
                         'Rating: ${technicianData['rate']} ⭐',
                         style: const TextStyle(fontSize: 16),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildStatCard('Requests', technicianData['requests'].toString()),
+                      _buildStatCard('Accepted', technicianData['accepted'].toString()),
+                      _buildStatCard('Refused', technicianData['cancelled'].toString()),
                     ],
                   ),
 
@@ -373,15 +340,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
             ),
 
 
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildStatCard('Requests', technicianData['numberOfRequests'].toString()),
-                _buildStatCard('Accepted', technicianData['accepted'].toString()),
-                _buildStatCard('Refused', technicianData['refused'].toString()),
-              ],
-            ),
+
             const SizedBox(height: 20),
             // Publish Photo Button
             ElevatedButton(
@@ -396,7 +355,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            technicianData['photos'].isEmpty
+            technicianData['portfolioDto'].isEmpty
                 ? const Center(child: Text('No photos published yet.'))
                 : GridView.builder(
               shrinkWrap: true,
@@ -406,15 +365,15 @@ class _TechnicianPageState extends State<TechnicianPage> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: technicianData['photos'].length,
+              itemCount: technicianData['portfolioDto'].length,
               itemBuilder: (context, index) {
-                String photoPath = technicianData['photos'][index];
+                final photoBytes = technicianData['portfolioDto'][index]['photo']; // Each item is a byte[]
                 return GestureDetector(
                   onTap: () {
-                    _viewPhotoFullScreen(photoPath);
+                    _viewPhotoFullScreen(photoBytes);
                   },
-                  child: Image.file(
-                    File(photoPath),
+                  child: Image(
+                    image: MemoryImage(base64Decode(photoBytes)),
                     fit: BoxFit.cover,
                   ),
                 );
@@ -468,4 +427,310 @@ class _TechnicianPageState extends State<TechnicianPage> {
       ],
     );
   }
+  Future<void> _changeProfilePhoto() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final confirm = await _showConfirmDialog(
+        'Change Profile Photo',
+        'Do you want to update your profile photo?',
+      );
+
+      if (confirm) {
+        try {
+          final request = http.MultipartRequest(
+            'POST',
+            Uri.parse('http://192.168.1.6:8080/update-profile-photo'),
+          );
+          request.files.add(await http.MultipartFile.fromPath(
+            'profilePhoto',
+            pickedFile.path,
+          ));
+
+          final response = await request.send();
+
+          if (response.statusCode == 200) {
+            setState(() {
+              _profilePhoto = File(pickedFile.path);
+              technicianData['profilePhoto'] = pickedFile.path;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Profile photo updated successfully!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          } else {
+            throw Exception('Failed to update profile photo.');
+          }
+        } catch (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error updating profile photo: $error'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
+
+  Future<void> _resetPassword(BuildContext context) async {
+    String? newPassword;
+    String? confirmPassword;
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Reset Password',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'New Password',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) => newPassword = value,
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Confirm Password',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) => confirmPassword = value,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  if (newPassword == null ||
+                      newPassword!.length < 6 ||
+                      newPassword != confirmPassword) {
+                    _showDialog(
+                      context,
+                      'Error',
+                      'Passwords must match and be at least 6 characters long!',
+                      Colors.red,
+                    );
+                  } else {
+                    final confirm = await _showConfirmDialog1(
+                      context,
+                      'Reset Password',
+                      'Are you sure you want to reset your password?',
+                    );
+
+                    if (confirm) {
+                      try {
+                        final response = await http.post(
+                          Uri.parse('http://192.168.1.6:8080/reset-password'),
+                          headers: {'Content-Type': 'application/json'},
+                          body: jsonEncode({'newPassword': newPassword}),
+                        );
+
+                        if (response.statusCode == 200) {
+                          Navigator.pop(context);
+                          _showDialog(
+                            context,
+                            'Success',
+                            'Password reset successfully!',
+                            Colors.green,
+                          );
+                        } else {
+                          throw Exception('Failed to reset password.');
+                        }
+                      } catch (error) {
+                        _showDialog(
+                          context,
+                          'Error',
+                          'Error resetting password: $error',
+                          Colors.red,
+                        );
+                      }
+                    }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text('Reset Password'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _publishPhoto() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final confirm = await _showConfirmDialog(
+        'Publish Photo',
+        'Are you sure you want to publish this photo?',
+      );
+
+      if (confirm) {
+        final tempPhotos = List<String>.from(technicianData['photos'])..add(pickedFile.path);
+
+        try {
+          final response = await http.post(
+            Uri.parse('http://192.168.1.6:8080/publish-photos'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({'photos': tempPhotos}),
+          );
+
+          if (response.statusCode == 200) {
+            setState(() {
+              technicianData['photos'] = tempPhotos;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Photos updated and published successfully!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+          } else {
+            throw Exception('Failed to publish photos.');
+          }
+        } catch (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error publishing photos: $error'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
+
+  Future<void> _removePhoto(String photoPath) async {
+    final confirm = await _showConfirmDialog(
+      'Remove Photo',
+      'Are you sure you want to remove this photo?',
+    );
+
+    if (confirm) {
+      final tempPhotos = List<String>.from(technicianData['photos'])..remove(photoPath);
+
+      try {
+        final response = await http.post(
+          Uri.parse('http://192.168.1.6:8080/update-photos'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'photos': tempPhotos}),
+        );
+
+        if (response.statusCode == 200) {
+          setState(() {
+            technicianData['photos'] = tempPhotos;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Photo removed successfully!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else {
+          throw Exception('Failed to remove photo.');
+        }
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error removing photo: $error'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+
+  Future<bool> _showConfirmDialog(String title, String content) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    ) ??
+        false;
+  }
+}
+Future<bool> _showConfirmDialog1(
+    BuildContext context, String title, String message) async {
+  return await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false), // Cancel
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context, true), // Confirm
+          child: const Text('Confirm'),
+        ),
+      ],
+    ),
+  ) ??
+      false; // Return false if dialog is dismissed
+
+}
+void _showDialog(
+    BuildContext context, String title, String message, Color titleColor) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(
+        title,
+        style: TextStyle(color: titleColor),
+      ),
+      content: Text(message),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context); // Close the dialog
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }

@@ -1,8 +1,11 @@
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/screens/userTechScreen.dart';
 import 'package:flutter/material.dart';
-import 'technician_page.dart'; // Import the User Profile page
+import 'package:el_ousta/screens/technician_page.dart'; // Import the User Profile page
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+const storage = FlutterSecureStorage();
 class TechnicianHome extends StatefulWidget {
   const TechnicianHome({Key? key}) : super(key: key);
 
@@ -12,10 +15,10 @@ class TechnicianHome extends StatefulWidget {
 
 class _TechnicianHomeState extends State<TechnicianHome> {
 List<Map<String, String>> pendingRequests = [
-    {"name": "Client A", "date": "2024-11-25", "image": "assets/hossam.jpg"},
-    {"name": "Client B", "date": "2024-11-26", "image": "assets/hossam.jpg"},
-    {"name": "Client C", "date": "2024-11-27", "image": "assets/hossam.jpg"},
-    {"name": "Client D", "date": "2024-11-28", "image": "assets/hossam.jpg"},
+    // {"state": "Client A", "startDate": "2024-11-25", "endDate": "assets/hossam.jpg"},
+    // {"state": "Client B", "startDate": "2024-11-26", "endDate": "assets/hossam.jpg"},
+    // {"state": "Client C", "startDate": "2024-11-27", "endDate": "assets/hossam.jpg"},
+    // {"state": "Client D", "startDate": "2024-11-28", "endDate": "assets/hossam.jpg"},
   ];
 bool isLoading = true;
   String searchQuery = '';
@@ -30,7 +33,7 @@ bool isLoading = true;
   }
 Future<void> fetchClientData() async {
   try {
-    final response = await http.get(Uri.parse('https://example.com/api/client'));
+    final response = await http.get(Uri.parse(ServerAPI.baseURL + '/technician/Home'));
     if (response.statusCode == 200) {
       setState(() {
         pendingRequests = json.decode(response.body); // Parse the fetched data
@@ -93,6 +96,22 @@ void _showSnackBar(String message, Color color) {
         ),
         centerTitle: true,
         backgroundColor: Colors.purple,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.black,
+            ),
+            onPressed: () async {
+              await storage.delete(key: 'auth_token');
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (ctx) => const UserTechScreen()
+                  )
+              );
+            },
+          )
+        ],
       ),
       body:isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -124,42 +143,6 @@ void _showSnackBar(String message, Color color) {
             ),
           ),
           const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: updateSearch,
-                    decoration: InputDecoration(
-                      hintText: 'Search by Date or Name',
-                      filled: true,
-                      fillColor: Colors.grey.shade200,
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.purple,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                    onPressed: () {
-                      print('Search query: $searchQuery');
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
           Expanded(
             child: filteredRequests.isNotEmpty
                 ? ListView.builder(
@@ -167,9 +150,9 @@ void _showSnackBar(String message, Color color) {
               itemBuilder: (context, index) {
                 final request = filteredRequests[index];
                 return _buildRequestCard(
-                  name: request["name"]!,
-                  date: request["date"]!,
-                  image: request["image"]!,
+                  state: request["state"]!,
+                  startDate: request["startDate"]!,
+                  endDate: request["endDate"]!,
                 );
               },
             )
@@ -219,9 +202,9 @@ void _showSnackBar(String message, Color color) {
 
   // Request card widget
   Widget _buildRequestCard({
-    required String name,
-    required String date,
-    required String image,
+    required String state,
+    required String startDate,
+    required String endDate,
   }) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -231,17 +214,12 @@ void _showSnackBar(String message, Color color) {
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(image),
-            ),
-            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    "State: $state",
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -249,7 +227,14 @@ void _showSnackBar(String message, Color color) {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    date,
+                    "Start Date: $startDate",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Text(
+                    "End Date: $endDate",
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,

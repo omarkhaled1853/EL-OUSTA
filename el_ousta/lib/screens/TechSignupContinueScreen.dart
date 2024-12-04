@@ -105,7 +105,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: response.body);
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (ctx) => const TechnicianHome()));
+                .pushReplacement(MaterialPageRoute(builder: (ctx) => const TechnicianHome()));
           } else {
             log("Sign in failed with status: ${response.statusCode}.");
           }

@@ -1,9 +1,10 @@
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'homeclient.dart';
+import 'package:el_ousta/screens/homeclient.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> fetchClientData() async {
     try {
-      final response = await http.get(Uri.parse('https://example.com/api/client'));
+      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/1'));
       if (response.statusCode == 200) {
         setState(() {
           userData = json.decode(response.body); // Parse the fetched data
@@ -59,13 +60,34 @@ class _ProfilePageState extends State<ProfilePage> {
       final confirm = await _showConfirmDialog(
           'Change Profile Photo', 'Do you want to update your profile photo?');
       if (confirm) {
-        setState(() {
-          _selectedImage = File(pickedFile.path);
-        });
-        _showSnackBar('Profile photo updated!', Colors.green);
+        File? tempImage = File(pickedFile.path); // Temporary image
+        try {
+          final request = http.MultipartRequest(
+            'POST',
+            Uri.parse(ServerAPI.baseURL + '/update-profile-photo'),
+          );
+          request.files.add(await http.MultipartFile.fromPath(
+            'profilePhoto',
+            tempImage.path,
+          ));
+          final response = await request.send();
+
+          if (response.statusCode == 200) {
+            setState(() {
+              _selectedImage = tempImage; // Update only on success
+              userData!['profilePicture'] = base64Encode(tempImage.readAsBytesSync());
+            });
+            _showSnackBar('Profile photo updated!', Colors.green);
+          } else {
+            _showSnackBar('Failed to update profile photo. Try again.', Colors.red);
+          }
+        } catch (error) {
+          _showSnackBar('Error updating profile photo: $error', Colors.red);
+        }
       }
     }
   }
+
 
   void onTabTapped(int index) {
     if (index == 0) {
@@ -104,9 +126,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       backgroundImage: _selectedImage != null
                           ? FileImage(_selectedImage!)
                           : userData != null &&
-                          userData!['ProfilePhoto'] != null
+                          userData!['profilePicture'] != null
                           ? MemoryImage(base64Decode(
-                          userData!['ProfilePhoto']))
+                          userData!['profilePicture']))
                           : const AssetImage('assets/hossam.jpg')
                       as ImageProvider,
                       child: _selectedImage == null
@@ -119,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    userData?['Name'] ?? 'User Name',
+                    userData?['firstName'] ?? 'User Name',
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -127,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    userData?['Email'] ?? 'user@example.com',
+                    userData?['email'] ?? 'user@example.com',
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -142,12 +164,12 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 _buildStatCard(
                     "Requests",
-                    userData?['numberOfRequests'].toString() ??
+                    userData?['requests'].toString() ??
                         '1'),
                 _buildStatCard('Accepted',
                     userData?['accepted'].toString() ?? '1'),
-                _buildStatCard('Refused',
-                    userData?['refused'].toString() ?? '1'),
+                _buildStatCard('cancelled',
+                    userData?['cancelled'].toString() ?? '1'),
               ],
             ),
             const Spacer(),
@@ -285,36 +307,37 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (newPassword == null ||
                       newPassword!.length < 6 ||
                       newPassword != confirmPassword) {
-                    // Show the Snackbar above the modal without dismissing it
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text(
-                          'Passwords must match and be at least 6 characters long!',
-                        ),
-                        backgroundColor: Colors.red,
-                        behavior: SnackBarBehavior.floating, // Makes it float above other elements
-                        margin: const EdgeInsets.only(bottom: 120.0, left: 16.0, right: 16.0), // Adjust position
-                        duration: const Duration(seconds: 3), // Optional: set duration
-                      ),
-                    );
+                    _showDialog(
+                        context,
+                        'Error',
+                        'Passwords must match and be at least 6 characters long!',
+                        Colors.red);
                   } else {
-                    print('Password reset successfully: $newPassword');
-                    Navigator.pop(context); // Dismiss the modal on success
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Password reset successfully!'),
-                        backgroundColor: Colors.green,
-                        behavior: SnackBarBehavior.floating,
-                        margin: const EdgeInsets.only(bottom: 120.0, left: 16.0, right: 16.0),
-                      ),
-                    );
+                    // Call API to reset password
+                    try {
+                      final response = await http.post(
+                        Uri.parse('http://192.168.1.6:8080/reset-password'),
+                        headers: {'Content-Type': 'application/json'},
+                        body: jsonEncode({'newPassword': newPassword}),
+                      );
+
+                      if (response.statusCode == 200) {
+                        Navigator.pop(context); // Dismiss modal
+                        _showDialog(context, 'Success',
+                            'Password reset successfully!', Colors.green);
+                      } else {
+                        throw Exception('Failed to reset password');
+                      }
+                    } catch (error) {
+                      _showDialog(context, 'Error',
+                          'Error resetting password: $error', Colors.red);
+                    }
                   }
                 },
-
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
                   minimumSize: const Size(double.infinity, 50),
@@ -330,6 +353,29 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
+
+  void _showDialog(
+      BuildContext context, String title, String message, Color titleColor) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(color: titleColor),
+        ),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   void _showSnackBar(String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(

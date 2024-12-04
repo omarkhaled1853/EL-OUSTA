@@ -100,7 +100,7 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
         // Storing the token
         if(response.body != 'fail') {
           await secureStorage.write(key: 'auth_token', value: response.body);
-          Navigator.of(context).push(
+          Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                   builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
               )

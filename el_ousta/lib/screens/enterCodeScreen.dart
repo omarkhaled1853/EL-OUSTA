@@ -109,17 +109,33 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
           TextButton(
             onPressed: (_validateOTP())
               ? () async {
-              var url = Uri.parse('http://192.168.1.6:8083/mail/verification/${widget.user.emailAddress}/${_otp}');
-              var response = await http.post(
-                url,
-                headers: {
-                  'Content-Type': 'application/json', // Explicitly set JSON Content-Type
-                },
-                body: jsonEncode({
-                  "subject": "test send email",
-                  "message": "this test message"
-                }),
-              );
+              var url, response;
+              if(widget.method == 'mail') {
+                url = Uri.parse('http://192.168.1.6:8083/mail/verification/${widget.user.emailAddress}/${_otp}');
+                response = await http.post(
+                  url,
+                  headers: {
+                    'Content-Type': 'application/json', // Explicitly set JSON Content-Type
+                  },
+                  body: jsonEncode({
+                    "subject": "test send email",
+                    "message": "this test message"
+                  }),
+                );
+              }
+              else {
+                url = Uri.parse('http://192.168.1.6:8083/twilio-otp/verification');
+                response = await http.post(
+                  url,
+                  headers: {
+                    'Content-Type': 'application/json', // Explicitly set JSON Content-Type
+                  },
+                  body: jsonEncode({
+                    "userphonenumber": "+201283348918",
+                    "otp": _otp
+                  }),
+                );
+              }
               if(response.statusCode == 200) {
                 log(response.body);
                 if(response.body == 'true') {

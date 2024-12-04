@@ -104,7 +104,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
             log(response.body);
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: response.body);
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => const ClientPage()
                 )

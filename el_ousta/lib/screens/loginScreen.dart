@@ -43,64 +43,66 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loggedIn = false;
 
   Future signIn() async {
-    Future signIn() async {
-      await GoogleSignInApi.signOutFromGoogle();
-      final user = await GoogleSignInApi.login();
-      if (user != null) {
-        log(user.email);
-        log(user.displayName ?? 'No display name');
-        log(user.id);
-        log(user.serverAuthCode ?? 'No server auth code');
-        var url = Uri.parse('http://192.168.1.6:8080/user/signIn/google');
-        // make http get request
-        var response = await http.post(
-          url,
-          headers: {
-            'Content-Type': 'application/json', // Explicitly set JSON Content-Type
-          },
-          body: jsonEncode({
-            'emailAddress': user.email,
-          }),
-        );
-        // check the status code for the result
-        if (response.statusCode == 200) {
+    await GoogleSignInApi.signOutFromGoogle();
+    final user = await GoogleSignInApi.login();
+    if (user != null) {
+      log(user.email);
+      log(user.displayName ?? 'No display name');
+      log(user.id);
+      log(user.serverAuthCode ?? 'No server auth code');
+      var url;
+      if(widget.type == Type.USER)
+        url = Uri.parse(ServerAPI.baseURL + '/user/signIn/google');
+      else
+        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
+      // make http get request
+      var response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json', // Explicitly set JSON Content-Type
+        },
+        body: jsonEncode({
+          'emailAddress': user.email,
+        }),
+      );
+      // check the status code for the result
+      if (response.statusCode == 200) {
+        log(response.body);
+        if(response.body != 'fail') {
           log(response.body);
-          if(response.body != 'fail') {
-            log(response.body);
-            // Storing the token
-            await secureStorage.write(key: 'auth_token', value: response.body);
+          // Storing the token
+          await secureStorage.write(key: 'auth_token', value: response.body);
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : TechnicianHome()
+              )
+          );
+        }
+        else {
+          log("Sign in failed with status: ${response.statusCode}.");
+          if(widget.type == Type.USER) {
             Navigator.of(context).push(
                 MaterialPageRoute(
-                    builder: (ctx) => const ClientPage()
+                    builder: (ctx) => UserSignupContinueScreen(email: user.email, password: user.id,)
                 )
             );
           }
           else {
-            log("Sign in failed with status: ${response.statusCode}.");
-            if(widget.type == Type.USER) {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (ctx) => UserSignupContinueScreen(email: user.email, password: user.id,)
-                  )
-              );
-            }
-            else {
-              Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (ctx) => UserSignupContinueScreen(email: user.email, password: user.id,)
-                  )
-              );
-            }
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (ctx) => TechSignupContinueScreen(email: user.email, password: user.id,)
+                )
+            );
           }
         }
-        else {
-          log('Request failed with status: ${response.statusCode}.');
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
-        }
-      } else {
-        log('User canceled the sign-in process');
       }
+      else {
+        log('Request failed with status: ${response.statusCode}.');
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Something went wrong, please try again")));
+      }
+    } else {
+      log('User canceled the sign-in process');
     }
   }
   void _validateUsername(String username) {
@@ -171,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Storing the token
         if(response.body != 'fail') {
           await secureStorage.write(key: 'auth_token', value: response.body);
-          result = Navigator.of(context).push(
+          result = Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                   builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
               )

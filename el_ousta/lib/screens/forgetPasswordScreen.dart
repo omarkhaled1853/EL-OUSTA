@@ -117,27 +117,71 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             const SizedBox(height: 20),
             // SMS Option
             GestureDetector(
-              onTap: () {
-                // Navigate to SMS verification screen
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (ctx) => EnterCodeScreen(
+              onTap: () async {
+                setState(() {
+                  isLoading = true; // Show loading indicator
+                });
+
+                var url = Uri.parse(
+                    'http://192.168.1.6:8083/twilio-otp/twilio-sms');
+                try {
+                  var response = await http.post(
+                    url,
+                    headers: {
+                      'Content-Type':
+                      'application/json', // Explicitly set JSON Content-Type
+                    },
+                    body: jsonEncode({
+                      "phonenumber": "+201283348918",
+                      "massage": "test otp"
+                    }),
+                  );
+
+                  if (response.statusCode == 200) {
+                    log(response.body);
+                    // Navigate to email verification screen
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) => EnterCodeScreen(
                           type: widget.type,
                           method: 'sms',
                           user: widget.user,
-                        )));
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                          Text("Something went wrong, please try again")),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Error: $e")),
+                  );
+                } finally {
+                  setState(() {
+                    isLoading = false; // Hide loading indicator
+                  });
+                }
               },
               child: Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      Icon(Icons.sms, color: Colors.deepPurple, size: 40),
-                      SizedBox(width: 16),
-                      Text(
+                      const Icon(Icons.sms, color: Colors.deepPurple, size: 40),
+                      const SizedBox(width: 16),
+                      isLoading
+                          ? const CircularProgressIndicator() // Show spinner if loading
+                          : const Text(
                         "Send code via SMS",
                         style: TextStyle(fontSize: 18),
                       ),
