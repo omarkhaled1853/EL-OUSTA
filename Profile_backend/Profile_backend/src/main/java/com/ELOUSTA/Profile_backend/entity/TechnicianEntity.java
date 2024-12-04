@@ -1,10 +1,7 @@
 package com.ELOUSTA.Profile_backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.List;
 @Data
 @SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 @Table(name = "technician")
 public class TechnicianEntity extends UserEntity {
