@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:el_ousta/screens/techinican_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:el_ousta/common/userTech.dart';
 import 'package:http/http.dart' as http;
-
-import 'TechnicianHomeScreen.dart';
-import 'homeClientScreen.dart';
+import '../API/serverAPI.dart';
+import 'homeclient.dart';
 class Resetpasswordscreen extends StatefulWidget {
   final dynamic type;
   final dynamic user;
@@ -80,9 +80,9 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
     if(isFormValid) {
       var url;
       if(widget.type == Type.USER) {
-        url = Uri.parse('http://192.168.1.6:8080/user/resetPassword');
+        url = Uri.parse(ServerAPI.baseURL + '/user/resetPassword');
       } else {
-        url = Uri.parse('http://192.168.1.6:8080/tech/resetPassword');
+        url = Uri.parse(ServerAPI.baseURL + '/tech/resetPassword');
       }
       // make http get request
       var response = await http.post(

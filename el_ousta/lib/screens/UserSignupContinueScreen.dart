@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:country_state_city/country_state_city.dart' as statecity;
-import 'package:el_ousta/screens/homeClientScreen.dart';
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,6 +14,7 @@ import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/User.dart';
+import 'homeclient.dart';
 
 class UserSignupContinueScreen extends StatefulWidget {
   final dynamic email;
@@ -74,7 +75,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
           city: _cityController.text,
           roles: 'ROLE_USER'
       );
-      var url = Uri.parse('http://192.168.1.6:8080/user/signUp');
+      var url = Uri.parse(ServerAPI.baseURL + '/user/signUp');
       // make http get request
       var response = await http.post(
           url,
@@ -87,7 +88,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
       if (response.statusCode == 200) {
         log(response.body);
         if(response.body == 'valid') {
-          url = Uri.parse('http://192.168.1.6:8080/user/signIn');
+          url = Uri.parse(ServerAPI.baseURL + '/user/signIn');
           // make http get request
           response = await http.post(
             url,

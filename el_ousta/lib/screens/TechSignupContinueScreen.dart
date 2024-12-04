@@ -4,14 +4,16 @@ import 'dart:ffi';
 
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/models/Technician.dart';
+import 'package:el_ousta/screens/techinican_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:http/http.dart' as http;
+import '../API/serverAPI.dart';
 import '../data/professions.dart';
 import '../main.dart';
-import 'homeClientScreen.dart';
+import 'homeclient.dart';
 
 class TechSignupContinueScreen extends StatefulWidget {
   final dynamic email;
@@ -74,7 +76,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
           roles: 'ROLE_USER',
           domain: selectedProfession as String,
           startDate: new DateTime.now());
-      var url = Uri.parse('http://192.168.1.6:8080/tech/signUp');
+      var url = Uri.parse(ServerAPI.baseURL + '/tech/signUp');
       // make http get request
       var response = await http.post(url,
           headers: {
@@ -86,7 +88,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
       if (response.statusCode == 200) {
         log(response.body);
         if (response.body == 'valid') {
-          url = Uri.parse('http://192.168.1.6:8080/tech/signIn');
+          url = Uri.parse(ServerAPI.baseURL + '/tech/signIn');
           // make http get request
           response = await http.post(
             url,
@@ -103,7 +105,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: response.body);
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (ctx) => const ClientPage()));
+                .push(MaterialPageRoute(builder: (ctx) => const TechnicianHome()));
           } else {
             log("Sign in failed with status: ${response.statusCode}.");
           }

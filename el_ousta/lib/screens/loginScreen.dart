@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'dart:ffi';
 
 // import 'package:country_state_city/country_state_city.dart' as statecity;
-import 'package:el_ousta/screens/TechnicianHomeScreen.dart';
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:el_ousta/screens/enterUsernameScreen.dart';
 import 'package:el_ousta/screens/forgetPasswordScreen.dart';
+import 'package:el_ousta/screens/techinican_home.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,7 +18,7 @@ import 'package:el_ousta/common/userTech.dart';
 import 'package:http/http.dart' as http;
 import '../API/googleSigninApi.dart';
 import 'TechSignupContinueScreen.dart';
-import 'homeClientScreen.dart';
+import 'homeclient.dart';
 
 class LoginScreen extends StatefulWidget {
   final dynamic type;
@@ -37,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _passwordErrorText = null;
   String? usernameErrorText = null;
   bool _isUsernameValid = false;
+  bool _isPasswordValid = false;
   bool isFormValid = false;
   bool loggedIn = false;
 
@@ -121,11 +123,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if(_passwordController.text.length < 8) {
       setState(() {
         _passwordErrorText = "password length must be at least 8 characters";
+        _isPasswordValid = false;
       });
     }
     else {
       setState(() {
         _passwordErrorText = null;
+        _isPasswordValid = true;
       });
     }
     validateForm();
@@ -148,9 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if(isFormValid) {
       var url;
       if(widget.type == Type.USER)
-        url = Uri.parse('http://192.168.1.6:8080/user/signIn');
+        url = Uri.parse(ServerAPI.baseURL + '/user/signIn');
       else
-        url = Uri.parse('http://192.168.1.6:8080/tech/signIn');
+        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn');
       // make http get request
       var response = await http.post(
         url,
@@ -196,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void validateForm() {
     setState(() {
       isFormValid = _formKey.currentState?.validate() ?? false;
-      isFormValid = _isUsernameValid && _validatePassword(_passwordController.text);
+      isFormValid = _isUsernameValid && _isPasswordValid;
     });
   }
   @override

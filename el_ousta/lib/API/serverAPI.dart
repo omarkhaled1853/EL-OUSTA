@@ -1,3 +1,3 @@
 class ServerAPI {
-  static const String baseURI = "http://192.168.1.6:8080";
+  static const String baseURL = "http://192.168.1.6:8080";
 }

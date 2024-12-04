@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:ffi';
 
 // import 'package:country_state_city/country_state_city.dart' as statecity;
-import 'package:el_ousta/screens/TechnicianHomeScreen.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/forgetPasswordScreen.dart';
 import 'package:email_validator/email_validator.dart';
@@ -14,9 +13,9 @@ import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:el_ousta/common/userTech.dart';
 import 'package:http/http.dart' as http;
 import '../API/googleSigninApi.dart';
+import '../API/serverAPI.dart';
 import '../models/User.dart';
 import 'TechSignupContinueScreen.dart';
-import 'homeClientScreen.dart';
 
 class EnterusernameScreen extends StatefulWidget {
   final dynamic type;
@@ -63,10 +62,10 @@ class _EnterusernameScreenState extends State<EnterusernameScreen> {
     if(isFormValid) {
       var url, user;
       if(widget.type == Type.USER) {
-        url = Uri.parse("http://192.168.1.6:8080/user/fetchUser");
+        url = Uri.parse(ServerAPI.baseURL + "/user/fetchUser");
       }
       else {
-        url = Uri.parse("http://192.168.1.6:8080/tech/fetchTch");
+        url = Uri.parse(ServerAPI.baseURL + "/tech/fetchTch");
       }
       final response = await http.post(
           url,

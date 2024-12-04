@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:ffi';
 import 'package:country_state_city/country_state_city.dart' as statecity;
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/loginScreen.dart';
+import 'package:el_ousta/screens/techinican_home.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,7 +15,7 @@ import 'package:http/http.dart' as http;
 import '../API/googleSigninApi.dart';
 import '../main.dart';
 import 'TechSignupContinueScreen.dart';
-import 'homeClientScreen.dart';
+import 'homeclient.dart';
 
 class SignupScreen extends StatefulWidget {
   final dynamic type;
@@ -51,9 +53,9 @@ class _SignupScreenState extends State<SignupScreen> {
       log(user.serverAuthCode ?? 'No server auth code');
       var url;
       if(widget.type == Type.USER)
-        url = Uri.parse('http://192.168.1.6:8080/user/signIn/google');
+        url = Uri.parse(ServerAPI.baseURL + '/user/signIn/google');
       else
-        url = Uri.parse('http://192.168.1.6:8080/tech/signIn/google');
+        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
       // make http get request
       var response = await http.post(
           url,
@@ -73,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
           await secureStorage.write(key: 'auth_token', value: response.body);
           Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (ctx) => const ClientPage()
+                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : TechnicianHome()
               )
           );
         }
