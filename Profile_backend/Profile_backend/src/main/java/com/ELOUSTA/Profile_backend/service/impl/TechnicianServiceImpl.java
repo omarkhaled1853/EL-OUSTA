@@ -24,7 +24,9 @@ public class TechnicianServiceImpl implements TechnicianService {
     @Autowired
     private TechnicianRepository technicianRepository;
 
-    private final String path = "C:\\images\\profile\\";
+    private final String profilePath = "C:\\images\\profile\\";
+    private final String domainPath = "C:\\images\\domain\\";
+    private final String portfolioPath = "C:\\images\\portfolio\\";
 
     @Override
     public Optional<TechnicianDTO> getTechnician(Integer id) {
@@ -38,7 +40,7 @@ public class TechnicianServiceImpl implements TechnicianService {
         });
     }
 
-    private byte[] getProfilePhoto (String filename) throws IOException {
+    private byte[] getProfilePhoto (String filename, String path) throws IOException {
         String filePath = path + filename;
         return Files.readAllBytes(new File(filePath).toPath());
     }
@@ -47,7 +49,7 @@ public class TechnicianServiceImpl implements TechnicianService {
     private TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
         List<PortfolioDto> portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
-        byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture());
+        byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);
         return TechnicianDTO.builder()
                 .id(technicianEntity.getId())
                 .firstName(technicianEntity.getFirstName())
@@ -65,7 +67,7 @@ public class TechnicianServiceImpl implements TechnicianService {
     }
 
     private DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) throws IOException {
-        byte[] domainPhoto = getProfilePhoto(domainEntity.getPhoto());
+        byte[] domainPhoto = getProfilePhoto(domainEntity.getPhoto(), domainPath);
         return DomainDTO.builder()
                 .id(domainEntity.getId())
                 .name(domainEntity.getName())
@@ -78,7 +80,7 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .map(portfolioEntity -> {
                     byte[] photoBytes = null;
                     try {
-                        photoBytes = getProfilePhoto(portfolioEntity.getPhoto());
+                        photoBytes = getProfilePhoto(portfolioEntity.getPhoto(), portfolioPath);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
