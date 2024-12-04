@@ -1,6 +1,7 @@
 package com.ELOUSTA.Profile_backend;
 
 import com.ELOUSTA.Profile_backend.dto.ClientDTO;
+import com.ELOUSTA.Profile_backend.dto.DomainDTO;
 import com.ELOUSTA.Profile_backend.dto.PortfolioDto;
 import com.ELOUSTA.Profile_backend.dto.TechnicianDTO;
 import com.ELOUSTA.Profile_backend.entity.ClientEntity;
@@ -19,11 +20,14 @@ import static com.ELOUSTA.Profile_backend.utils.ImageHandler.getProfilePhoto;
 public final class TestData {
     public TestData() {
     }
-    private static final String path = "C:\\images\\profile\\";
+    private static final String profilePath = "C:\\images\\profile\\";
+    private static final String domainPath = "C:\\images\\domain\\";
+    private static final String portfolioPath = "C:\\images\\portfolio\\";
+
 
 
     public static ClientDTO testClientDTO() throws IOException {
-        byte[] profilePhoto = getProfilePhoto("johndoe.png", path);
+        byte[] profilePhoto = getProfilePhoto("johndoe.png", profilePath);
         return ClientDTO.builder()
                 .id(1)
                 .firstName("John")
@@ -112,4 +116,54 @@ public final class TestData {
     }
 
 
+    public TechnicianDTO testTechnicianDto() throws IOException {
+        byte[] profilePhoto = getProfilePhoto("john.png", profilePath);
+        return TechnicianDTO.builder()
+                .id(3)
+                .firstName("John")
+                .lastName("Doe")
+                .dob(Date.valueOf("1985-07-15"))
+                .userName("johndoe")
+                .phoneNumber("123-456-7890")
+                .email("john.doe@email.com")
+                .location("Cairo Downtown")
+                .profilePicture(profilePhoto)
+                .rate(4.5)
+                .description("This is description")
+                .portfolioDto()
+                .domainDTO()
+                .build();
+    }
+
+    public DomainDTO testDomainDto() throws IOException {
+        byte[] photo = getProfilePhoto("electrician.png", domainPath);
+        return DomainDTO.builder()
+                .id(1)
+                .name("Electrician")
+                .photo(photo)
+                .build();
+    }
+
+    public PortfolioDto testPortfolioDto() throws IOException {
+        byte[] photo = getProfilePhoto("portfolio1.png", portfolioPath);
+        return PortfolioDto.builder()
+                .id(7) // Assuming the portfolio ID is 1
+                .photo(photo)
+                .build();
+    }
+
+    public List<PortfolioDto> testPortfolioDtoList() throws IOException {
+        byte[] photo1 = getProfilePhoto("portfolio1.png", portfolioPath);
+        byte[] photo2 = getProfilePhoto("portfolio2.png", portfolioPath);
+        return List.of(
+                PortfolioDto.builder()
+                        .id(7)
+                        .photo(photo1)
+                        .build(),
+                PortfolioDto.builder()
+                        .id(8)
+                        .photo(photo2)
+                        .build()
+        );
+    }
 }
