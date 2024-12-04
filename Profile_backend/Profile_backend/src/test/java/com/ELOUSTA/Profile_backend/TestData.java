@@ -8,19 +8,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.Date;
 
+import static com.ELOUSTA.Profile_backend.utils.ImageHandler.getProfilePhoto;
+
 public final class TestData {
     public TestData() {
     }
     private static final String path = "C:\\images\\profile\\";
 
 
-    private static byte[] getProfilePhoto(String filename) throws IOException {
-        String filePath = path + filename;
-        return Files.readAllBytes(new File(filePath).toPath());
-    }
-
     public static ClientDTO testClientDTO() throws IOException {
-        byte[] profilePhoto = getProfilePhoto("johndoe.png");
+        byte[] profilePhoto = getProfilePhoto("johndoe.png", path);
         return ClientDTO.builder()
                 .id(1)
                 .firstName("John")

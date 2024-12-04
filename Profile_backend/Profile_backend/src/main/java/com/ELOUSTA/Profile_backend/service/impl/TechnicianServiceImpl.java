@@ -1,10 +1,8 @@
 package com.ELOUSTA.Profile_backend.service.impl;
 
-import com.ELOUSTA.Profile_backend.dto.ClientDTO;
 import com.ELOUSTA.Profile_backend.dto.DomainDTO;
 import com.ELOUSTA.Profile_backend.dto.PortfolioDto;
 import com.ELOUSTA.Profile_backend.dto.TechnicianDTO;
-import com.ELOUSTA.Profile_backend.entity.ClientEntity;
 import com.ELOUSTA.Profile_backend.entity.DomainEntity;
 import com.ELOUSTA.Profile_backend.entity.PortfolioEntity;
 import com.ELOUSTA.Profile_backend.entity.TechnicianEntity;
@@ -19,6 +17,8 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ELOUSTA.Profile_backend.utils.ImageHandler.getProfilePhoto;
 
 @Service
 public class TechnicianServiceImpl implements TechnicianService {
@@ -41,12 +41,6 @@ public class TechnicianServiceImpl implements TechnicianService {
             }
         });
     }
-
-    private byte[] getProfilePhoto (String filename, String path) throws IOException {
-        String filePath = path + filename;
-        return Files.readAllBytes(new File(filePath).toPath());
-    }
-
 
     private TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());

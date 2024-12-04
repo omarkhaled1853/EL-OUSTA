@@ -4,15 +4,15 @@ import com.ELOUSTA.Profile_backend.dto.ClientDTO;
 import com.ELOUSTA.Profile_backend.entity.ClientEntity;
 import com.ELOUSTA.Profile_backend.repository.ClientRepository;
 import com.ELOUSTA.Profile_backend.service.ClientService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+
+import static com.ELOUSTA.Profile_backend.utils.ImageHandler.getProfilePhoto;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -32,13 +32,8 @@ public class ClientServiceImpl implements ClientService {
         });
     }
 
-    private byte[] getProfilePhoto (String filename) throws IOException {
-        String filePath = path + filename;
-        return Files.readAllBytes(new File(filePath).toPath());
-    }
-
     private ClientDTO clientEntityToClientDTO(ClientEntity clientEntity) throws IOException {
-        byte[] profilePhoto = getProfilePhoto(clientEntity.getProfilePicture());
+        byte[] profilePhoto = getProfilePhoto(clientEntity.getProfilePicture(), path);
         return ClientDTO.builder()
                 .id(clientEntity.getId())
                 .firstName(clientEntity.getFirstName())
