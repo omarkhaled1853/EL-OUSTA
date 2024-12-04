@@ -63,6 +63,7 @@ public class TechnicianServiceImpl implements TechnicianService {
                 .email(technicianEntity.getEmail())
                 .location(technicianEntity.getGovernorate() + " "
                         + technicianEntity.getDistrict())
+                .rate(technicianEntity.getRate())
                 .domainDTO(domainDTO)
                 .portfolioDto(portfolioDtoList)
                 .build();
