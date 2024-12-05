@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.profile;
 
-import com.ELOUSTA.Profile_backend.dto.TechnicianDTO;
-import com.ELOUSTA.Profile_backend.service.TechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.service.profile.TechnicianProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +13,16 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/technician")
 public class TechnicianProfileController {
-    private final TechnicianService technicianService;
+    private final TechnicianProfileService technicianProfileService;
 
     @Autowired
-    public TechnicianProfileController(TechnicianService technicianService) {
-        this.technicianService = technicianService;
+    public TechnicianProfileController(TechnicianProfileService technicianProfileService) {
+        this.technicianProfileService = technicianProfileService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TechnicianDTO> getTechnician(@PathVariable Integer id) {
-        Optional<TechnicianDTO> clientDTO = technicianService.getTechnician(id);
+        Optional<TechnicianDTO> clientDTO = technicianProfileService.getTechnician(id);
         return clientDTO.map(technician -> new ResponseEntity<TechnicianDTO>(technician, HttpStatus.OK))
                 .orElse(new ResponseEntity<TechnicianDTO>(HttpStatus.NOT_FOUND));
     }

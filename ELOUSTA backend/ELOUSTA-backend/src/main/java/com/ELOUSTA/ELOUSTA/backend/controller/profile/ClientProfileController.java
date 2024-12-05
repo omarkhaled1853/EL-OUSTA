@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.profile;
 
-import com.ELOUSTA.Profile_backend.dto.ClientDTO;
-import com.ELOUSTA.Profile_backend.service.ClientService;
+import com.ELOUSTA.ELOUSTA.backend.dto.ClientDTO;
+import com.ELOUSTA.ELOUSTA.backend.service.profile.ClientProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/client")
 public class ClientProfileController {
-    private final ClientService clientService;
+    private final ClientProfileService clientService;
 
     @Autowired
-    public ClientProfileController(ClientService clientService) {
+    public ClientProfileController(ClientProfileService clientService) {
         this.clientService = clientService;
     }
 
