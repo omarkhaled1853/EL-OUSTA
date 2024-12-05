@@ -18,9 +18,9 @@ import java.util.List;
 
 @RestController
 public class UserHomePageController {
-    private FilterTechnicianService filterService;
-    private SearchTechnicianService searchService;
-    private SortTechnicianService sortService;
+    private final FilterTechnicianService filterService;
+    private final SearchTechnicianService searchService;
+    private final SortTechnicianService sortService;
 
     @Autowired
     public UserHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,

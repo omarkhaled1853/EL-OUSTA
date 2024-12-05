@@ -28,7 +28,6 @@ public class UserEntity {
     private String email;
     private String password;
     private Date signUpDate;
-    private String governorate;
-    private String district;
+    private String city;
     private String profilePicture;
 }

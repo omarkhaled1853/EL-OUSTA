@@ -21,8 +21,7 @@ public final class ClientMapper {
                 .userName(clientEntity.getUserName())
                 .phoneNumber(clientEntity.getPhoneNumber())
                 .email(clientEntity.getEmail())
-                .location(clientEntity.getGovernorate() + " "
-                        + clientEntity.getDistrict())
+                .city(clientEntity.getCity())
                 .build();
     }
 }

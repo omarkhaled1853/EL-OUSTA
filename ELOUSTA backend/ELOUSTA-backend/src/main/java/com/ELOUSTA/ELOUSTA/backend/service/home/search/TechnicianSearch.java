@@ -26,7 +26,7 @@ public class TechnicianSearch {
                             ||jaroWinkler.apply(query, t.getLastName() ) >= threshold
                             ||jaroWinkler.apply(query, t.getRate().toString()) >= threshold
                             ||jaroWinkler.apply(query, t.getDomainDTO().getName()) >= threshold
-                            ||jaroWinkler.apply(query, t.getLocation()) >= threshold;
+                            ||jaroWinkler.apply(query, t.getCity()) >= threshold;
                 })
                 .collect(Collectors.toList());
     }

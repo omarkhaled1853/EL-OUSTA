@@ -35,9 +35,8 @@ public final class TechnicianMapper {
                 .userName(technician.getUserName())
                 .phoneNumber(technician.getPhoneNumber())
                 .email(technician.getEmail())
-                .location(technician.getLocation())
+                .city(technician.getCity())
                 .rate(technician.getRate())
-//                .experience(technician.getExperience())
                 .portfolioDto(technician.getPortfolioDto())
                 .domainDTO(technician.getDomainDTO())
                 .build();
@@ -76,8 +75,7 @@ public final class TechnicianMapper {
                 .userName(technicianEntity.getUserName())
                 .phoneNumber(technicianEntity.getPhoneNumber())
                 .email(technicianEntity.getEmail())
-                .location(technicianEntity.getGovernorate() + " "
-                        + technicianEntity.getDistrict())
+                .city(technicianEntity.getCity())
                 .rate(technicianEntity.getRate())
                 .description(technicianEntity.getDescription())                .domainDTO(domainDTO)
                 .portfolioDto(portfolioDtoList)

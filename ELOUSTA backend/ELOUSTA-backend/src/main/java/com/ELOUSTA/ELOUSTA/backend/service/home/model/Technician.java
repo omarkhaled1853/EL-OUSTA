@@ -26,7 +26,7 @@ public class Technician {
    private String userName;
    private String phoneNumber;
    private String email;
-   private String location;
+   private String city;
    private Double rate;
    @JsonFormat(pattern = "yyyy-MM-dd")
    private Date startDate;
