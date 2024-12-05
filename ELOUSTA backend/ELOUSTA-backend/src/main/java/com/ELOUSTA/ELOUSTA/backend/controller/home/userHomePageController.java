@@ -1,34 +1,37 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 
-import com.example.Backend.classes.HomePayload;
-import com.example.Backend.classes.TechnicianDTO;
-import com.example.Backend.services.*;
+import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SearchTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SortTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.HomePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class userHomePageController {
-    private filterTechnicianService filterService;
-    private searchTechnicianService searchService;
-    private sortTechnicianService sortService;
+    private FilterTechnicianService filterService;
+    private SearchTechnicianService searchService;
+    private SortTechnicianService sortService;
 
     @Autowired
-    public userHomePageController(filterTechnicianService filterService, searchTechnicianService searchService, sortTechnicianService sortService) {
+    public userHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
+                                  SortTechnicianService sortService) {
         this.filterService = filterService;
         this.searchService = searchService;
         this.sortService = sortService;
     }
 
     @GetMapping("/")
-    public List<TechnicianDTO> startPage()
-    {
+    public List<TechnicianDTO> startPage() throws IOException {
          int counter=0;
          List<TechnicianDTO>DTOs=sortService.sortTechnicians("rate");
          List<TechnicianDTO>toBeReturned=new ArrayList<>();
@@ -40,19 +43,19 @@ public class userHomePageController {
         }
          return toBeReturned;
     }
+
     @PostMapping("/search")
-    public List<TechnicianDTO>searchTechnicians(@RequestBody String query)
-    {
+    public List<TechnicianDTO>searchTechnicians(@RequestBody String query) throws IOException {
         return searchService.searchTechnician(query);
     }
+
     @PostMapping("/sort")
-    public List<TechnicianDTO>sortTechnicians(@RequestBody String field)
-    {
+    public List<TechnicianDTO>sortTechnicians(@RequestBody String field) throws IOException {
         return sortService.sortTechnicians(field);
     }
+
     @PostMapping("/filter")
-    public List<TechnicianDTO>filterTechnicians(@RequestBody HomePayload payload)
-    {
+    public List<TechnicianDTO>filterTechnicians(@RequestBody HomePayload payload) throws IOException {
         return filterService.filterTechnician(payload.getField(), payload.getQuery());
     }
 }
