@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.search;
 
-import com.example.Backend.classes.Technician;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +22,11 @@ public class technicianSearch {
         JaroWinklerDistance jaroWinkler = new JaroWinklerDistance();
         return searchSpace.stream()
                 .filter(t -> {
-                    return jaroWinkler.apply(query, t.getFName()) >= threshold
-                            ||jaroWinkler.apply(query, t.getLName() ) >= threshold
-                            ||jaroWinkler.apply(query, t.getRate()) >= threshold
-                            ||jaroWinkler.apply(query, t.getDomain()) >= threshold
-                            ||jaroWinkler.apply(query, t.getGovernorate()) >= threshold
-                            ||jaroWinkler.apply(query, t.getDistrict()) >= threshold;
+                    return jaroWinkler.apply(query, t.getFirstName()) >= threshold
+                            ||jaroWinkler.apply(query, t.getLastName() ) >= threshold
+                            ||jaroWinkler.apply(query, t.getRate().toString()) >= threshold
+                            ||jaroWinkler.apply(query, t.getDomainDTO().getName()) >= threshold
+                            ||jaroWinkler.apply(query, t.getLocation()) >= threshold;
                 })
                 .collect(Collectors.toList());
     }
