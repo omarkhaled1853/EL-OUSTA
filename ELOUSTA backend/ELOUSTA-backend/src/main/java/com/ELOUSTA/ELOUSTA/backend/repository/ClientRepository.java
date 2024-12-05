@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.repository;
 
-import com.ELOUSTA.Profile_backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

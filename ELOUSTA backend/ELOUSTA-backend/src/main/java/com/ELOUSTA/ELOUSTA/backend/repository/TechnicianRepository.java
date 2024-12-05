@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.repository;
 
-import com.ELOUSTA.Profile_backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
