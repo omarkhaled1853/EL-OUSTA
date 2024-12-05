@@ -1,45 +1,43 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.impl;
 
-import com.example.Backend.classes.Technician;
-import com.example.Backend.classes.TechnicianDTO;
-import com.example.Backend.classes.technicianMapper;
-import com.example.Backend.entities.technicianEntity;
-import com.example.Backend.interfaces.ITechSort;
-import com.example.Backend.repositories.technicianRepository;
-import com.example.Backend.sortpackage.sortStrategyFactory;
+import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
+import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.service.home.sort.SortStrategyFactory;
+import com.ELOUSTA.ELOUSTA.backend.utils.TechnicianMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SortTechnicianService {
 
-    private final sortStrategyFactory sortStrategyFactory;
-    private final technicianMapper mapper;
-    private final technicianRepository repository;
+    private final SortStrategyFactory sortStrategyFactory;
+    private final TechnicianRepository repository;
 
     @Autowired
-    public SortTechnicianService(com.example.Backend.sortpackage.sortStrategyFactory sortStrategyFactory, technicianMapper technicianMapper, technicianRepository repository) {
+    public SortTechnicianService(SortStrategyFactory sortStrategyFactory, TechnicianRepository repository) {
         this.sortStrategyFactory = sortStrategyFactory;
-        this.mapper=technicianMapper;
         this.repository = repository;
     }
 
-    public List<TechnicianDTO> sortTechnicians(String field)
-    {
+    public List<TechnicianDTO> sortTechnicians(String field) throws IOException {
 
-        List<technicianEntity>dataBaseTechnicians=this.repository.findAll();
+        List<TechnicianEntity>dataBaseTechnicians=this.repository.findAll();
         ArrayList<Technician> technicians=new ArrayList<>();
-        for (technicianEntity entity:dataBaseTechnicians) {
-            technicians.add(mapper.technicianEntityToTechnician(entity));
+        for (TechnicianEntity entity:dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
         }
         ITechSort iTechSort =this.sortStrategyFactory.getInstance(field);
         List<Technician> sorted =iTechSort.sort(technicians);
         List<TechnicianDTO>DTOs=new ArrayList<>();
         for (Technician tech: sorted) {
-            DTOs.add(mapper.technicainToTechnicianDTO(tech));
+            DTOs.add(TechnicianMapper.technicainToTechnicianDTO(tech));
         }
         return DTOs;
     }

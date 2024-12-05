@@ -1,45 +1,41 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.impl;
 
-import com.example.Backend.classes.Technician;
-import com.example.Backend.classes.TechnicianDTO;
-import com.example.Backend.classes.technicianMapper;
-import com.example.Backend.entities.technicianEntity;
-import com.example.Backend.filterpackage.*;
-import com.example.Backend.filterpackage.filterCriteriaFactory;
-import com.example.Backend.interfaces.ITechFilter;
-import com.example.Backend.repositories.technicianRepository;
+import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
+import com.ELOUSTA.ELOUSTA.backend.service.home.ITechFilter;
+import com.ELOUSTA.ELOUSTA.backend.service.home.filter.FilterCriteriaFactory;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.utils.TechnicianMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class FilterTechnicianService {
-    private final filterCriteriaFactory filterCriteriaFactory;
-    private final technicianRepository repository;
-
-    private technicianMapper mapper;
+    private final FilterCriteriaFactory filterCriteriaFactory;
+    private final TechnicianRepository repository;
 
     @Autowired
-    public FilterTechnicianService(filterCriteriaFactory filterCriteriaFactory, technicianRepository repository, technicianMapper technicianMapper) {
+    public FilterTechnicianService(FilterCriteriaFactory filterCriteriaFactory, TechnicianRepository repository) {
         this.filterCriteriaFactory = filterCriteriaFactory;
         this.repository = repository;
-        this.mapper=technicianMapper;
     }
 
-    public List<TechnicianDTO> filterTechnician (String filterType, String filterQuery)
-    {
-        List<technicianEntity>dataBaseTechnicians=this.repository.findAll();
+    public List<TechnicianDTO> filterTechnician (String filterType, String filterQuery) throws IOException {
+        List<TechnicianEntity>dataBaseTechnicians=this.repository.findAll();
         ArrayList<Technician>technicians=new ArrayList<>();
-        for (technicianEntity entity:dataBaseTechnicians) {
-            technicians.add(mapper.technicianEntityToTechnician(entity));
+        for (TechnicianEntity entity:dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
         }
         ITechFilter iTechFilter=this.filterCriteriaFactory.getInstance(filterType);
         List<Technician>filtered=iTechFilter.Filter(filterQuery,technicians);
         List<TechnicianDTO>DTOs=new ArrayList<>();
         for (Technician tech:filtered) {
-            DTOs.add(mapper.technicainToTechnicianDTO(tech));
+            DTOs.add(TechnicianMapper.technicainToTechnicianDTO(tech));
         }
         return DTOs;
     }
