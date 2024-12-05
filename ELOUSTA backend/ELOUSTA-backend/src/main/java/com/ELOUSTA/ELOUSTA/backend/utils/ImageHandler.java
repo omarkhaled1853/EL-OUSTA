@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.profile.utils;
+package com.ELOUSTA.ELOUSTA.backend.utils;
 
 import java.io.File;
 import java.io.IOException;
