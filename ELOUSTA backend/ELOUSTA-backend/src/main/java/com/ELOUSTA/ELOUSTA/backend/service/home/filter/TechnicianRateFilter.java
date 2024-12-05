@@ -5,7 +5,7 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 
 import java.util.ArrayList;
 
-public class technicianRateFilter implements ITechFilter {
+public class TechnicianRateFilter implements ITechFilter {
 
 
     @Override

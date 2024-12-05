@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class searchTechnicianService {
+public class SearchTechnicianService {
 
     private final technicianSearch techSearch;
     private final technicianMapper mapper;
     private final technicianRepository repository;
 
     @Autowired
-    public searchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch, technicianMapper technicianMappper, technicianRepository repository) {
+    public SearchTechnicianService(com.example.Backend.searchpackage.technicianSearch technicianSearch, technicianMapper technicianMappper, technicianRepository repository) {
         this.techSearch = technicianSearch;
         this.mapper = technicianMappper;
         this.repository = repository;

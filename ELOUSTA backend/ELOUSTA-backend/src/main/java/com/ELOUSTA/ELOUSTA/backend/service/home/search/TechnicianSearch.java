@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class technicianSearch {
+public class TechnicianSearch {
 
 
     public List<Technician>JaroSearch(String Query, List<Technician> searchSpace)

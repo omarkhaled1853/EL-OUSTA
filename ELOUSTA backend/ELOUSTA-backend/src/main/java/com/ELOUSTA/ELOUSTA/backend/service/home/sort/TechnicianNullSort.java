@@ -7,7 +7,7 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 import java.util.ArrayList;
 import java.util.List;
 
-public class technicianNullSort implements ITechSort {
+public class TechnicianNullSort implements ITechSort {
     @Override
     public List<Technician> sort(List<Technician> technicians) {  //An implementation of null object Design pattern
         if (technicians==null)

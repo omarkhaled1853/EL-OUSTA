@@ -1,13 +1,17 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.filter;
 
-
 import com.ELOUSTA.ELOUSTA.backend.service.home.ITechFilter;
 import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class technicianGovernorateFilter implements ITechFilter {
-
+@NoArgsConstructor
+@Setter
+@Getter
+public class TechnicianDistrictFilter implements ITechFilter {
 
 
     @Override
@@ -16,8 +20,8 @@ public class technicianGovernorateFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getLocation().equals(query))
-                Answer.add(tech);
+              if(tech.getLocation().equals(query))
+                  Answer.add(tech);
         }
         return Answer;
     }

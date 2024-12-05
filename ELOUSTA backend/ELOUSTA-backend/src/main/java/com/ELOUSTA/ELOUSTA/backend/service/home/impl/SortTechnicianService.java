@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class sortTechnicianService {
+public class SortTechnicianService {
 
     private final sortStrategyFactory sortStrategyFactory;
     private final technicianMapper mapper;
     private final technicianRepository repository;
 
     @Autowired
-    public sortTechnicianService(com.example.Backend.sortpackage.sortStrategyFactory sortStrategyFactory, technicianMapper technicianMapper, technicianRepository repository) {
+    public SortTechnicianService(com.example.Backend.sortpackage.sortStrategyFactory sortStrategyFactory, technicianMapper technicianMapper, technicianRepository repository) {
         this.sortStrategyFactory = sortStrategyFactory;
         this.mapper=technicianMapper;
         this.repository = repository;

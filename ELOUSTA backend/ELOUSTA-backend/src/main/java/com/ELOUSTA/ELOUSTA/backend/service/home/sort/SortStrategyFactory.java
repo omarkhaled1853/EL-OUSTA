@@ -4,10 +4,10 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class sortStrategyFactory {
-    private technicianExperienceSort experienceSort=null;
-    private technicianRateSort rateSort=null;
-    private technicianNullSort nullSort=null;
+public class SortStrategyFactory {
+    private TechnicianExperienceSort experienceSort=null;
+    private TechnicianRateSort rateSort=null;
+    private TechnicianNullSort nullSort=null;
     public synchronized ITechSort getInstance(String field)
     {
         field = field.toLowerCase();  //ensuring case-Insensitive
@@ -15,21 +15,21 @@ public class sortStrategyFactory {
         return switch (field) {
             case "experience" -> {
                 if (experienceSort == null) {
-                    experienceSort = new technicianExperienceSort();
+                    experienceSort = new TechnicianExperienceSort();
                     experienceSort.setAscending(false);
                 }
                 yield experienceSort;
             }
             case "rate" -> {
                 if (rateSort == null) {
-                    rateSort = new technicianRateSort();
+                    rateSort = new TechnicianRateSort();
                     rateSort.setAscending(false);
                 }
                 yield rateSort;
             }
             default -> {
                 if (nullSort == null) {
-                    nullSort = new technicianNullSort();
+                    nullSort = new TechnicianNullSort();
                 }
                 yield nullSort;
             }

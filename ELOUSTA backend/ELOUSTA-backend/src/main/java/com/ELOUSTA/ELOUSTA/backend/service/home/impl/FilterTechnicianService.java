@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class filterTechnicianService {
+public class FilterTechnicianService {
     private final filterCriteriaFactory filterCriteriaFactory;
     private final technicianRepository repository;
 
     private technicianMapper mapper;
 
     @Autowired
-    public filterTechnicianService(filterCriteriaFactory filterCriteriaFactory, technicianRepository repository,technicianMapper technicianMapper) {
+    public FilterTechnicianService(filterCriteriaFactory filterCriteriaFactory, technicianRepository repository, technicianMapper technicianMapper) {
         this.filterCriteriaFactory = filterCriteriaFactory;
         this.repository = repository;
         this.mapper=technicianMapper;

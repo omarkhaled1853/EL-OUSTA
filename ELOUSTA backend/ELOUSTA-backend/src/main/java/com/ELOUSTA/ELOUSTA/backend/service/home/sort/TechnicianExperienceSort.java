@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 @Getter
 @Setter
-public class technicianExperienceSort implements ITechSort {
+public class TechnicianExperienceSort implements ITechSort {
 
     private boolean Ascending;
     @Override

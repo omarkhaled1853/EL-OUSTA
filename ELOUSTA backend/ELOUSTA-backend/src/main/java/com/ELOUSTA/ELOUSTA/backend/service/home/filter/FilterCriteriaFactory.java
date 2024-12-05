@@ -4,13 +4,13 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.ITechFilter;
 import org.springframework.stereotype.Service;
 
 @Service
-public class filterCriteriaFactory {
+public class FilterCriteriaFactory {
 
-    private technicianRateFilter rateFilter=null;
-    private technicianGovernorateFilter governorateFilter=null;
-    private technicianDomainFilter domainFilter=null;
-    private technicianDistrictFilter districtFilter=null;
-    private  technicianNullFilter nullFilter=null;
+    private TechnicianRateFilter rateFilter=null;
+    private TechnicianGovernorateFilter governorateFilter=null;
+    private TechnicianDomainFilter domainFilter=null;
+    private TechnicianDistrictFilter districtFilter=null;
+    private TechnicianNullFilter nullFilter=null;
 
     public synchronized ITechFilter getInstance(String type)
     {
@@ -18,27 +18,27 @@ public class filterCriteriaFactory {
         switch (type) {
             case "rate" -> {
                 if (rateFilter == null)
-                    rateFilter = new technicianRateFilter();
+                    rateFilter = new TechnicianRateFilter();
                 return rateFilter;
             }
             case "district" -> {
                 if (districtFilter == null)
-                    districtFilter = new technicianDistrictFilter();
+                    districtFilter = new TechnicianDistrictFilter();
                 return districtFilter;
             }
             case "governorate" -> {
                 if (governorateFilter == null)
-                    governorateFilter = new technicianGovernorateFilter();
+                    governorateFilter = new TechnicianGovernorateFilter();
                 return governorateFilter;
             }
             case "domain" -> {
                 if (domainFilter == null)
-                    domainFilter = new technicianDomainFilter();
+                    domainFilter = new TechnicianDomainFilter();
                 return domainFilter;
             }
             default -> {
                 if (nullFilter == null)
-                    nullFilter = new technicianNullFilter();
+                    nullFilter = new TechnicianNullFilter();
                 return nullFilter;
             }
         }

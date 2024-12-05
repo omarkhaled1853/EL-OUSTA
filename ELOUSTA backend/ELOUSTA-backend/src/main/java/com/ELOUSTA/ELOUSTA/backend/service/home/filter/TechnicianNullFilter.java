@@ -6,7 +6,7 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 
 import java.util.ArrayList;
 
-public class technicianNullFilter implements ITechFilter {
+public class TechnicianNullFilter implements ITechFilter {
     @Override
     public ArrayList<Technician> Filter(final String query, ArrayList<Technician> technicians) {   //Null object pattern
         if (technicians==null)
