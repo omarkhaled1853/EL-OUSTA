@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.sort;
 
-import com.example.Backend.interfaces.ITechSort;
+import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,27 +12,28 @@ public class sortStrategyFactory {
     {
         field = field.toLowerCase();  //ensuring case-Insensitive
 
-        switch (field) {
-            case "experience":
+        return switch (field) {
+            case "experience" -> {
                 if (experienceSort == null) {
                     experienceSort = new technicianExperienceSort();
                     experienceSort.setAscending(false);
                 }
-                return experienceSort;
-
-            case "rate":
+                yield experienceSort;
+            }
+            case "rate" -> {
                 if (rateSort == null) {
                     rateSort = new technicianRateSort();
                     rateSort.setAscending(false);
                 }
-                return rateSort;
-
-            default:
+                yield rateSort;
+            }
+            default -> {
                 if (nullSort == null) {
                     nullSort = new technicianNullSort();
                 }
-                return nullSort;
-        }
+                yield nullSort;
+            }
+        };
 
     }
 }

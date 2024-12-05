@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.sort;
 
-import com.example.Backend.classes.Technician;
-import com.example.Backend.interfaces.ITechSort;
+import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class technicianExperienceSort implements ITechSort {
     public List<Technician> sort(List<Technician> technicians) {
         if (technicians==null)
             return new ArrayList<>();
-        Collections.sort(technicians, (e1, e2) -> e2.getStartDate().compareTo(e1.getStartDate()));
+        technicians.sort((e1, e2) -> e2.getStartDate().compareTo(e1.getStartDate()));
         if(!this.isAscending()) {
             Collections.reverse(technicians);
         }

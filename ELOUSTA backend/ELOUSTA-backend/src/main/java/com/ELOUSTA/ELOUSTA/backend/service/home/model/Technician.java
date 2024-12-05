@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.home;
+package com.ELOUSTA.ELOUSTA.backend.service.home.model;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
@@ -28,7 +28,8 @@ public class Technician {
    private String email;
    private String location;
    private Double rate;
-   private int experience;
+   @JsonFormat(pattern = "yyyy-MM-dd")
+   private Date startDate;
    private String description;
    private List<PortfolioDto> portfolioDto;
    private DomainDTO domainDTO;

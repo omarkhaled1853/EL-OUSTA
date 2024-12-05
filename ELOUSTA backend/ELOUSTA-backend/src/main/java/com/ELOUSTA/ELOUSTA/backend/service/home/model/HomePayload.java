@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.home;
+package com.ELOUSTA.ELOUSTA.backend.service.home.model;
 
 import lombok.*;
 

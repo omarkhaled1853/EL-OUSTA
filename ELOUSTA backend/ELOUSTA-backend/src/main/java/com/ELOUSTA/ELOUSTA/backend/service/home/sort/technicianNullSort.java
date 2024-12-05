@@ -1,7 +1,8 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.sort;
 
-import com.example.Backend.classes.Technician;
-import com.example.Backend.interfaces.ITechSort;
+
+import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 
 import java.util.ArrayList;
 import java.util.List;

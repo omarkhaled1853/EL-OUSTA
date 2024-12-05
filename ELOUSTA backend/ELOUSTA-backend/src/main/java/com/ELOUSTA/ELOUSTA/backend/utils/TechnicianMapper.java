@@ -6,7 +6,7 @@ import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.home.Technician;
+import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public final class TechnicianMapper {
                 .email(technician.getEmail())
                 .location(technician.getLocation())
                 .rate(technician.getRate())
-                .experience(technician.getExperience())
+//                .experience(technician.getExperience())
                 .portfolioDto(technician.getPortfolioDto())
                 .domainDTO(technician.getDomainDTO())
                 .build();
