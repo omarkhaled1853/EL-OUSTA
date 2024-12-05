@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class userHomePageController {
+public class UserHomePageController {
     private FilterTechnicianService filterService;
     private SearchTechnicianService searchService;
     private SortTechnicianService sortService;
 
     @Autowired
-    public userHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
+    public UserHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
                                   SortTechnicianService sortService) {
         this.filterService = filterService;
         this.searchService = searchService;

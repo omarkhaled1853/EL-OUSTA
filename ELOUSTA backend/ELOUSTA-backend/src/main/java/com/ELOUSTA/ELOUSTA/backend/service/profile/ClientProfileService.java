@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.profile;
 
-import com.ELOUSTA.Profile_backend.dto.ClientDTO;
+
+import com.ELOUSTA.ELOUSTA.backend.dto.ClientDTO;
 
 import java.util.Optional;
 

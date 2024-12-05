@@ -63,7 +63,7 @@ public final class TechnicianMapper {
     }
 
 
-    private static TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
+    public static TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
         List<PortfolioDto> portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
         byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);
@@ -84,7 +84,7 @@ public final class TechnicianMapper {
                 .build();
     }
 
-    private static DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) throws IOException {
+    public static DomainDTO domainEntityToDomainDto(DomainEntity domainEntity) throws IOException {
         byte[] domainPhoto = getProfilePhoto(domainEntity.getPhoto(), domainPath);
         return DomainDTO.builder()
                 .id(domainEntity.getId())
@@ -93,7 +93,7 @@ public final class TechnicianMapper {
                 .build();
     }
 
-    private static List<PortfolioDto> portfolioEntityListToPortfolioDtoList(List<PortfolioEntity> portfolioEntityList) {
+    public static List<PortfolioDto> portfolioEntityListToPortfolioDtoList(List<PortfolioEntity> portfolioEntityList) {
         return portfolioEntityList.stream()
                 .map(portfolioEntity -> {
                     byte[] photoBytes = null;
