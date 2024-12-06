@@ -6,5 +6,5 @@ import com.ELOUSTA.ELOUSTA.backend.dto.ClientDTO;
 import java.util.Optional;
 
 public interface ClientProfileService {
-    public Optional<ClientDTO> getClient(Integer id);
+    Optional<ClientDTO> getClient(Integer id);
 }
