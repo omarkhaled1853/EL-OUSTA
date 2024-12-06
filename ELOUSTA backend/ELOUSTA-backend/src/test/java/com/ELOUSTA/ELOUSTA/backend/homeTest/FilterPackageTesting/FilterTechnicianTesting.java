@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 
 
+import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
@@ -142,25 +143,25 @@ public class FilterTechnicianTesting {
 
     @Test
     void filterByRate() throws IOException {
-        List<TechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Rate","4");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Rate","4");
         Assertions.assertEquals(DTOs.getFirst().getFirstName(),"Mahmoud");
     }
 
     @Test
     void filterByDomain() throws IOException {
-        List<TechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electrical");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electrical");
         Assertions.assertEquals(DTOs.size(),2);
     }
 
     @Test
     void shouldNotReturnAnyOne() throws IOException {
-        List<TechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","elRaml2");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","elRaml2");
         Assertions.assertEquals(DTOs.size(),0);
     }
 
     @Test
     void nullFilterTest() throws IOException {
-        List<TechnicianDTO>DTOs=filterTechnicianService.filterTechnician("auth","data");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("auth","data");
         Assertions.assertEquals(DTOs.size(),5);
     }
 
