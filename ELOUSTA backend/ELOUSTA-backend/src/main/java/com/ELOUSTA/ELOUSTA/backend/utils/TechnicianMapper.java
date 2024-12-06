@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.utils;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
 import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
@@ -22,22 +23,13 @@ public final class TechnicianMapper {
     private static final String domainPath = "C:\\images\\domain\\";
     private static final String portfolioPath = "C:\\images\\portfolio\\";
 
-    public static TechnicianDTO technicainToTechnicianDTO(Technician technician) {
-        return TechnicianDTO.builder()
+    public static HomeTechnicianDTO technicainToHomeTechnicianDTO(Technician technician) {
+        return HomeTechnicianDTO.builder()
                 .id(technician.getId())
                 .firstName(technician.getFirstName())
                 .lastName(technician.getLastName())
-                .profilePicture(technician.getProfilePicture())
-                .requests(technician.getRequests())
-                .cancelled(technician.getCancelled())
-                .accepted(technician.getAccepted())
-                .dob(technician.getDob())
-                .userName(technician.getUserName())
-                .phoneNumber(technician.getPhoneNumber())
-                .email(technician.getEmail())
                 .city(technician.getCity())
                 .rate(technician.getRate())
-                .portfolioDto(technician.getPortfolioDto())
                 .domainDTO(technician.getDomainDTO())
                 .build();
     }
