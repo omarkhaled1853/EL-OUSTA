@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.impl;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -26,16 +27,16 @@ public class SearchTechnicianService {
     }
 
 
-    public List<TechnicianDTO> searchTechnician(String searchQuery) throws IOException {
+    public List<HomeTechnicianDTO> searchTechnician(String searchQuery) throws IOException {
         List<TechnicianEntity>dataBaseTechnicians=this.repository.findAll();
         ArrayList<Technician> technicians=new ArrayList<>();
         for (TechnicianEntity entity:dataBaseTechnicians) {
             technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
         }
         List<Technician> searchedList = techSearch.JaroSearch(searchQuery,technicians);
-        List<TechnicianDTO>DTOs=new ArrayList<>();
+        List<HomeTechnicianDTO>DTOs=new ArrayList<>();
         for (Technician tech: searchedList) {
-            DTOs.add(TechnicianMapper.technicainToTechnicianDTO(tech));
+            DTOs.add(TechnicianMapper.technicainToHomeTechnicianDTO(tech));
         }
         return DTOs;
 

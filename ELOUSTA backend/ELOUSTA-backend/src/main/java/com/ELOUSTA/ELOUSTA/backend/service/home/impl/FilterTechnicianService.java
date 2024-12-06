@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.impl;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -25,7 +26,7 @@ public class FilterTechnicianService {
         this.repository = repository;
     }
 
-    public List<TechnicianDTO> filterTechnician (String filterType, String filterQuery) throws IOException {
+    public List<HomeTechnicianDTO> filterTechnician (String filterType, String filterQuery) throws IOException {
         List<TechnicianEntity>dataBaseTechnicians=this.repository.findAll();
         ArrayList<Technician>technicians=new ArrayList<>();
         for (TechnicianEntity entity:dataBaseTechnicians) {
@@ -33,9 +34,9 @@ public class FilterTechnicianService {
         }
         ITechFilter iTechFilter=this.filterCriteriaFactory.getInstance(filterType);
         List<Technician>filtered=iTechFilter.Filter(filterQuery,technicians);
-        List<TechnicianDTO>DTOs=new ArrayList<>();
+        List<HomeTechnicianDTO>DTOs=new ArrayList<>();
         for (Technician tech:filtered) {
-            DTOs.add(TechnicianMapper.technicainToTechnicianDTO(tech));
+            DTOs.add(TechnicianMapper.technicainToHomeTechnicianDTO(tech));
         }
         return DTOs;
     }
