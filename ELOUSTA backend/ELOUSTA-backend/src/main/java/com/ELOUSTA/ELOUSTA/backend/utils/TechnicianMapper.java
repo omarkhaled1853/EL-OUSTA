@@ -8,7 +8,6 @@ import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 
 import static com.ELOUSTA.ELOUSTA.backend.utils.ImageHandler.getProfilePhoto;
 
-@Service
 public final class TechnicianMapper {
 
     private static final String profilePath = "C:\\images\\profile\\";

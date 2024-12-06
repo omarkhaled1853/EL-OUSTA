@@ -2,14 +2,14 @@ package com.ELOUSTA.ELOUSTA.backend.service.home.sort;
 
 import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
 import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-@Getter
-@Setter
+
+
+@Data
 public class TechnicianExperienceSort implements ITechSort {
 
     private boolean Ascending;

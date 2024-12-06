@@ -2,7 +2,6 @@ package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 
 import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SearchTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SortTechnicianService;

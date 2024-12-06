@@ -1,7 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.impl;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;

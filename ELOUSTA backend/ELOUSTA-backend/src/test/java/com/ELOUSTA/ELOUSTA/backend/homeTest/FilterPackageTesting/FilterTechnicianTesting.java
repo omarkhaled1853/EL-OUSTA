@@ -2,10 +2,16 @@ package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 
 
 import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
+import jakarta.transaction.Transactional;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -25,33 +30,44 @@ public class FilterTechnicianTesting {
     private FilterTechnicianService filterTechnicianService;
 
     @Autowired
-    private TechnicianRepository Repository;
+    private TechnicianRepository technicianRepository;
+
+    @Autowired
+    private DomainRepository domainRepository;
 
     @BeforeEach
     public void setup()
     {
-        Repository.deleteAll();
-        List<TechnicianEntity> technicians = new ArrayList<>();
+        domainRepository.deleteAll();
+        domainRepository.flush();
+        technicianRepository.deleteAll();
+        technicianRepository.flush();
 
-        TechnicianEntity tech1 = FilterTechnicianTestData.technicianOneTest();
-        TechnicianEntity tech2 = FilterTechnicianTestData.technicianTwoTest();
-        TechnicianEntity tech3 = FilterTechnicianTestData.technicianThreeTest();
-        TechnicianEntity tech4 = FilterTechnicianTestData.technicianThreeTest();
-        TechnicianEntity tech5 = FilterTechnicianTestData.technicianFourTest();
+        List<DomainEntity> domainEntities = List.of(
+            FilterTechnicianTestData.domainOneTest(),
+            FilterTechnicianTestData.domainTwoTest(),
+            FilterTechnicianTestData.domainThreeTest(),
+            FilterTechnicianTestData.domainFourTest()
+        );
 
-        technicians.add(tech1);
-        technicians.add(tech2);
-        technicians.add(tech3);
-        technicians.add(tech4);
-        technicians.add(tech5);
+        domainRepository.saveAll(domainEntities);
 
-        Repository.saveAll(technicians);
+
+        List<TechnicianEntity> technicians = List.of(
+                FilterTechnicianTestData.technicianOneTest(),
+                FilterTechnicianTestData.technicianTwoTest(),
+                FilterTechnicianTestData.technicianThreeTest(),
+                FilterTechnicianTestData.technicianFourTest(),
+                FilterTechnicianTestData.technicianFiveTest()
+        );
+
+        technicianRepository.saveAll(technicians);
     }
 
     @Test
     void filterByRate() throws IOException {
         List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Rate","4");
-        Assertions.assertEquals(DTOs.getFirst().getFirstName(),"Mahmoud");
+        Assertions.assertEquals(DTOs.get(0).getFirstName(),"Mahmoud");
     }
 
     @Test
