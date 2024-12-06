@@ -6,7 +6,7 @@ import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
 
 import java.util.ArrayList;
 
-public class TechnicianGovernorateFilter implements ITechFilter {
+public class TechnicianCityFilter implements ITechFilter {
 
 
 
@@ -16,7 +16,7 @@ public class TechnicianGovernorateFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getLocation().equals(query))
+            if(tech.getCity().equals(query))
                 Answer.add(tech);
         }
         return Answer;

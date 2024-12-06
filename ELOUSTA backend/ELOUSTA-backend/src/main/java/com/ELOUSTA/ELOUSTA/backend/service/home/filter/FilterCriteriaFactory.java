@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 public class FilterCriteriaFactory {
 
     private TechnicianRateFilter rateFilter=null;
-    private TechnicianGovernorateFilter governorateFilter=null;
+    private TechnicianCityFilter cityFilter =null;
     private TechnicianDomainFilter domainFilter=null;
-    private TechnicianDistrictFilter districtFilter=null;
+
     private TechnicianNullFilter nullFilter=null;
 
     public synchronized ITechFilter getInstance(String type)
@@ -21,15 +21,10 @@ public class FilterCriteriaFactory {
                     rateFilter = new TechnicianRateFilter();
                 return rateFilter;
             }
-            case "district" -> {
-                if (districtFilter == null)
-                    districtFilter = new TechnicianDistrictFilter();
-                return districtFilter;
-            }
-            case "governorate" -> {
-                if (governorateFilter == null)
-                    governorateFilter = new TechnicianGovernorateFilter();
-                return governorateFilter;
+            case "city" -> {
+                if (cityFilter == null)
+                    cityFilter = new TechnicianCityFilter();
+                return cityFilter;
             }
             case "domain" -> {
                 if (domainFilter == null)
