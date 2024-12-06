@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 
+import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SearchTechnicianService;
@@ -31,11 +32,11 @@ public class UserHomePageController {
     }
 
     @GetMapping("/")
-    public List<TechnicianDTO> startPage() throws IOException {
+    public List<HomeTechnicianDTO> startPage() throws IOException {
          int counter=0;
-         List<TechnicianDTO>DTOs=sortService.sortTechnicians("rate");
-         List<TechnicianDTO>toBeReturned=new ArrayList<>();
-        for (TechnicianDTO dto:DTOs) {
+         List<HomeTechnicianDTO>DTOs=sortService.sortTechnicians("rate");
+         List<HomeTechnicianDTO>toBeReturned=new ArrayList<>();
+        for (HomeTechnicianDTO dto:DTOs) {
             counter++;
             if (counter==21)
                 break;
@@ -45,17 +46,17 @@ public class UserHomePageController {
     }
 
     @PostMapping("/search")
-    public List<TechnicianDTO>searchTechnicians(@RequestBody String query) throws IOException {
+    public List<HomeTechnicianDTO>searchTechnicians(@RequestBody String query) throws IOException {
         return searchService.searchTechnician(query);
     }
 
     @PostMapping("/sort")
-    public List<TechnicianDTO>sortTechnicians(@RequestBody String field) throws IOException {
+    public List<HomeTechnicianDTO>sortTechnicians(@RequestBody String field) throws IOException {
         return sortService.sortTechnicians(field);
     }
 
     @PostMapping("/filter")
-    public List<TechnicianDTO>filterTechnicians(@RequestBody HomePayload payload) throws IOException {
+    public List<HomeTechnicianDTO>filterTechnicians(@RequestBody HomePayload payload) throws IOException {
         return filterService.filterTechnician(payload.getField(), payload.getQuery());
     }
 }
