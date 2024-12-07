@@ -47,6 +47,8 @@ public final class TechnicianMapper {
                 .email(technicianEntity.getEmail())
                 .rate(technicianEntity.getRate())
                 .portfolioDto(portfolioDtoList)
+                .city(technicianEntity.getCity())
+                .startDate(technicianEntity.getJobStartDate())
                 .domainDTO(domainDTO)
                 .build();
     }

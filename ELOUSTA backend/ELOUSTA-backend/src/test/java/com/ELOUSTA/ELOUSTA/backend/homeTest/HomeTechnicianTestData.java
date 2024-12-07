@@ -1,11 +1,14 @@
-package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
+package com.ELOUSTA.ELOUSTA.backend.homeTest;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public final class FilterTechnicianTestData {
+public final class HomeTechnicianTestData {
 
     public static DomainEntity domainOneTest() {
         return DomainEntity.builder()
@@ -58,7 +61,7 @@ public final class FilterTechnicianTestData {
                 .dob(new Date(1990, 3, 25))
                 .phoneNumber("5559876543")
                 .city("Cairo")
-                .jobStartDate(new Date(2021, 5, 10))
+                .jobStartDate(new Date(2001, 5, 10))
                 .rate(2.0)
                 .build();
     }
@@ -79,7 +82,7 @@ public final class FilterTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianFourTest (DomainEntity domain) {
+    public static TechnicianEntity technicianFourTest (DomainEntity domain)  {
         return TechnicianEntity.builder()
                 .userName("Mahmoud123")
                 .password("strongPass789")
@@ -95,7 +98,7 @@ public final class FilterTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianFiveTest (DomainEntity domain) {
+    public static TechnicianEntity technicianFiveTest (DomainEntity domain)  {
         return TechnicianEntity.builder()
                 .userName("Meedo")
                 .password("simplePass101")

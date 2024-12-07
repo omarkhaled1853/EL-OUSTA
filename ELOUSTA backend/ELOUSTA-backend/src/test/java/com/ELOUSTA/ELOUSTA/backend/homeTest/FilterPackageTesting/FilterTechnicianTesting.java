@@ -4,6 +4,7 @@ package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.homeTest.HomeTechnicianTestData;
 import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
@@ -39,10 +40,10 @@ public class FilterTechnicianTesting {
         domainRepository.deleteAll();
 //        create domains data test
         List<DomainEntity> domainEntities = List.of(
-                FilterTechnicianTestData.domainOneTest(),
-                FilterTechnicianTestData.domainTwoTest(),
-                FilterTechnicianTestData.domainThreeTest(),
-                FilterTechnicianTestData.domainFourTest()
+                HomeTechnicianTestData.domainOneTest(),
+                HomeTechnicianTestData.domainTwoTest(),
+                HomeTechnicianTestData.domainThreeTest(),
+                HomeTechnicianTestData.domainFourTest()
         );
 //        save domains data test
         domainRepository.saveAll(domainEntities);
@@ -50,11 +51,11 @@ public class FilterTechnicianTesting {
         List<DomainEntity> savedDomainEntities = domainRepository.findAll();
 //        create technicians data test
         List<TechnicianEntity> technicianEntities = List.of(
-                FilterTechnicianTestData.technicianOneTest(savedDomainEntities.get(0)),
-                FilterTechnicianTestData.technicianTwoTest(savedDomainEntities.get(1)),
-                FilterTechnicianTestData.technicianThreeTest(savedDomainEntities.get(2)),
-                FilterTechnicianTestData.technicianFourTest(savedDomainEntities.get(1)),
-                FilterTechnicianTestData.technicianFiveTest(savedDomainEntities.get(3))
+                HomeTechnicianTestData.technicianOneTest(savedDomainEntities.get(0)),
+                HomeTechnicianTestData.technicianTwoTest(savedDomainEntities.get(1)),
+                HomeTechnicianTestData.technicianThreeTest(savedDomainEntities.get(2)),
+                HomeTechnicianTestData.technicianFourTest(savedDomainEntities.get(1)),
+                HomeTechnicianTestData.technicianFiveTest(savedDomainEntities.get(3))
         );
 //        save technicians data test
         technicianRepository.saveAll(technicianEntities);
@@ -62,7 +63,7 @@ public class FilterTechnicianTesting {
 
     @Test
     void filterByRate() throws IOException {
-        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Rate","4");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Rate","4.0");
         Assertions.assertEquals(DTOs.get(0).getFirstName(),"Mahmoud");
     }
 
