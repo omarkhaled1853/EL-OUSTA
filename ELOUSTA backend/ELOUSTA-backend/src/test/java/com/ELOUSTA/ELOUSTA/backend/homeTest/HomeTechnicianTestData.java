@@ -3,9 +3,6 @@ package com.ELOUSTA.ELOUSTA.backend.homeTest;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class HomeTechnicianTestData {
@@ -36,7 +33,7 @@ public final class HomeTechnicianTestData {
 
     public static TechnicianEntity technicianOneTest (DomainEntity domain) {
         return TechnicianEntity.builder()
-                .userName("joe44")
+                .username("joe44")
                 .password("12345678")
                 .domainEntity(domain)
                 .email("john.doe@gmail.com")
@@ -52,7 +49,7 @@ public final class HomeTechnicianTestData {
 
     public static TechnicianEntity technicianTwoTest (DomainEntity domain) {
         return TechnicianEntity.builder()
-                .userName("Omar123")
+                .username("Omar123")
                 .password("safePassword321")
                 .domainEntity(domain)
                 .email("omar@gmail.com")
@@ -68,7 +65,7 @@ public final class HomeTechnicianTestData {
 
     public static TechnicianEntity technicianThreeTest (DomainEntity domain) {
         return TechnicianEntity.builder()
-                .userName("Nada312")
+                .username("Nada312")
                 .password("pass456Secure")
                 .domainEntity(domain)
                 .email("Nada@gmail.com")
@@ -84,7 +81,7 @@ public final class HomeTechnicianTestData {
 
     public static TechnicianEntity technicianFourTest (DomainEntity domain)  {
         return TechnicianEntity.builder()
-                .userName("Mahmoud123")
+                .username("Mahmoud123")
                 .password("strongPass789")
                 .domainEntity(domain)
                 .email("Mahmoud515@gmail.com")
@@ -100,7 +97,7 @@ public final class HomeTechnicianTestData {
 
     public static TechnicianEntity technicianFiveTest (DomainEntity domain)  {
         return TechnicianEntity.builder()
-                .userName("Meedo")
+                .username("Meedo")
                 .password("simplePass101")
                 .domainEntity(domain)
                 .email("Meedo@gmail.com")

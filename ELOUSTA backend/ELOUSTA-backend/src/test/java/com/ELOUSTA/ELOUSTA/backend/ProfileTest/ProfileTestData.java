@@ -54,7 +54,7 @@ public final class ProfileTestData {
                 .password("securepassword123")
                 .phoneNumber("1234567890")
                 .signUpDate(Date.valueOf("2024-12-03"))
-                .userName("johndoe")
+                .username("johndoe")
                 .city("Cairo")
                 .profilePicture("johndoe.png")
                 .build();
@@ -67,7 +67,7 @@ public final class ProfileTestData {
                 .firstName("John")
                 .lastName("Doe")
                 .dob(Date.valueOf("1985-07-15"))
-                .userName("johndoe")
+                .username("johndoe")
                 .phoneNumber("123-456-7890")
                 .email("john.doe@email.com")
                 .password("password123")
