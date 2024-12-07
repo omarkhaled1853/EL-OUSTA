@@ -1,10 +1,10 @@
-package com.example.springsecurity.service;
+package com.ELOUSTA.ELOUSTA.backend.service.auth;
 
-import com.example.springsecurity.Enums.ValidationStatus;
-import com.example.springsecurity.dto.GoogleAuthRequest;
-import com.example.springsecurity.dto.ResetPasswordRequest;
-import com.example.springsecurity.entity.ClientEntity;
-import com.example.springsecurity.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.GoogleAuthRequest;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.ResetPasswordRequest;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
-class ClientEntityServiceTest {
+class ClientEntityAuthenticationServiceTest {
     private ClientEntity clientEntity;
     @Mock
     private ClientRepository clientRepository;

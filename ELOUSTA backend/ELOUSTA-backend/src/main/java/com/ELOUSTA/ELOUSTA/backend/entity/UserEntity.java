@@ -23,11 +23,12 @@ public class UserEntity {
     private String firstName;
     private String lastName;
     private Date dob;
-    private String userName;
+    private String username;
     private String phoneNumber;
-    private String email;
+    private String emailAddress;
     private String password;
     private Date signUpDate;
     private String city;
     private String profilePicture;
+    private String roles;
 }

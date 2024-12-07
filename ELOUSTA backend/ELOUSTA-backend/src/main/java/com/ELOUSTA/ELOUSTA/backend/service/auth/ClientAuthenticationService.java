@@ -1,10 +1,10 @@
-package com.example.springsecurity.service;
+package com.ELOUSTA.ELOUSTA.backend.service.auth;
 
-import com.example.springsecurity.Enums.ValidationStatus;
-import com.example.springsecurity.dto.GoogleAuthRequest;
-import com.example.springsecurity.dto.ResetPasswordRequest;
-import com.example.springsecurity.entity.ClientEntity;
-import com.example.springsecurity.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.GoogleAuthRequest;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.ResetPasswordRequest;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 
 @Service
 public class ClientAuthenticationService implements UserDetailsService {

@@ -18,9 +18,9 @@ public final class ClientMapper {
                 .lastName(clientEntity.getLastName())
                 .profilePicture(profilePhoto)
                 .dob(clientEntity.getDob())
-                .userName(clientEntity.getUserName())
+                .userName(clientEntity.getUsername())
                 .phoneNumber(clientEntity.getPhoneNumber())
-                .email(clientEntity.getEmail())
+                .email(clientEntity.getEmailAddress())
                 .city(clientEntity.getCity())
                 .build();
     }
