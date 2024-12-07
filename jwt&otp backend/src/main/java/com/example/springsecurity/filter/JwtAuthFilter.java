@@ -1,8 +1,8 @@
 package com.example.springsecurity.filter;
 
 import com.example.springsecurity.service.JwtService;
-import com.example.springsecurity.service.TechnicianService;
-import com.example.springsecurity.service.UserInfoService;
+import com.example.springsecurity.service.TechnicianAuthenticationService;
+import com.example.springsecurity.service.ClientAuthenticationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,10 +24,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private UserInfoService userService;
+    private ClientAuthenticationService userService;
 
     @Autowired
-    private TechnicianService technicianService;
+    private TechnicianAuthenticationService technicianAuthenticationService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if(requestURI.startsWith("/user")){
                 userDetails = userService.loadUserByUsername(username);
             } else if (requestURI.startsWith("/tech")) {
-                userDetails = technicianService.loadUserByUsername(username);
+                userDetails = technicianAuthenticationService.loadUserByUsername(username);
             }else{
                 throw new IllegalArgumentException();
             }

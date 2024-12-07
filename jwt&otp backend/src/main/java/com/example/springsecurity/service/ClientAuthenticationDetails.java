@@ -1,6 +1,6 @@
 package com.example.springsecurity.service;
 
-import com.example.springsecurity.entity.UserInfo;
+import com.example.springsecurity.entity.ClientEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,15 +9,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserInfoDetails implements UserDetails {
+public class ClientAuthenticationDetails implements UserDetails {
     private final String username;
     private final String password;
     private final List<GrantedAuthority> authorities;
 
-    public UserInfoDetails(UserInfo userInfo){
-        this.username = userInfo.getUsername();
-        this.password = userInfo.getPassword();
-        this.authorities = List.of(userInfo.getRoles().split(","))
+    public ClientAuthenticationDetails(ClientEntity clientEntity){
+        this.username = clientEntity.getUsername();
+        this.password = clientEntity.getPassword();
+        this.authorities = List.of(clientEntity.getRoles().split(","))
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

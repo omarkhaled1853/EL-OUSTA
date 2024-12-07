@@ -1,9 +1,9 @@
 package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
-import com.example.springsecurity.entity.GoogleAuthRequest;
-import com.example.springsecurity.entity.ResetPasswordRequest;
-import com.example.springsecurity.entity.UserInfo;
+import com.example.springsecurity.dto.GoogleAuthRequest;
+import com.example.springsecurity.dto.ResetPasswordRequest;
+import com.example.springsecurity.entity.ClientEntity;
 import com.example.springsecurity.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserInfoService implements UserDetailsService {
+public class ClientAuthenticationService implements UserDetailsService {
 
     @Autowired
     private UserInfoRepository userRepository;
@@ -26,16 +26,16 @@ public class UserInfoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserInfo> userInfo = userRepository.findByUsername(username);
+        Optional<ClientEntity> userInfo = userRepository.findByUsername(username);
 
         if(userInfo.isPresent()){
-            return new UserInfoDetails(userInfo.get());
+            return new ClientAuthenticationDetails(userInfo.get());
         }
 
         throw new UsernameNotFoundException("No user with name: " + username);
     }
-    public UserInfo loadUserByUsernameAsUserInfo(String username){
-        Optional<UserInfo> userInfo = userRepository.findByUsername(username);
+    public ClientEntity loadUserByUsernameAsUserInfo(String username){
+        Optional<ClientEntity> userInfo = userRepository.findByUsername(username);
 
         if(userInfo.isPresent()){
             return userInfo.get();
@@ -43,14 +43,14 @@ public class UserInfoService implements UserDetailsService {
         throw new IllegalArgumentException("Invalid username");
     }
 
-    public String addUser(UserInfo userInfo){
-        userInfo.setPassword(encoder.encode(userInfo.getPassword()));
-        userRepository.save(userInfo);
+    public String addUser(ClientEntity clientEntity){
+        clientEntity.setPassword(encoder.encode(clientEntity.getPassword()));
+        userRepository.save(clientEntity);
 
         return ValidationStatus.VALID.getMessage();
     }
     public String resetPassword(ResetPasswordRequest request){
-        Optional<UserInfo> userInfo = userRepository.findByUsername(request.getUsername());
+        Optional<ClientEntity> userInfo = userRepository.findByUsername(request.getUsername());
 
         if(userInfo.isEmpty()){
             return ValidationStatus.FAIL.getMessage();
@@ -59,11 +59,11 @@ public class UserInfoService implements UserDetailsService {
         return addUser(userInfo.get());
     }
     // Check the uniqueness of the user (there is no user in DB with the same email or username)
-    public String validateUniqueUsernameAndEmail(UserInfo userInfo){
-        if(!validUsername(userInfo.getUsername())){
+    public String validateUniqueUsernameAndEmail(ClientEntity clientEntity){
+        if(!validUsername(clientEntity.getUsername())){
             return ValidationStatus.INVALID_USERNAME.getMessage();
         }
-        if(!validEmailAddress(userInfo.getEmailAddress())){
+        if(!validEmailAddress(clientEntity.getEmailAddress())){
             return ValidationStatus.INVALID_EMAIL.getMessage();
         }
         return ValidationStatus.VALID.getMessage();
@@ -73,7 +73,7 @@ public class UserInfoService implements UserDetailsService {
         if(username == null){
             return false;
         }
-        Optional<UserInfo> userInfo = userRepository.findByUsername(username);
+        Optional<ClientEntity> userInfo = userRepository.findByUsername(username);
         return userInfo.isEmpty();
     }
     // Check that username set the value and the uniqueness of username
@@ -81,17 +81,17 @@ public class UserInfoService implements UserDetailsService {
         if (emailAddress == null){
             return false;
         }
-        Optional<UserInfo> userInfo = userRepository.findByEmailAddress(emailAddress);
+        Optional<ClientEntity> userInfo = userRepository.findByEmailAddress(emailAddress);
         return userInfo.isEmpty();
     }
 
     //In authentication with Google we just check if email exist
     public Boolean validAuthenticationWithGoogle(GoogleAuthRequest googleAuthRequest){
-        Optional<UserInfo> userInfo = userRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());
+        Optional<ClientEntity> userInfo = userRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());
         return userInfo.isPresent();
     }
-    public UserInfo loadUserByEmailAddress(String emailAddress){
-        Optional<UserInfo> userInfo = userRepository.findByEmailAddress(emailAddress);
+    public ClientEntity loadUserByEmailAddress(String emailAddress){
+        Optional<ClientEntity> userInfo = userRepository.findByEmailAddress(emailAddress);
 
         if(userInfo.isPresent()){
             return userInfo.get();

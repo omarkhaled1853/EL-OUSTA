@@ -1,6 +1,6 @@
 package com.example.springsecurity.service;
 
-import com.example.springsecurity.entity.Technician;
+import com.example.springsecurity.entity.TechnicianEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,15 +9,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TechnicianDetails implements UserDetails {
+public class TechnicianAuthenticationDetails implements UserDetails {
     private String password;
     private String username;
     private List<GrantedAuthority> authorities;
 
-    public TechnicianDetails(Technician technician){
-        this.username = technician.getUsername();
-        this.password = technician.getPassword();
-        this.authorities = List.of(technician.getRoles().split(", "))
+    public TechnicianAuthenticationDetails(TechnicianEntity technicianEntity){
+        this.username = technicianEntity.getUsername();
+        this.password = technicianEntity.getPassword();
+        this.authorities = List.of(technicianEntity.getRoles().split(", "))
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());

@@ -1,33 +1,35 @@
 package com.example.springsecurity.entity;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
-@Entity
+
+
+@MappedSuperclass
 @Data
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Technician{
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String username;
-    private String password;
-    private String emailAddress;
+    private Integer id;
     private String firstName;
     private String lastName;
     private Date dob;
+    private String username;
     private String phoneNumber;
+    private String emailAddress;
+    private String password;
+    private Date signUpDate;
     private String city;
+    private String profilePicture;
     private String roles;
-    private String domain;
-    private Date startDate;
 }

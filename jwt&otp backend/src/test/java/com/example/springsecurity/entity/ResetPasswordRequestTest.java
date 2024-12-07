@@ -1,5 +1,6 @@
 package com.example.springsecurity.entity;
 
+import com.example.springsecurity.dto.ResetPasswordRequest;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 

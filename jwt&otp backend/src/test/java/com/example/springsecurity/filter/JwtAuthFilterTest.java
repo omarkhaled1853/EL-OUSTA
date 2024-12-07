@@ -1,8 +1,8 @@
 package com.example.springsecurity.filter;
 
 import com.example.springsecurity.service.JwtService;
-import com.example.springsecurity.service.TechnicianService;
-import com.example.springsecurity.service.UserInfoService;
+import com.example.springsecurity.service.TechnicianAuthenticationService;
+import com.example.springsecurity.service.ClientAuthenticationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +26,10 @@ class JwtAuthFilterTest {
     private JwtService jwtService;
 
     @Mock
-    private UserInfoService userInfoService;
+    private ClientAuthenticationService clientAuthenticationService;
 
     @Mock
-    private TechnicianService technicianService;
+    private TechnicianAuthenticationService technicianAuthenticationService;
 
     @Mock
     private HttpServletRequest request;
@@ -61,13 +61,13 @@ class JwtAuthFilterTest {
         when(request.getHeader("Authorization")).thenReturn(authHeader);
         when(jwtService.extractUsername(token)).thenReturn(username);
         when(request.getRequestURI()).thenReturn("/user");
-        when(userInfoService.loadUserByUsername(username)).thenReturn(userDetails);
+        when(clientAuthenticationService.loadUserByUsername(username)).thenReturn(userDetails);
         when(jwtService.validateToken(token, userDetails)).thenReturn(true);
         when(userDetails.getAuthorities()).thenReturn(null);
 
         jwtAuthFilter.doFilterInternal(request, response, filterChain);
 
-        verify(userInfoService).loadUserByUsername(username);
+        verify(clientAuthenticationService).loadUserByUsername(username);
         verify(jwtService).validateToken(token, userDetails);
         verify(filterChain).doFilter(request, response);
 
@@ -86,13 +86,13 @@ class JwtAuthFilterTest {
         when(request.getHeader("Authorization")).thenReturn(authHeader);
         when(jwtService.extractUsername(token)).thenReturn(username);
         when(request.getRequestURI()).thenReturn("/tech");
-        when(technicianService.loadUserByUsername(username)).thenReturn(userDetails);
+        when(technicianAuthenticationService.loadUserByUsername(username)).thenReturn(userDetails);
         when(jwtService.validateToken(token, userDetails)).thenReturn(true);
         when(userDetails.getAuthorities()).thenReturn(null);
 
         jwtAuthFilter.doFilterInternal(request, response, filterChain);
 
-        verify(technicianService).loadUserByUsername(username);
+        verify(technicianAuthenticationService).loadUserByUsername(username);
         verify(jwtService).validateToken(token, userDetails);
         verify(filterChain).doFilter(request, response);
 

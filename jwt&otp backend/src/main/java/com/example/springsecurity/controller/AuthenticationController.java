@@ -1,13 +1,13 @@
 package com.example.springsecurity.controller;
 
 import com.example.springsecurity.Enums.ValidationStatus;
-import com.example.springsecurity.entity.AuthRequest;
-import com.example.springsecurity.entity.GoogleAuthRequest;
-import com.example.springsecurity.entity.Technician;
-import com.example.springsecurity.entity.UserInfo;
+import com.example.springsecurity.dto.AuthRequest;
+import com.example.springsecurity.dto.GoogleAuthRequest;
+import com.example.springsecurity.entity.TechnicianEntity;
+import com.example.springsecurity.entity.ClientEntity;
 import com.example.springsecurity.service.JwtService;
-import com.example.springsecurity.service.TechnicianService;
-import com.example.springsecurity.service.UserInfoService;
+import com.example.springsecurity.service.TechnicianAuthenticationService;
+import com.example.springsecurity.service.ClientAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class AuthenticationController {
     @Autowired
-    private UserInfoService userService;
+    private ClientAuthenticationService userService;
 
     @Autowired
-    private TechnicianService technicianService;
+    private TechnicianAuthenticationService technicianAuthenticationService;
 
     @Autowired
     private JwtService jwtService;
@@ -30,19 +30,19 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/user/signUp")
-    public String addNewUser(@RequestBody UserInfo userInfo){
-        String validationStatus = userService.validateUniqueUsernameAndEmail(userInfo);
+    public String addNewUser(@RequestBody ClientEntity clientEntity){
+        String validationStatus = userService.validateUniqueUsernameAndEmail(clientEntity);
         if(validationStatus.equals(ValidationStatus.VALID.getMessage())){
-            return userService.addUser(userInfo);
+            return userService.addUser(clientEntity);
         }
         return validationStatus;
     }
 
     @PostMapping("/tech/signUp")
-    public String addNewTech(@RequestBody Technician technician){
-        String validationStatus = technicianService.validateUniqueUsernameAndEmail(technician);
+    public String addNewTech(@RequestBody TechnicianEntity technicianEntity){
+        String validationStatus = technicianAuthenticationService.validateUniqueUsernameAndEmail(technicianEntity);
         if(validationStatus.equals(ValidationStatus.VALID.getMessage())){
-            return technicianService.addTechnician(technician);
+            return technicianAuthenticationService.addTechnician(technicianEntity);
         }
         return validationStatus;
     }
@@ -83,10 +83,10 @@ public class AuthenticationController {
     }
     @PostMapping("/tech/signIn/google")
     public String googleAuthenticationTech(@RequestBody GoogleAuthRequest googleAuthRequest){
-         Boolean isAuthenticated = technicianService.validAuthenticationWithGoogle(googleAuthRequest);
+         Boolean isAuthenticated = technicianAuthenticationService.validAuthenticationWithGoogle(googleAuthRequest);
 
         if(isAuthenticated){
-            String username = technicianService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
+            String username = technicianAuthenticationService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
             return jwtService.generateToken(username);
         }
         return ValidationStatus.FAIL.getMessage();

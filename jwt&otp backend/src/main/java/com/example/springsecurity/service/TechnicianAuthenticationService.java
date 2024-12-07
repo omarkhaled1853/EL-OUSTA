@@ -1,9 +1,9 @@
 package com.example.springsecurity.service;
 
 import com.example.springsecurity.Enums.ValidationStatus;
-import com.example.springsecurity.entity.GoogleAuthRequest;
-import com.example.springsecurity.entity.ResetPasswordRequest;
-import com.example.springsecurity.entity.Technician;
+import com.example.springsecurity.dto.GoogleAuthRequest;
+import com.example.springsecurity.dto.ResetPasswordRequest;
+import com.example.springsecurity.entity.TechnicianEntity;
 import com.example.springsecurity.repository.TechnicianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TechnicianService implements UserDetailsService {
+public class TechnicianAuthenticationService implements UserDetailsService {
     @Autowired
     private TechnicianRepository technicianRepository;
 
@@ -24,15 +24,15 @@ public class TechnicianService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Technician> technician = technicianRepository.findByUsername(username);
+        Optional<TechnicianEntity> technician = technicianRepository.findByUsername(username);
 
         if(technician.isPresent()){
-            return new TechnicianDetails(technician.get());
+            return new TechnicianAuthenticationDetails(technician.get());
         }
         throw new UsernameNotFoundException("User not found");
     }
-    public Technician loadUserByUsernameAsTechnician(String username){
-        Optional<Technician> technician = technicianRepository.findByUsername(username);
+    public TechnicianEntity loadUserByUsernameAsTechnician(String username){
+        Optional<TechnicianEntity> technician = technicianRepository.findByUsername(username);
 
         if(technician.isPresent()){
             return technician.get();
@@ -40,15 +40,15 @@ public class TechnicianService implements UserDetailsService {
         throw new IllegalArgumentException("Invalid username");
     }
 
-    public String addTechnician(Technician technician){
-        technician.setPassword(encoder.encode(technician.getPassword()));
-        technicianRepository.save(technician);
+    public String addTechnician(TechnicianEntity technicianEntity){
+        technicianEntity.setPassword(encoder.encode(technicianEntity.getPassword()));
+        technicianRepository.save(technicianEntity);
 
         return ValidationStatus.VALID.getMessage();
     }
 
     public String resetPassword(ResetPasswordRequest request){
-        Optional<Technician> technician = technicianRepository.findByUsername(request.getUsername());
+        Optional<TechnicianEntity> technician = technicianRepository.findByUsername(request.getUsername());
 
         if(technician.isEmpty()){
             return ValidationStatus.FAIL.getMessage();
@@ -57,11 +57,11 @@ public class TechnicianService implements UserDetailsService {
         return addTechnician(technician.get());
     }
 
-    public String validateUniqueUsernameAndEmail(Technician technician){
-        if(!validUsername(technician.getUsername())){
+    public String validateUniqueUsernameAndEmail(TechnicianEntity technicianEntity){
+        if(!validUsername(technicianEntity.getUsername())){
             return ValidationStatus.INVALID_USERNAME.getMessage();
         }
-        if(!validEmailAddress(technician.getEmailAddress())){
+        if(!validEmailAddress(technicianEntity.getEmailAddress())){
             return ValidationStatus.INVALID_EMAIL.getMessage();
         }
         return ValidationStatus.VALID.getMessage();
@@ -70,24 +70,24 @@ public class TechnicianService implements UserDetailsService {
         if(username == null){
             return false;
         }
-        Optional<Technician> technician = technicianRepository.findByUsername(username);
+        Optional<TechnicianEntity> technician = technicianRepository.findByUsername(username);
         return technician.isEmpty();
     }
     private Boolean validEmailAddress(String emailAddress){
         if (emailAddress == null){
             return false;
         }
-        Optional<Technician> technician = technicianRepository.findByEmailAddress(emailAddress);
+        Optional<TechnicianEntity> technician = technicianRepository.findByEmailAddress(emailAddress);
         return technician.isEmpty();
     }
 
     //In authentication with Google we just check if email exist
     public Boolean validAuthenticationWithGoogle(GoogleAuthRequest googleAuthRequest){
-        Optional<Technician> technician = technicianRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());
+        Optional<TechnicianEntity> technician = technicianRepository.findByEmailAddress(googleAuthRequest.getEmailAddress());
         return technician.isPresent();
     }
-    public Technician loadUserByEmailAddress(String emailAddress){
-        Optional<Technician> technician = technicianRepository.findByEmailAddress(emailAddress);
+    public TechnicianEntity loadUserByEmailAddress(String emailAddress){
+        Optional<TechnicianEntity> technician = technicianRepository.findByEmailAddress(emailAddress);
 
         if(technician.isPresent()){
             return technician.get();

@@ -1,8 +1,8 @@
 package com.example.springsecurity.config;
 
 import com.example.springsecurity.filter.JwtAuthFilter;
-import com.example.springsecurity.service.TechnicianService;
-import com.example.springsecurity.service.UserInfoService;
+import com.example.springsecurity.service.TechnicianAuthenticationService;
+import com.example.springsecurity.service.ClientAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,11 +32,11 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return new UserInfoService();
+        return new ClientAuthenticationService();
     }
     @Bean
     public UserDetailsService technicianDetailsService(){
-        return new TechnicianService();
+        return new TechnicianAuthenticationService();
     }
 
     @Bean
