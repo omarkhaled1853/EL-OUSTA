@@ -1,5 +1,6 @@
-package com.ELOUSTA.ELOUSTA.backend.dto;
+package com.ELOUSTA.ELOUSTA.backend.dto.homeDto;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

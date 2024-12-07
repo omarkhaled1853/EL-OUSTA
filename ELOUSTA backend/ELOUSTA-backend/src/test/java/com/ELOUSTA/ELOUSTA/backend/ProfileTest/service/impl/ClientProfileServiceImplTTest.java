@@ -1,6 +1,6 @@
-package com.ELOUSTA.ELOUSTA.backend.ProfileTest;
+package com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.ClientDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.ClientProfileProfileServiceImpl;
@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testClientProfileDTO;
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testClientEntity;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testClientProfileDTO;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testClientEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -38,14 +38,14 @@ public class ClientProfileServiceImplTTest {
 
     @Test
     public void testThatFindByIdReturnsClientWhenExists() throws IOException {
-        final ClientDTO clientDTO = testClientProfileDTO();
+        final ClientProfileProfileDTO clientProfileDTO = testClientProfileDTO();
         final ClientEntity clientEntity = testClientEntity();
 
-        when(clientRepository.findById(eq(clientDTO.getId()))).thenReturn(Optional.of(clientEntity));
+        when(clientRepository.findById(eq(clientProfileDTO.getId()))).thenReturn(Optional.of(clientEntity));
 
-        final Optional<ClientDTO> result = clientProfileProfileService.getClient(clientDTO.getId());
+        final Optional<ClientProfileProfileDTO> result = clientProfileProfileService.getClient(clientProfileDTO.getId());
 
-        assertEquals(Optional.of(clientDTO), result);
+        assertEquals(Optional.of(clientProfileDTO), result);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ClientProfileServiceImplTTest {
 
         when(clientRepository.findById(eq(id))).thenReturn(Optional.empty());
 
-        final Optional<ClientDTO> result = clientProfileProfileService.getClient(id);
+        final Optional<ClientProfileProfileDTO> result = clientProfileProfileService.getClient(id);
 
         assertEquals(Optional.empty(), result);
     }

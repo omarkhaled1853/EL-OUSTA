@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.dto;
+package com.ELOUSTA.ELOUSTA.backend.dto.profileDto;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserProfileDTO {
     private Integer id;
     private String firstName;
     private String lastName;

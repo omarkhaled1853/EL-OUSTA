@@ -1,6 +1,6 @@
-package com.ELOUSTA.ELOUSTA.backend.ProfileTest;
+package com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.TechnicianProfileServiceImpl;
@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testTechnicianEntity;
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testTechnicianProfileDto;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testTechnicianEntity;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testTechnicianProfileDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -38,14 +38,14 @@ public class TechnicianProfileServiceImplTest {
 
     @Test
     public void testThatFindByIdReturnsTechnicianWhenExists() throws IOException {
-        final TechnicianDTO technicianDTO = testTechnicianProfileDto();
+        final TechnicianProfileProfileDTO technicianProfileDTO = testTechnicianProfileDto();
         final TechnicianEntity technicianEntity = testTechnicianEntity();
 
-        when(technicianRepository.findTechnicianWithDomainAndPortfolio(eq(technicianDTO.getId()))).thenReturn(Optional.of(technicianEntity));
+        when(technicianRepository.findTechnicianWithDomainAndPortfolio(eq(technicianProfileDTO.getId()))).thenReturn(Optional.of(technicianEntity));
 
-        final Optional<TechnicianDTO> result = technicianProfileService.getTechnician(technicianDTO.getId());
+        final Optional<TechnicianProfileProfileDTO> result = technicianProfileService.getTechnician(technicianProfileDTO.getId());
 
-        assertEquals(Optional.of(technicianDTO), result);
+        assertEquals(Optional.of(technicianProfileDTO), result);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class TechnicianProfileServiceImplTest {
 
         when(technicianRepository.findTechnicianWithDomainAndPortfolio(eq(id))).thenReturn(Optional.empty());
 
-        final Optional<TechnicianDTO> result = technicianProfileService.getTechnician(id);
+        final Optional<TechnicianProfileProfileDTO> result = technicianProfileService.getTechnician(id);
 
         assertEquals(Optional.empty(), result);
     }

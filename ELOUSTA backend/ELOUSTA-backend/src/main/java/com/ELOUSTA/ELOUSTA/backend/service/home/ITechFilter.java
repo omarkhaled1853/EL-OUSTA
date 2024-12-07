@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home;
 
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 
 import java.util.ArrayList;
 

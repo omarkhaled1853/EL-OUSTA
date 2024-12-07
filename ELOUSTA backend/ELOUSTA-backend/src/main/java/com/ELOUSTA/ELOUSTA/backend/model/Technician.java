@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.home.model;
+package com.ELOUSTA.ELOUSTA.backend.model;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;

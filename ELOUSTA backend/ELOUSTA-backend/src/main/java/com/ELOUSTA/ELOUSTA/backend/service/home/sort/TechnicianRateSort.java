@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.sort;
 
 import com.ELOUSTA.ELOUSTA.backend.service.home.ITechSort;
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 import lombok.Data;
 
 import java.util.ArrayList;

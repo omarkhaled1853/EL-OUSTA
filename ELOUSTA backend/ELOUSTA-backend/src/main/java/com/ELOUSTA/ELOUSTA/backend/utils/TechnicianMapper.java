@@ -1,13 +1,13 @@
 package com.ELOUSTA.ELOUSTA.backend.utils;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
-import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,11 +54,11 @@ public final class TechnicianMapper {
     }
 
 
-    public static TechnicianDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
+    public static TechnicianProfileProfileDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
         List<PortfolioDto> portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
         byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);
-        return TechnicianDTO.builder()
+        return TechnicianProfileProfileDTO.builder()
                 .id(technicianEntity.getId())
                 .firstName(technicianEntity.getFirstName())
                 .lastName(technicianEntity.getLastName())

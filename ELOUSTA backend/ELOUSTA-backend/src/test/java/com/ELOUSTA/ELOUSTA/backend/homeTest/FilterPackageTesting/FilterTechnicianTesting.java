@@ -1,13 +1,13 @@
 package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.homeTest.HomeTechnicianTestData;
 import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
-import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.FilterTechnicianService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

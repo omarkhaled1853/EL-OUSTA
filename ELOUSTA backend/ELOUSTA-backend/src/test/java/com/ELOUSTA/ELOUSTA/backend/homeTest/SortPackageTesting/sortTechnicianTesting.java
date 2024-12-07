@@ -1,13 +1,13 @@
 package com.ELOUSTA.ELOUSTA.backend.homeTest.SortPackageTesting;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.homeTest.HomeTechnicianTestData;
 import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
-import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SortTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.SortTechnicianService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest

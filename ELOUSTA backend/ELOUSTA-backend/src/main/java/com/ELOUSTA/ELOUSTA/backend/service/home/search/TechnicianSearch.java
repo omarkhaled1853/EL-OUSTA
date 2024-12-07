@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.search;
 
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 import org.springframework.stereotype.Service;
 

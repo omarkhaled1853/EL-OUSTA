@@ -1,10 +1,10 @@
-package com.ELOUSTA.ELOUSTA.backend.ProfileTest;
+package com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.ClientDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
-import com.ELOUSTA.ELOUSTA.backend.dto.TechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
@@ -26,9 +26,9 @@ public final class ProfileTestData {
 
 
 
-    public static ClientDTO testClientProfileDTO() throws IOException {
+    public static ClientProfileProfileDTO testClientProfileDTO() throws IOException {
         byte[] profilePhoto = getProfilePhoto("johndoe.png", profilePath);
-        return ClientDTO.builder()
+        return ClientProfileProfileDTO.builder()
                 .id(1)
                 .firstName("John")
                 .lastName("Doe")
@@ -114,9 +114,9 @@ public final class ProfileTestData {
     }
 
 
-    public static TechnicianDTO testTechnicianProfileDto() throws IOException {
+    public static TechnicianProfileProfileDTO testTechnicianProfileDto() throws IOException {
         byte[] profilePhoto = getProfilePhoto("john.png", profilePath);
-        return TechnicianDTO.builder()
+        return TechnicianProfileProfileDTO.builder()
                 .id(1)
                 .firstName("John")
                 .lastName("Doe")

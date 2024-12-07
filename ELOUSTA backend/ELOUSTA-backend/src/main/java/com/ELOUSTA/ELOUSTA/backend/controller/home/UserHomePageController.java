@@ -1,11 +1,11 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
-import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
-import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SearchTechnicianService;
-import com.ELOUSTA.ELOUSTA.backend.service.home.impl.SortTechnicianService;
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.HomePayload;
+import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.service.home.FilterTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.SearchTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.SortTechnicianService;
+import com.ELOUSTA.ELOUSTA.backend.model.HomePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

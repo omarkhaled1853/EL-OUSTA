@@ -1,5 +1,7 @@
-package com.ELOUSTA.ELOUSTA.backend.dto;
+package com.ELOUSTA.ELOUSTA.backend.dto.profileDto;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,7 +13,7 @@ import java.util.List;
 @SuperBuilder
 @Data
 @ToString(callSuper = true)
-public class TechnicianDTO extends UserDTO{
+public class TechnicianProfileProfileDTO extends UserProfileDTO {
     private Double rate;
     private int experience;
     private String description;

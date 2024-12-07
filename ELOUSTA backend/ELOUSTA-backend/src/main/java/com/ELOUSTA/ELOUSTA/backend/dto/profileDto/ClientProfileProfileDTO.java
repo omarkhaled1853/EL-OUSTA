@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.dto;
+package com.ELOUSTA.ELOUSTA.backend.dto.profileDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,5 +9,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 @ToString(callSuper = true)
-public class ClientDTO extends UserDTO{
+public class ClientProfileProfileDTO extends UserProfileDTO {
 }

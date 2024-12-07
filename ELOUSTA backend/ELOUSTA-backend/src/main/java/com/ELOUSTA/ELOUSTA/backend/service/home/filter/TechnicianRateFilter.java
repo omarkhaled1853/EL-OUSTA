@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home.filter;
 
 import com.ELOUSTA.ELOUSTA.backend.service.home.ITechFilter;
-import com.ELOUSTA.ELOUSTA.backend.service.home.model.Technician;
+import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 
 import java.util.ArrayList;
 
