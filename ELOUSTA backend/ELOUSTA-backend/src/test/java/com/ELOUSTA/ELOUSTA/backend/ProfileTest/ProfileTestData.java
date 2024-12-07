@@ -26,7 +26,7 @@ public final class ProfileTestData {
 
 
 
-    public static ClientDTO testClientDTO() throws IOException {
+    public static ClientDTO testClientProfileDTO() throws IOException {
         byte[] profilePhoto = getProfilePhoto("johndoe.png", profilePath);
         return ClientDTO.builder()
                 .id(1)
@@ -114,7 +114,7 @@ public final class ProfileTestData {
     }
 
 
-    public static TechnicianDTO testTechnicianDto() throws IOException {
+    public static TechnicianDTO testTechnicianProfileDto() throws IOException {
         byte[] profilePhoto = getProfilePhoto("john.png", profilePath);
         return TechnicianDTO.builder()
                 .id(1)

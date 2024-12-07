@@ -32,7 +32,7 @@ public class sortTechnicianTesting {
     @BeforeEach
     public void setup()
     {
-        //        delete technicians first
+//        delete technicians first
         technicianRepository.deleteAll();
 //        delete domains
         domainRepository.deleteAll();
