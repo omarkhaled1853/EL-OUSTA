@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testTechnicianEntity;
-import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl.ProfileTestData.testTechnicianProfileDto;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testTechnicianEntity;
+import static com.ELOUSTA.ELOUSTA.backend.ProfileTest.ProfileTestData.testTechnicianProfileDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;

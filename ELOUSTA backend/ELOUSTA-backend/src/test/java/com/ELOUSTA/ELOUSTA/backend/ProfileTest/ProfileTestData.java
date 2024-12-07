@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.ProfileTest.service.impl;
+package com.ELOUSTA.ELOUSTA.backend.ProfileTest;
 
 
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
