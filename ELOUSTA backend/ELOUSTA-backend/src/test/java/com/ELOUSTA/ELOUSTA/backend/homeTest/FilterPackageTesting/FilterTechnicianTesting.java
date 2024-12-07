@@ -3,22 +3,17 @@ package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
-import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.home.impl.FilterTechnicianService;
-import jakarta.transaction.Transactional;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -44,10 +39,10 @@ public class FilterTechnicianTesting {
         technicianRepository.flush();
 
         List<DomainEntity> domainEntities = List.of(
-            FilterTechnicianTestData.domainOneTest(),
-            FilterTechnicianTestData.domainTwoTest(),
-            FilterTechnicianTestData.domainThreeTest(),
-            FilterTechnicianTestData.domainFourTest()
+                FilterTechnicianTestData.domainOneTest(),
+                FilterTechnicianTestData.domainTwoTest(),
+                FilterTechnicianTestData.domainThreeTest(),
+                FilterTechnicianTestData.domainFourTest()
         );
 
         domainRepository.saveAll(domainEntities);

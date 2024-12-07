@@ -21,11 +21,11 @@ public class TechnicianEntity extends UserEntity {
     private String description;
 
 //    Each technician has portfolio of works
-    @OneToMany(mappedBy = "technicianEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "technicianEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PortfolioEntity> portfolioEntities;
 
 //    Each technician assigned to exactly one domain
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "domain_id")
+    @JoinColumn(name = "domain_id", nullable = false)
     private DomainEntity domainEntity;
 }
