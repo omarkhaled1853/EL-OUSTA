@@ -3,7 +3,6 @@ package com.ELOUSTA.ELOUSTA.backend.homeTest.FilterPackageTesting;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public final class FilterTechnicianTestData {
@@ -32,11 +31,11 @@ public final class FilterTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianOneTest () {
+    public static TechnicianEntity technicianOneTest (DomainEntity domain) {
         return TechnicianEntity.builder()
                 .userName("joe44")
                 .password("12345678")
-                .domainEntity(domainOneTest())
+                .domainEntity(domain)
                 .email("john.doe@gmail.com")
                 .firstName("youssef")
                 .lastName("Mahmoud")
@@ -45,15 +44,14 @@ public final class FilterTechnicianTestData {
                 .city("Alexandria")
                 .jobStartDate(new Date(2020, 1, 15))
                 .rate(1.0)
-                .portfolioEntities(new ArrayList<>())
                 .build();
     }
 
-    public static TechnicianEntity technicianTwoTest () {
+    public static TechnicianEntity technicianTwoTest (DomainEntity domain) {
         return TechnicianEntity.builder()
                 .userName("Omar123")
                 .password("safePassword321")
-                .domainEntity(domainTwoTest())
+                .domainEntity(domain)
                 .email("omar@gmail.com")
                 .firstName("Omar")
                 .lastName("Khaled")
@@ -62,15 +60,14 @@ public final class FilterTechnicianTestData {
                 .city("Cairo")
                 .jobStartDate(new Date(2021, 5, 10))
                 .rate(2.0)
-                .portfolioEntities(new ArrayList<>())
                 .build();
     }
 
-    public static TechnicianEntity technicianThreeTest () {
+    public static TechnicianEntity technicianThreeTest (DomainEntity domain) {
         return TechnicianEntity.builder()
                 .userName("Nada312")
                 .password("pass456Secure")
-                .domainEntity(domainThreeTest())
+                .domainEntity(domain)
                 .email("Nada@gmail.com")
                 .firstName("Nada")
                 .lastName("Fouad")
@@ -79,15 +76,14 @@ public final class FilterTechnicianTestData {
                 .city("AlBehira")
                 .jobStartDate(new Date(2019, 8, 1))
                 .rate(3.0)
-                .portfolioEntities(new ArrayList<>())
                 .build();
     }
 
-    public static TechnicianEntity technicianFourTest () {
+    public static TechnicianEntity technicianFourTest (DomainEntity domain) {
         return TechnicianEntity.builder()
                 .userName("Mahmoud123")
                 .password("strongPass789")
-                .domainEntity(domainTwoTest())
+                .domainEntity(domain)
                 .email("Mahmoud515@gmail.com")
                 .firstName("Mahmoud")
                 .lastName("Adds")
@@ -96,15 +92,14 @@ public final class FilterTechnicianTestData {
                 .city("Alexandria")
                 .jobStartDate(new Date(2022, 3, 20))
                 .rate(4.0)
-                .portfolioEntities(new ArrayList<>())
                 .build();
     }
 
-    public static TechnicianEntity technicianFiveTest () {
+    public static TechnicianEntity technicianFiveTest (DomainEntity domain) {
         return TechnicianEntity.builder()
                 .userName("Meedo")
                 .password("simplePass101")
-                .domainEntity(domainFourTest())
+                .domainEntity(domain)
                 .email("Meedo@gmail.com")
                 .firstName("mohammed")
                 .lastName("mounir")
@@ -113,7 +108,6 @@ public final class FilterTechnicianTestData {
                 .city("Cairo")
                 .jobStartDate(new Date(2021, 7, 5))
                 .rate(5.0)
-                .portfolioEntities(new ArrayList<>())
                 .build();
     }
 }

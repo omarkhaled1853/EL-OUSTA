@@ -22,6 +22,6 @@ public class DomainEntity {
     private String photo;
 
 //    Each domain has many technician
-    @OneToMany(mappedBy = "domainEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "domainEntity")
     private List<TechnicianEntity> technicianEntities;
 }

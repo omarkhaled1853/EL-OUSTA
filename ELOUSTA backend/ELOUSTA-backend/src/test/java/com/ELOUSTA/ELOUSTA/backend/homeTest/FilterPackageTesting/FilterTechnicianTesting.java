@@ -33,30 +33,31 @@ public class FilterTechnicianTesting {
     @BeforeEach
     public void setup()
     {
-        domainRepository.deleteAll();
-        domainRepository.flush();
+//        delete technicians first
         technicianRepository.deleteAll();
-        technicianRepository.flush();
-
+//        delete domains
+        domainRepository.deleteAll();
+//        create domains data test
         List<DomainEntity> domainEntities = List.of(
                 FilterTechnicianTestData.domainOneTest(),
                 FilterTechnicianTestData.domainTwoTest(),
                 FilterTechnicianTestData.domainThreeTest(),
                 FilterTechnicianTestData.domainFourTest()
         );
-
+//        save domains data test
         domainRepository.saveAll(domainEntities);
-
-
-        List<TechnicianEntity> technicians = List.of(
-                FilterTechnicianTestData.technicianOneTest(),
-                FilterTechnicianTestData.technicianTwoTest(),
-                FilterTechnicianTestData.technicianThreeTest(),
-                FilterTechnicianTestData.technicianFourTest(),
-                FilterTechnicianTestData.technicianFiveTest()
+//        get the saved domains data test
+        List<DomainEntity> savedDomainEntities = domainRepository.findAll();
+//        create technicians data test
+        List<TechnicianEntity> technicianEntities = List.of(
+                FilterTechnicianTestData.technicianOneTest(savedDomainEntities.get(0)),
+                FilterTechnicianTestData.technicianTwoTest(savedDomainEntities.get(1)),
+                FilterTechnicianTestData.technicianThreeTest(savedDomainEntities.get(2)),
+                FilterTechnicianTestData.technicianFourTest(savedDomainEntities.get(1)),
+                FilterTechnicianTestData.technicianFiveTest(savedDomainEntities.get(3))
         );
-
-        technicianRepository.saveAll(technicians);
+//        save technicians data test
+        technicianRepository.saveAll(technicianEntities);
     }
 
     @Test

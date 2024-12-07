@@ -19,7 +19,7 @@ public class PortfolioEntity {
     private String photo;
 
 //    Each portfolio of works assigned to exactly one technician
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "technician_id")
     private TechnicianEntity technicianEntity;
 }

@@ -25,7 +25,7 @@ public class TechnicianEntity extends UserEntity {
     private List<PortfolioEntity> portfolioEntities;
 
 //    Each technician assigned to exactly one domain
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "domain_id", nullable = false)
     private DomainEntity domainEntity;
 }
