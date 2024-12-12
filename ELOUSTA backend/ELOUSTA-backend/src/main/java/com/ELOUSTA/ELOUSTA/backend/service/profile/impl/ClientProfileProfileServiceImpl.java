@@ -31,7 +31,7 @@ public class ClientProfileProfileServiceImpl implements ClientProfileService {
     }
 
     @Override
-    public void removeClientProfilePhoto(Integer id) {
+    public void removeClientProfilePicture(Integer id) {
         clientRepository.deleteProfilePictureById(id);
     }
 
