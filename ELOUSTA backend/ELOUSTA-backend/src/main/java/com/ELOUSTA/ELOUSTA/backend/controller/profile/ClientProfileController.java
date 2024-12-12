@@ -26,4 +26,10 @@ public class ClientProfileController {
         return clientDTO.map(client -> new ResponseEntity<ClientProfileProfileDTO>(client, HttpStatus.OK))
                 .orElse(new ResponseEntity<ClientProfileProfileDTO>(HttpStatus.NOT_FOUND));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeClientProfilePicture(@PathVariable Integer id) {
+        clientService.removeClientProfilePhoto(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
