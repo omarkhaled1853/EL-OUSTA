@@ -28,15 +28,22 @@ public class TechnicianProfileController {
     }
 
     @DeleteMapping("/delete/profile-picture/{id}")
-    public ResponseEntity<?> removeClientProfilePicture(@PathVariable Integer id) {
+    public ResponseEntity<?> removeTechnicianProfilePicture(@PathVariable Integer id) {
         technicianProfileService.removeTechnicianProfilePhoto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/patch/password/{id}")
-    public ResponseEntity<?> resetClientPassword(@PathVariable Integer id,
+    public ResponseEntity<?> resetTechnicianPassword(@PathVariable Integer id,
                                                  @RequestBody String newPassword) {
         technicianProfileService.resetTechnicianPassword(id, newPassword);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/delete/portfolio/{id}/{portfolioId}")
+    public ResponseEntity<?> removeTechnicianPortfolio(@PathVariable Integer id,
+                                                       @PathVariable Integer portfolioId) {
+        technicianProfileService.removeTechnicianPortfolio(id, portfolioId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
