@@ -40,7 +40,7 @@ public class ClientProfileProfileServiceImpl implements ClientProfileService {
         Optional<ClientEntity> clientEntityOptional = clientRepository.findById(id);
 
         if (clientEntityOptional.isEmpty()) {
-            throw  new UsernameNotFoundException("Client with " + id + "not exist");
+            throw  new UsernameNotFoundException("Client with " + id + " not exist");
         }
 
         ClientEntity clientEntity = clientEntityOptional.get();
