@@ -1,11 +1,13 @@
 package com.ELOUSTA.ELOUSTA.backend.service.profile.impl;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.TechnicianProfileService;
 import com.ELOUSTA.ELOUSTA.backend.utils.TechnicianMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -33,5 +35,20 @@ public class TechnicianProfileServiceImpl implements TechnicianProfileService {
     @Override
     public void removeTechnicianProfilePhoto(Integer id) {
         technicianRepository.deleteProfilePictureById(id);
+    }
+
+    @Override
+    public void resetTechnicianPassword(Integer id, String newPassword) {
+        Optional<TechnicianEntity> technicianEntityOptional = technicianRepository.findById(id);
+
+        if (technicianEntityOptional.isEmpty()) {
+            throw  new UsernameNotFoundException("Technician with " + id + " not exist");
+        }
+
+        TechnicianEntity technicianEntity = technicianEntityOptional.get();
+
+        technicianEntity.setPassword(newPassword);
+
+        technicianRepository.save(technicianEntity);
     }
 }
