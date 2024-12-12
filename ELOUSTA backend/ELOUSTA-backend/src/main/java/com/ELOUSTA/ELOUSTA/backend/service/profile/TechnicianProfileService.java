@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface TechnicianProfileService {
     Optional<TechnicianProfileProfileDTO> getTechnician(Integer id);
+    void removeTechnicianProfilePhoto(Integer id);
 }
