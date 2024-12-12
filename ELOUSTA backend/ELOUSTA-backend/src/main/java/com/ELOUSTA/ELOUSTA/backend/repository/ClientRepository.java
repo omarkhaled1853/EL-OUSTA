@@ -17,6 +17,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
     @Modifying
     @Query("UPDATE ClientEntity c" +
             " SET c.profilePicture = NULL" +
-            " WHERE u.id = :clientId")
+            " WHERE c.id = :clientId")
     void deleteProfilePictureById(@Param("clientId") Integer id);
 }

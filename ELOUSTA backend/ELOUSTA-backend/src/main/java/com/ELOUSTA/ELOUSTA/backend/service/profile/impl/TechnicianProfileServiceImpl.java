@@ -29,4 +29,9 @@ public class TechnicianProfileServiceImpl implements TechnicianProfileService {
             }
         });
     }
+
+    @Override
+    public void removeTechnicianProfilePhoto(Integer id) {
+        technicianRepository.deleteProfilePictureById(id);
+    }
 }

@@ -2,6 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.repository;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,10 @@ public interface TechnicianRepository extends JpaRepository<TechnicianEntity, In
             "LEFT JOIN FETCH t.portfolioEntities p " +
             "WHERE t.id = :technicianId")
     Optional<TechnicianEntity> findTechnicianWithDomainAndPortfolio(@Param("technicianId") Integer technicianId);
+
+    @Modifying
+    @Query("UPDATE TechnicianEntity t" +
+            " SET t.profilePicture = NULL" +
+            " WHERE t.id = :technicianId")
+    void deleteProfilePictureById(@Param("technicianId") Integer id);
 }

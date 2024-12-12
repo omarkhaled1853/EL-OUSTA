@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.service.impl;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.TechnicianProfileServiceImpl;
@@ -16,10 +17,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testTechnicianEntity;
-import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testTechnicianProfileDto;
+import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -57,5 +58,14 @@ public class TechnicianProfileServiceImplTest {
         final Optional<TechnicianProfileProfileDTO> result = technicianProfileService.getTechnician(id);
 
         assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    public void testForDeleteProfilePictureById() throws IOException {
+        final TechnicianEntity technicianEntity = testTechnicianEntity();
+
+        technicianRepository.deleteProfilePictureById(technicianEntity.getId());
+
+        verify(technicianRepository).deleteProfilePictureById(eq(technicianEntity.getId()));
     }
 }
