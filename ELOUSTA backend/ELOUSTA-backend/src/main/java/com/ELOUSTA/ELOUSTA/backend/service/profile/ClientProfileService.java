@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ClientProfileService {
     Optional<ClientProfileProfileDTO> getClient(Integer id);
     void removeClientProfilePhoto(Integer id);
+    void resetClientPassword(Integer id, String newPassword);
 }
