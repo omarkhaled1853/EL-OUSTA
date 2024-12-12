@@ -32,4 +32,11 @@ public class ClientProfileController {
         clientService.removeClientProfilePhoto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PatchMapping("/patch/password/{id}")
+    public ResponseEntity<?> resetClientPassword(@PathVariable Integer id,
+                                                 @RequestBody String newPassword) {
+        clientService.resetClientPassword(id, newPassword);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
