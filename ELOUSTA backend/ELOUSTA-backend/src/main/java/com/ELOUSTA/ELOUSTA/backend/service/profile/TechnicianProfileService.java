@@ -9,4 +9,5 @@ public interface TechnicianProfileService {
     Optional<TechnicianProfileProfileDTO> getTechnician(Integer id);
     void removeTechnicianProfilePhoto(Integer id);
     void resetTechnicianPassword(Integer id, String newPassword);
+    void removeTechnicianPortfolio(Integer id, Integer portfolioId);
 }
