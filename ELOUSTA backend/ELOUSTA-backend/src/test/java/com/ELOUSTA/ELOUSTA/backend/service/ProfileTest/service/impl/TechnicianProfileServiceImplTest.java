@@ -64,7 +64,7 @@ public class TechnicianProfileServiceImplTest {
     public void testForDeleteProfilePictureById() throws IOException {
         final TechnicianEntity technicianEntity = testTechnicianEntity();
 
-        technicianRepository.deleteProfilePictureById(technicianEntity.getId());
+        technicianProfileService.removeTechnicianProfilePhoto(technicianEntity.getId());
 
         verify(technicianRepository).deleteProfilePictureById(eq(technicianEntity.getId()));
     }

@@ -27,7 +27,7 @@ public class TechnicianProfileController {
                 .orElse(new ResponseEntity<TechnicianProfileProfileDTO>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/delete/profile_picture/{id}")
+    @DeleteMapping("/delete/profile-picture/{id}")
     public ResponseEntity<?> removeClientProfilePicture(@PathVariable Integer id) {
         technicianProfileService.removeTechnicianProfilePhoto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
