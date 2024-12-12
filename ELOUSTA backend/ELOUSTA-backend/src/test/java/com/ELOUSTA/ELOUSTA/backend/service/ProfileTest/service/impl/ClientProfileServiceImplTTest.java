@@ -19,7 +19,9 @@ import java.util.Optional;
 import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testClientProfileDTO;
 import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testClientEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -57,5 +59,14 @@ public class ClientProfileServiceImplTTest {
         final Optional<ClientProfileProfileDTO> result = clientProfileProfileService.getClient(id);
 
         assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    public void testForDeleteProfilePictureById() throws IOException {
+        final ClientEntity clientEntity = testClientEntity();
+
+        clientRepository.deleteProfilePictureById(clientEntity.getId());
+
+        verify(clientRepository).deleteProfilePictureById(eq(clientEntity.getId()));
     }
 }
