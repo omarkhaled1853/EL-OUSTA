@@ -29,7 +29,7 @@ public class TechnicianProfileController {
 
     @DeleteMapping("/delete/profile-picture/{id}")
     public ResponseEntity<?> removeTechnicianProfilePicture(@PathVariable Integer id) {
-        technicianProfileService.removeTechnicianProfilePhoto(id);
+        technicianProfileService.removeTechnicianProfilePicture(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

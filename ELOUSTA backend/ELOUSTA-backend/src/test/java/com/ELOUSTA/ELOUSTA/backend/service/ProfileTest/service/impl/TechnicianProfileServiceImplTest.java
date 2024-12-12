@@ -1,7 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.service.impl;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
-import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.TechnicianProfileServiceImpl;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.IOException;
@@ -69,7 +67,7 @@ public class TechnicianProfileServiceImplTest {
 
         doNothing().when(technicianRepository).deleteProfilePictureById(technicianEntity.getId());
 
-        technicianProfileService.removeTechnicianProfilePhoto(technicianEntity.getId());
+        technicianProfileService.removeTechnicianProfilePicture(technicianEntity.getId());
 
         verify(technicianRepository).deleteProfilePictureById(eq(technicianEntity.getId()));
     }

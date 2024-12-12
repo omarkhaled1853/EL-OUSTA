@@ -66,7 +66,7 @@ public class ClientProfileServiceImplTTest {
 
         doNothing().when(clientRepository).deleteProfilePictureById(clientEntity.getId());
 
-        clientProfileProfileService.removeClientProfilePhoto(clientEntity.getId());
+        clientProfileProfileService.removeClientProfilePicture(clientEntity.getId());
 
         verify(clientRepository).deleteProfilePictureById(eq(clientEntity.getId()));
     }
