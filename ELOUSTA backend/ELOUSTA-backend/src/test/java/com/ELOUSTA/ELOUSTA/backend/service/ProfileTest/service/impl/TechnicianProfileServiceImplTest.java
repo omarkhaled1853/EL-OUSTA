@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.IOException;
@@ -109,5 +110,25 @@ public class TechnicianProfileServiceImplTest {
 
         verify(technicianRepository).findById(id);
         verify(technicianRepository, never()).save(any());
+    }
+
+    @Test
+    public void testForDeleteExistingPortfolioByPortfolioIdAndTechnicianId() {
+        final TechnicianEntity technicianEntity = testTechnicianEntity();
+
+        doNothing().when(technicianRepository).deletePortfolioByIdAndTechnicianId(
+                technicianEntity.getId(),
+                technicianEntity.getPortfolioEntities().getFirst().getId()
+        );
+
+        technicianProfileService.removeTechnicianPortfolio(
+                technicianEntity.getId(),
+                technicianEntity.getPortfolioEntities().getFirst().getId()
+        );
+
+        verify(technicianRepository).deletePortfolioByIdAndTechnicianId(
+                technicianEntity.getId(),
+                technicianEntity.getPortfolioEntities().getFirst().getId()
+        );
     }
 }
