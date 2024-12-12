@@ -12,17 +12,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.IOException;
 import java.util.Optional;
 
 import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testClientProfileDTO;
 import static com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.ProfileTestData.testClientEntity;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
@@ -68,5 +67,42 @@ public class ClientProfileServiceImplTTest {
         clientProfileProfileService.removeClientProfilePhoto(clientEntity.getId());
 
         verify(clientRepository).deleteProfilePictureById(eq(clientEntity.getId()));
+    }
+
+    @Test
+    public void testForResetPasswordForExistingClient() {
+        final ClientEntity clientEntity = testClientEntity();
+
+        when(clientRepository.findById(eq(clientEntity.getId()))).thenReturn(Optional.of(clientEntity));
+
+
+        String newPassword = "newPassword";
+        clientProfileProfileService.resetClientPassword(
+                clientEntity.getId(),
+                newPassword
+                );
+
+        verify(clientRepository).findById(clientEntity.getId());
+        verify(clientRepository).save(clientEntity);
+
+        assertEquals(newPassword, clientEntity.getPassword());
+    }
+
+    @Test
+    public void testForResetPasswordForNonExistingClient() {
+        Integer id = 123;
+
+        when(clientRepository.findById(id)).thenReturn(Optional.empty());
+
+        String newPassword = "newPassword";
+        UsernameNotFoundException exception = assertThrows(
+                UsernameNotFoundException.class,
+                () -> clientProfileProfileService.resetClientPassword(id, newPassword)
+        );
+
+        assertEquals("Client with " + id + " not exist", exception.getMessage());
+
+        verify(clientRepository).findById(id);
+        verify(clientRepository, never()).save(any());
     }
 }
