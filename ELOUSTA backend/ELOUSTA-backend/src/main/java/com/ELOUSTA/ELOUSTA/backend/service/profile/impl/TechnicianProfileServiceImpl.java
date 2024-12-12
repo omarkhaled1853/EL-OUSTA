@@ -51,4 +51,9 @@ public class TechnicianProfileServiceImpl implements TechnicianProfileService {
 
         technicianRepository.save(technicianEntity);
     }
+
+    @Override
+    public void removeTechnicianPortfolio(Integer id, Integer portfolioId) {
+        technicianRepository.deletePortfolioByIdAndTechnicianId(id, portfolioId);
+    }
 }
