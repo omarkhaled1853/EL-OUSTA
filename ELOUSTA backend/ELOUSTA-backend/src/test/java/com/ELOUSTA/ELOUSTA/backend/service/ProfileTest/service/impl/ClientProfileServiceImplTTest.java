@@ -64,6 +64,8 @@ public class ClientProfileServiceImplTTest {
     public void testForDeleteProfilePictureById() throws IOException {
         final ClientEntity clientEntity = testClientEntity();
 
+        doNothing().when(clientRepository).deleteProfilePictureById(clientEntity.getId());
+
         clientProfileProfileService.removeClientProfilePhoto(clientEntity.getId());
 
         verify(clientRepository).deleteProfilePictureById(eq(clientEntity.getId()));
