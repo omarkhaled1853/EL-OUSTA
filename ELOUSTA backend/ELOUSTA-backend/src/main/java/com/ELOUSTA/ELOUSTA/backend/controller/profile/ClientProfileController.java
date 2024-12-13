@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/client")
+@RequestMapping("/client/profile")
 public class ClientProfileController {
     private final ClientProfileService clientService;
 
