@@ -1,6 +1,5 @@
-package com.ELOUSTA.ELOUSTA.backend.entity;
+package com.ELOUSTA.ELOUSTA.backend.dto.authDto;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.authDto.ResetPasswordRequest;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
