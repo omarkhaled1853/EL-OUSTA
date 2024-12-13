@@ -2,28 +2,25 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.sortRequestsService;
+import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.filterRequestsService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 @SpringBootTest
-public class sortRequestsServiceTesting {
+public class filterRequestServiceTesting {
 
     @Autowired
     private RequestRepository repository;
     @Autowired
-    private sortRequestsService service;
+    private filterRequestsService service;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     @BeforeEach
     void setup() throws ParseException {
@@ -39,7 +36,7 @@ public class sortRequestsServiceTesting {
         entity1.setTechId(3);
         entity1.setState("PENDING");
         entity1.setDescription("Fixing server issues");
-        entity1.setLocation("New York");
+        entity1.setLocation("Boston");
         entity1.setStartDate(dateFormat.parse("2/2/2024"));
         entity1.setEndDate(dateFormat.parse("5/1/2024"));
         requestEntities.add(entity1);
@@ -48,9 +45,9 @@ public class sortRequestsServiceTesting {
         RequestEntity entity2 = new RequestEntity();
         entity2.setUserId(7);
         entity2.setTechId(3);
-        entity2.setState("COMPLETED");
+        entity2.setState("PENDING");
         entity2.setDescription("Testing security patches");
-        entity2.setLocation("Seattle");
+        entity2.setLocation("Boston");
         entity2.setStartDate(dateFormat.parse("20/03/2024"));
         entity2.setEndDate(dateFormat.parse("25/03/2024"));
         requestEntities.add(entity2);
@@ -147,18 +144,20 @@ public class sortRequestsServiceTesting {
         this.repository.saveAll(requestEntities);
     }
 
+    @Test
+
+    void shouldReturnTwoRequests()
+    {
+        List<RequestEntity>answer=service.filterRequests(3,"PENDING","bost");
+        Assertions.assertEquals(2,answer.size());
+    }
 
     @Test
-    void test1() throws ParseException {
-        List<RequestEntity>answer=this.service.sortRequests(3,"startDate","PENDING");
-        Assertions.assertEquals(answer.size(),1);
-        Assertions.assertEquals(dateFormat.parse("2/2/2024"),answer.get(0).getStartDate());
-    }
-    @Test
-    void test2() throws ParseException {
-        List<RequestEntity>answer=this.service.sortRequests(3,"endDate","IN-PROGRESS");
-        Assertions.assertEquals(answer.size(),2);
-        Assertions.assertEquals(dateFormat.parse("10/2/2024"),answer.get(0).getEndDate());
+    void shouldReturnOneRequest()
+    {
+        List<RequestEntity>answer=service.filterRequests(4,"PENDING","iami");
+        Assertions.assertEquals(1,answer.size());
+        Assertions.assertEquals("Database optimization",answer.get(0).getDescription());
     }
 
 }

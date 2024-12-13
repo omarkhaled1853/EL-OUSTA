@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.RequestsSearching;
+package com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.RequestsSearching;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 
