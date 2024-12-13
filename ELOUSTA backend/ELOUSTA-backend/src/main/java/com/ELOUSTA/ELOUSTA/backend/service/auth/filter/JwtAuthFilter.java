@@ -43,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails;
 
             String requestURI = request.getRequestURI();
-            if(requestURI.startsWith("/user")){
+            if(requestURI.startsWith("/client")){
                 userDetails = userService.loadUserByUsername(username);
             } else if (requestURI.startsWith("/tech")) {
                 userDetails = technicianAuthenticationService.loadUserByUsername(username);

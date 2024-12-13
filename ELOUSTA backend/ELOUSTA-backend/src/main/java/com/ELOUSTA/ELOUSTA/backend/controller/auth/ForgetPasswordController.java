@@ -23,7 +23,7 @@ public class ForgetPasswordController {
     private JwtService jwtService;
 
 
-    @PostMapping("/user/fetchUser")
+    @PostMapping("/client/fetchUser")
     public ClientEntity fetchUser(@RequestBody FetchUserRequest request){
         return clientAuthenticationService.loadUserByUsernameAsUserInfo(request.getUsername());
     }
@@ -32,7 +32,7 @@ public class ForgetPasswordController {
     public TechnicianEntity fetchTechnician(@RequestBody FetchUserRequest request){
         return technicianAuthenticationService.loadUserByUsernameAsTechnician(request.getUsername());
     }
-    @PostMapping("/user/resetPassword")
+    @PostMapping("/client/resetPassword")
     public String userResetPassword(@RequestBody ResetPasswordRequest request){
         String resetPasswordStatus = clientAuthenticationService.resetPassword(request);
         if (resetPasswordStatus.equals(ValidationStatus.VALID.getMessage())) {

@@ -44,12 +44,12 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/user/signUp", "/user/signIn",
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
-                                "/user/signIn/google", "/tech/signIn/google",
-                                "/user/resetPassword", "/tech/resetPassword",
-                                "/user/fetchUser", "/tech/fetchTch").permitAll()
-                        .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
+                                "/client/signIn/google", "/tech/signIn/google",
+                                "/client/resetPassword", "/tech/resetPassword",
+                                "/client/fetchUser", "/tech/fetchTch").permitAll()
+                        .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Make the session stateless as we make per request token
@@ -97,7 +97,7 @@ public class SecurityConfig {
                         .getRequest().getRequestURI();
 
                 // If the URL is related to a user, use UserService AuthenticationProvider
-                if (requestURI.startsWith("/user")) {
+                if (requestURI.startsWith("/client")) {
                     return userAuthenticationProvider().authenticate(authentication);
                 }
 
