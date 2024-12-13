@@ -5,7 +5,6 @@ import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -15,6 +14,6 @@ public class LocationFilter implements IRequestFilter{
 
     @Override
     public List<RequestEntity> Filter(int id, String state, String query) {
-        return this.repository.FilterRequestsByLocation(id, state, query);
+        return this.repository.filterRequestsByLocation(id, state, query);
     }
 }

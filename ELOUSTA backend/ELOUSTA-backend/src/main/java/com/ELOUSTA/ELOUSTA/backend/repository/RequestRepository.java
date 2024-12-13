@@ -17,7 +17,9 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
     List<RequestEntity> sortRequestsByEndDate(@Param("techId") int techId,@Param("state")String state);
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND LOCATION LIKE CONCAT('%', :filterTerm, '%')", nativeQuery = true)
-    List<RequestEntity> FilterRequestsByLocation(@Param("techId") int techId, @Param("state") String state, @Param("filterTerm") String filterTerm);
+    List<RequestEntity> filterRequestsByLocation(@Param("techId") int techId, @Param("state") String state, @Param("filterTerm") String filterTerm);
 
+    @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND DESCRIPTION LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
+    List<RequestEntity> searchRequestsByDescription(@Param("techId") int techId, @Param("state") String state, @Param("searchTerm") String searchTerm);
 
 }
