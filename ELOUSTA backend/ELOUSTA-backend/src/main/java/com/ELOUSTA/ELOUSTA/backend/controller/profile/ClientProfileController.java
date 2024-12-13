@@ -13,16 +13,16 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/client/profile")
 public class ClientProfileController {
-    private final ClientProfileService clientService;
+    private final ClientProfileService clientProfileService;
 
     @Autowired
-    public ClientProfileController(ClientProfileService clientService) {
-        this.clientService = clientService;
+    public ClientProfileController(ClientProfileService clientProfileService) {
+        this.clientProfileService = clientProfileService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClientProfileProfileDTO> getClient(@PathVariable Integer id) {
-        Optional<ClientProfileProfileDTO> clientDTO = clientService.getClient(id);
+        Optional<ClientProfileProfileDTO> clientDTO = clientProfileService.getClient(id);
         return clientDTO.map(client -> new ResponseEntity<ClientProfileProfileDTO>(client, HttpStatus.OK))
                 .orElse(new ResponseEntity<ClientProfileProfileDTO>(HttpStatus.NOT_FOUND));
     }
