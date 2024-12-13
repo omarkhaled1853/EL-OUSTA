@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IRequestSort {
 
-    List<RequestEntity> sort(final List<RequestEntity> data);
+
+    List<RequestEntity> sort(int id);
 }
