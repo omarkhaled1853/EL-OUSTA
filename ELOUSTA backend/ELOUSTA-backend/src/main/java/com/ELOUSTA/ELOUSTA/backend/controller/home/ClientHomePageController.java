@@ -15,14 +15,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/client/home")
-public class UserHomePageController {
+public class ClientHomePageController {
     private final FilterTechnicianService filterService;
     private final SearchTechnicianService searchService;
     private final SortTechnicianService sortService;
 
     @Autowired
-    public UserHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
-                                  SortTechnicianService sortService) {
+    public ClientHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
+                                    SortTechnicianService sortService) {
         this.filterService = filterService;
         this.searchService = searchService;
         this.sortService = sortService;
