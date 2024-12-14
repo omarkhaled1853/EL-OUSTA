@@ -40,4 +40,18 @@ public class SearchTechnicianService {
         return DTOs;
 
     }
+
+    public List<HomeTechnicianDTO> searchTechniciansOfSpecificProfession(String searchQuery,int domainId) throws IOException {
+        List<TechnicianEntity>dataBaseTechnicians=this.repository.findTechniciansByDomain(domainId);
+        ArrayList<Technician> technicians=new ArrayList<>();
+        for (TechnicianEntity entity:dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
+        }
+        List<Technician> searchedList = techSearch.JaroSearch(searchQuery,technicians);
+        List<HomeTechnicianDTO>DTOs=new ArrayList<>();
+        for (Technician tech: searchedList) {
+            DTOs.add(TechnicianMapper.technicainToHomeTechnicianDTO(tech));
+        }
+        return DTOs;
+    }
 }

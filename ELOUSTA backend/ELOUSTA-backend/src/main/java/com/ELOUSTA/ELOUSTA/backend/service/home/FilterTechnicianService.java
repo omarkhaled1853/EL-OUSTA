@@ -38,4 +38,19 @@ public class FilterTechnicianService {
         }
         return DTOs;
     }
+
+    public List<HomeTechnicianDTO> filterTechniciansOfASpecificProfession(String filterType,String filterQuery,int domainId) throws IOException {
+        List<TechnicianEntity>dataBaseTechnicians=this.repository.findTechniciansByDomain(domainId);
+        ArrayList<Technician>technicians=new ArrayList<>();
+        for (TechnicianEntity entity:dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
+        }
+        ITechFilter iTechFilter=this.filterCriteriaFactory.getInstance(filterType);
+        List<Technician>filtered=iTechFilter.Filter(filterQuery,technicians);
+        List<HomeTechnicianDTO>DTOs=new ArrayList<>();
+        for (Technician tech:filtered) {
+            DTOs.add(TechnicianMapper.technicainToHomeTechnicianDTO(tech));
+        }
+        return DTOs;
+    }
 }

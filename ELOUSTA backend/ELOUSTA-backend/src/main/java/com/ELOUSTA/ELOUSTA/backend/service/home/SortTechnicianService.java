@@ -40,4 +40,20 @@ public class SortTechnicianService {
         }
         return DTOs;
     }
+
+    public List<HomeTechnicianDTO> sortTechniciansOfASpecificProfession(String field,int DomainId) throws IOException {
+        List<TechnicianEntity>dataBaseTechnicians=this.repository.findTechniciansByDomain(DomainId);
+        ArrayList<Technician> technicians=new ArrayList<>();
+        for (TechnicianEntity entity:dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
+        }
+        ITechSort iTechSort =this.sortStrategyFactory.getInstance(field);
+        List<Technician> sorted =iTechSort.sort(technicians);
+        List<HomeTechnicianDTO>DTOs=new ArrayList<>();
+        for (Technician tech: sorted) {
+            DTOs.add(TechnicianMapper.technicainToHomeTechnicianDTO(tech));
+        }
+        return DTOs;
+    }
+
 }
