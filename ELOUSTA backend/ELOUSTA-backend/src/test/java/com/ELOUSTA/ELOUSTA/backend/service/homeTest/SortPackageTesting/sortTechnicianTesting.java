@@ -76,4 +76,21 @@ public class sortTechnicianTesting {
         Assertions.assertEquals(DTOs.get(0).getFirstName(),"youssef"); //they came in same order
     }
 
+    @Test
+    void sortElectricalTechsByRate() throws IOException {
+        List<HomeTechnicianDTO>DTOs=sortService.sortTechniciansOfASpecificProfession("rate",domainRepository.getDomainByName("Electrical").getId());
+
+        Assertions.assertEquals(2,DTOs.size());
+        Assertions.assertEquals("Mahmoud",DTOs.get(0).getFirstName());
+
+    }
+
+    @Test
+    void sortElectricalTechsByExperience() throws IOException {
+        List<HomeTechnicianDTO>DTOs=sortService.sortTechniciansOfASpecificProfession("experience",domainRepository.getDomainByName("Electrical").getId());
+
+        Assertions.assertEquals(2,DTOs.size());
+        Assertions.assertEquals("Omar",DTOs.get(0).getFirstName());
+    }
+
 }

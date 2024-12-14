@@ -15,7 +15,7 @@ public class TechnicianDomainFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getDomainDTO().getName().contains(query))
+            if(tech.getDomainDTO().getName().toLowerCase().contains(query.toLowerCase()))
                 Answer.add(tech);
         }
         return Answer;

@@ -80,6 +80,13 @@ public class FilterTechnicianTesting {
     }
 
     @Test
+    void shouldReturnMahmoud() throws IOException {
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechniciansOfASpecificProfession("City","alex",domainRepository.getDomainByName("Electrical").getId());
+        Assertions.assertEquals(DTOs.size(),1);
+        Assertions.assertEquals("Mahmoud",DTOs.get(0).getFirstName());
+    }
+
+    @Test
     void nullFilterTest() throws IOException {
         List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("auth","data");
         Assertions.assertEquals(DTOs.size(),5);
