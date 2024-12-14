@@ -36,7 +36,7 @@ public class ClientHomePageController {
     @GetMapping("/")      //Domains don't support search, sort ,filter
     public List<DomainDTO> startPage() throws IOException {
 
-        return null;
+        return domainService.getDomains();
     }
 
     @PostMapping("/search")
