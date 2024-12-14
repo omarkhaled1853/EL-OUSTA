@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @SpringBootTest
@@ -28,8 +29,7 @@ public class sortTechnicianTesting {
     private DomainRepository domainRepository;
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() throws ParseException {
 //        delete technicians first
         technicianRepository.deleteAll();
 //        delete domains

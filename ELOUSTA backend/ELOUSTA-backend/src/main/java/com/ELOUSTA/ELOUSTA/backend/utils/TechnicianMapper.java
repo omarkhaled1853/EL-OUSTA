@@ -10,6 +10,10 @@ import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.model.Technician;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +26,17 @@ public final class TechnicianMapper {
     private static final String portfolioPath = "C:\\images\\portfolio\\";
 
     public static HomeTechnicianDTO technicainToHomeTechnicianDTO(Technician technician) {
+        LocalDate start = technician.getStartDate().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate now = LocalDate.now();
         return HomeTechnicianDTO.builder()
                 .id(technician.getId())
                 .firstName(technician.getFirstName())
                 .lastName(technician.getLastName())
                 .city(technician.getCity())
                 .rate(technician.getRate())
-                .domainDTO(technician.getDomainDTO())
+                .experience((int) ChronoUnit.YEARS.between(start, now))
                 .build();
     }
 
@@ -69,7 +77,8 @@ public final class TechnicianMapper {
                 .email(technicianEntity.getEmailAddress())
                 .city(technicianEntity.getCity())
                 .rate(technicianEntity.getRate())
-                .description(technicianEntity.getDescription())                .domainDTO(domainDTO)
+                .description(technicianEntity.getDescription())
+                .domainDTO(domainDTO)
                 .portfolioDto(portfolioDtoList)
                 .build();
     }

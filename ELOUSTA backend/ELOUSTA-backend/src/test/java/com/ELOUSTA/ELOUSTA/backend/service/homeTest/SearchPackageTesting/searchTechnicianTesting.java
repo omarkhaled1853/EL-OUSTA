@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @SpringBootTest
@@ -30,8 +31,7 @@ public class searchTechnicianTesting {
     private DomainRepository domainRepository;
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() throws ParseException {
 //        delete technicians first
         technicianRepository.deleteAll();
 //        delete domains
@@ -77,7 +77,7 @@ public class searchTechnicianTesting {
         boolean found=false;
         List<HomeTechnicianDTO>DTOs=searchTechService.searchTechnician("lec");
         for (HomeTechnicianDTO dto:DTOs) {
-            if(dto.getDomainDTO().getName().equals("Electrical")) {
+            if(dto.getFirstName().equals("Omar")) {
                 found = true;
                 break;
             }
