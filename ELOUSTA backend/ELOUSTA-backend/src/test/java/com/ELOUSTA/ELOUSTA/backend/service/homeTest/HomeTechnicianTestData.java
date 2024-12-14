@@ -31,7 +31,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianOneTest (DomainEntity domain) {
+    public static TechnicianEntity technicianOneTest (DomainEntity domain) {  //Carpentry
         return TechnicianEntity.builder()
                 .username("joe44")
                 .password("12345678")
@@ -47,7 +47,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianTwoTest (DomainEntity domain) {
+    public static TechnicianEntity technicianTwoTest (DomainEntity domain) {  //Electrical
         return TechnicianEntity.builder()
                 .username("Omar123")
                 .password("safePassword321")
@@ -63,7 +63,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianThreeTest (DomainEntity domain) {
+    public static TechnicianEntity technicianThreeTest (DomainEntity domain) {  //Cleaning
         return TechnicianEntity.builder()
                 .username("Nada312")
                 .password("pass456Secure")
@@ -79,7 +79,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianFourTest (DomainEntity domain)  {
+    public static TechnicianEntity technicianFourTest (DomainEntity domain)  {  //Electrical
         return TechnicianEntity.builder()
                 .username("Mahmoud123")
                 .password("strongPass789")
@@ -95,7 +95,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianFiveTest (DomainEntity domain)  {
+    public static TechnicianEntity technicianFiveTest (DomainEntity domain)  {  //Building
         return TechnicianEntity.builder()
                 .username("Meedo")
                 .password("simplePass101")

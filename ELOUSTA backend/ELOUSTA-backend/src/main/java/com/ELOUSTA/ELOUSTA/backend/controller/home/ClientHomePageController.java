@@ -3,6 +3,7 @@ package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
+import com.ELOUSTA.ELOUSTA.backend.service.home.DomainService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.FilterTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.SearchTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.SortTechnicianService;
@@ -21,12 +22,15 @@ public class ClientHomePageController {
     private final SearchTechnicianService searchService;
     private final SortTechnicianService sortService;
 
+    private final DomainService domainService;
+
     @Autowired
     public ClientHomePageController(FilterTechnicianService filterService, SearchTechnicianService searchService,
-                                    SortTechnicianService sortService) {
+                                    SortTechnicianService sortService,DomainService domainService) {
         this.filterService = filterService;
         this.searchService = searchService;
         this.sortService = sortService;
+        this.domainService=domainService;
     }
 
     @GetMapping("/")      //Domains don't support search, sort ,filter

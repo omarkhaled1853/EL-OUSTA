@@ -98,4 +98,18 @@ public class searchTechnicianTesting {
     }
 
 
+   @Test
+   void searchQuery4() throws IOException {
+       boolean found=false;
+       List<HomeTechnicianDTO>DTOs=searchTechService.searchTechniciansOfSpecificProfession("Alexar",domainRepository.getDomainByName("Electrical").getId());
+       for (HomeTechnicianDTO dto:DTOs) {
+           if(dto.getCity().equals("Alexandria")) {
+               found = true;
+               break;
+           }
+       }
+       Assertions.assertEquals(found,true);
+   }
+
+
 }

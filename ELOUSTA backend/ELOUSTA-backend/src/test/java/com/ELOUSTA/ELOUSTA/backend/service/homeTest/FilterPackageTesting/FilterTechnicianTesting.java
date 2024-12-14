@@ -69,13 +69,13 @@ public class FilterTechnicianTesting {
 
     @Test
     void filterByDomain() throws IOException {
-        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electrical");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electric");
         Assertions.assertEquals(DTOs.size(),2);
     }
 
     @Test
     void shouldNotReturnAnyOne() throws IOException {
-        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","elRaml2");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","Raml2");
         Assertions.assertEquals(DTOs.size(),0);
     }
 
