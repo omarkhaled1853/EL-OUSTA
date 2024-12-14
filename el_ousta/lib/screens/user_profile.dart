@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> fetchClientData() async {
     try {
-      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/1'));
+      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/profile/{id}')); // todo
       if (response.statusCode == 200) {
         setState(() {
           userData = json.decode(response.body); // Parse the fetched data

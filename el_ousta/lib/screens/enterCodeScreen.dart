@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/screens/resetPasswordScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -111,7 +112,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
               ? () async {
               var url, response;
               if(widget.method == 'mail') {
-                url = Uri.parse('http://192.168.1.6:8083/mail/verification/${widget.user.emailAddress}/${_otp}');
+                url = Uri.parse(ServerAPI.baseURL + '/mail/verification/${widget.user.emailAddress}/${_otp}');
                 response = await http.post(
                   url,
                   headers: {
@@ -124,7 +125,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 );
               }
               else {
-                url = Uri.parse('http://192.168.1.6:8083/twilio-otp/verification');
+                url = Uri.parse(ServerAPI.baseURL + '/twilio-otp/verification');
                 response = await http.post(
                   url,
                   headers: {

@@ -33,7 +33,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.get(
-        Uri.parse(ServerAPI.baseURL + '/'), // Replace with your API endpoint
+        Uri.parse(ServerAPI.baseURL + 'client/home/'), // Replace with your API endpoint
       );
 
       if (response.statusCode == 200) {
@@ -61,7 +61,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + '/search'),
+        Uri.parse(ServerAPI.baseURL + 'client/home/search'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode( query),
       );
@@ -91,7 +91,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + '/filter'),
+        Uri.parse(ServerAPI.baseURL + 'client/home/filter'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'field': attribute,
@@ -125,7 +125,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + '/sort'),
+        Uri.parse(ServerAPI.baseURL + 'client/home/sort'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(field),
       );
@@ -177,7 +177,7 @@ class _ClientPageState extends State<ClientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('El Osta'),
+        title: const Text('El Ousta'),
         backgroundColor: Colors.purple,
         actions: <Widget>[
           IconButton(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -47,7 +48,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 });
 
                 var url = Uri.parse(
-                    'http://192.168.1.6:8083/mail/send/${widget.user.emailAddress}');
+                    ServerAPI.baseURL + '/mail/send/${widget.user.emailAddress}');
                 try {
                   var response = await http.post(
                     url,
@@ -123,7 +124,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 });
 
                 var url = Uri.parse(
-                    'http://192.168.1.6:8083/twilio-otp/twilio-sms');
+                    ServerAPI.baseURL + '/twilio-otp/twilio-sms');
                 try {
                   var response = await http.post(
                     url,

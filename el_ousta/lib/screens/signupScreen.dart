@@ -53,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
       log(user.serverAuthCode ?? 'No server auth code');
       var url;
       if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/user/signIn/google');
+        url = Uri.parse(ServerAPI.baseURL + '/client/signIn/google');
       else
         url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
       // make http get request

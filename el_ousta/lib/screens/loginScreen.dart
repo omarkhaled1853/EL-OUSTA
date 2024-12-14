@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       log(user.serverAuthCode ?? 'No server auth code');
       var url;
       if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/user/signIn/google');
+        url = Uri.parse(ServerAPI.baseURL + '/client/signIn/google');
       else
         url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
       // make http get request
@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if(isFormValid) {
       var url;
       if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/user/signIn');
+        url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
       else
         url = Uri.parse(ServerAPI.baseURL + '/tech/signIn');
       // make http get request

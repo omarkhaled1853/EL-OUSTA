@@ -80,7 +80,7 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
     if(isFormValid) {
       var url;
       if(widget.type == Type.USER) {
-        url = Uri.parse(ServerAPI.baseURL + '/user/resetPassword');
+        url = Uri.parse(ServerAPI.baseURL + '/client/resetPassword');
       } else {
         url = Uri.parse(ServerAPI.baseURL + '/tech/resetPassword');
       }

@@ -39,7 +39,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
 
   Future<void> fetchClientData() async {
     try {
-      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/technician/1'));
+      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/tech/profile/{id}')); // todo
       if (response.statusCode == 200) {
 
         setState(() {

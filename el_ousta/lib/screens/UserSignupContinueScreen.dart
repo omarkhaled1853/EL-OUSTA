@@ -75,7 +75,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
           city: _cityController.text,
           roles: 'ROLE_USER'
       );
-      var url = Uri.parse(ServerAPI.baseURL + '/user/signUp');
+      var url = Uri.parse(ServerAPI.baseURL + '/client/signUp');
       // make http get request
       var response = await http.post(
           url,
@@ -88,7 +88,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
       if (response.statusCode == 200) {
         log(response.body);
         if(response.body == 'valid') {
-          url = Uri.parse(ServerAPI.baseURL + '/user/signIn');
+          url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
           // make http get request
           response = await http.post(
             url,

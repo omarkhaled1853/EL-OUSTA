@@ -46,7 +46,7 @@ class UserTechScreen extends StatelessWidget {
                             SizedBox(
                               height: 35,
                               child: Text(
-                                "NORMAL USER",
+                                "CLIENT",
                                 textAlign: TextAlign.center,
                                 softWrap: true,
                                 strutStyle: const StrutStyle(
