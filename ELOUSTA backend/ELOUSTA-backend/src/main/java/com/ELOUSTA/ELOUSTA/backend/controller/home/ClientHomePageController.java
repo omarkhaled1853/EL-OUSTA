@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.home;
 
 
+import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.home.FilterTechnicianService;
 import com.ELOUSTA.ELOUSTA.backend.service.home.SearchTechnicianService;
@@ -28,18 +29,10 @@ public class ClientHomePageController {
         this.sortService = sortService;
     }
 
-    @GetMapping("/")
-    public List<HomeTechnicianDTO> startPage() throws IOException {
-         int counter=0;
-         List<HomeTechnicianDTO>DTOs=sortService.sortTechnicians("rate");
-         List<HomeTechnicianDTO>toBeReturned=new ArrayList<>();
-        for (HomeTechnicianDTO dto:DTOs) {
-            counter++;
-            if (counter==21)
-                break;
-            toBeReturned.add(dto);
-        }
-         return toBeReturned;
+    @GetMapping("/")      //Domains don't support search, sort ,filter
+    public List<DomainDTO> startPage() throws IOException {
+
+        return null;
     }
 
     @PostMapping("/search")
@@ -47,13 +40,28 @@ public class ClientHomePageController {
         return searchService.searchTechnician(query);
     }
 
+    @PostMapping("/search/{id}")
+    public List<HomeTechnicianDTO>searchTechniciansWithSpecificDomain(@RequestBody String query,@PathVariable int id) throws IOException {
+        return searchService.searchTechniciansOfSpecificProfession(query,id);
+    }
+
     @PostMapping("/sort")
     public List<HomeTechnicianDTO>sortTechnicians(@RequestBody String field) throws IOException {
         return sortService.sortTechnicians(field);
     }
 
+    @PostMapping("/sort/{id}")
+    public List<HomeTechnicianDTO>sortTechniciansWithSpecificDomain(@RequestBody String field,@PathVariable int id) throws IOException {
+        return sortService.sortTechniciansOfASpecificProfession(field,id);
+    }
+
+
     @PostMapping("/filter")
     public List<HomeTechnicianDTO>filterTechnicians(@RequestBody HomePayload payload) throws IOException {
         return filterService.filterTechnician(payload.getField(), payload.getQuery());
+    }
+    @PostMapping("/filter/{id}")
+    public List<HomeTechnicianDTO>filterTechnicians(@RequestBody HomePayload payload,@PathVariable int id) throws IOException {
+        return filterService.filterTechniciansOfASpecificProfession(payload.getField(), payload.getQuery(), id);
     }
 }
