@@ -16,7 +16,7 @@ public class TechnicianCityFilter implements ITechFilter {
             return new ArrayList<>();
         ArrayList<Technician>Answer=new ArrayList<>();
         for (Technician tech :technicians) {
-            if(tech.getCity().equals(query))
+            if(tech.getCity().contains(query))
                 Answer.add(tech);
         }
         return Answer;
