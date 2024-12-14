@@ -55,6 +55,7 @@ public class sortTechnicianTesting {
         );
 //        save technicians data test
         technicianRepository.saveAll(technicianEntities);
+
     }
 
     @Test
