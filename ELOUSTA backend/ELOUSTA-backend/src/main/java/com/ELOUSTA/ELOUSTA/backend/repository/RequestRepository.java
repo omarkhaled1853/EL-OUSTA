@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface RequestRepository extends JpaRepository<RequestEntity,Integer> {
 
+
+    @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE= :state", nativeQuery = true)
+    List<RequestEntity> getRequestsByState(@Param("techId")int techId,@Param("state")String state);
+
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE= :state ORDER BY START_DATE", nativeQuery = true)
     List<RequestEntity> sortRequestsByStartDate(@Param("techId") int techId,@Param("state")String state);
 
@@ -21,5 +25,7 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND DESCRIPTION LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
     List<RequestEntity> searchRequestsByDescription(@Param("techId") int techId, @Param("state") String state, @Param("searchTerm") String searchTerm);
+
+//    @Query(value = "SELECT * FROM REQUEST WHERE ID= :id AND TECHID= :techId AND USERID = :clientId")
 
 }

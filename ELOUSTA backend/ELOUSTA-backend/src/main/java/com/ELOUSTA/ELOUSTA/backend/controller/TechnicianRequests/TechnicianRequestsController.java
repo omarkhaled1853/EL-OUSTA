@@ -3,14 +3,13 @@ package com.ELOUSTA.ELOUSTA.backend.controller.TechnicianRequests;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.*;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.filterRequestsService;
+import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.generalTechnicianRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.searchRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.sortRequestsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -18,44 +17,46 @@ import java.util.List;
 public class TechnicianRequestsController {
 
     private final filterRequestsService filterService;
-
     private final searchRequestsService searchService;
     private final sortRequestsService sortService;
+    private final generalTechnicianRequestsService generalService;
+
 
     @Autowired
-    public TechnicianRequestsController(filterRequestsService filterService, searchRequestsService searchService, sortRequestsService sortService) {
+    public TechnicianRequestsController(filterRequestsService filterService, searchRequestsService searchService, sortRequestsService sortService, generalTechnicianRequestsService generalService) throws ParseException {
         this.filterService = filterService;
         this.searchService = searchService;
         this.sortService = sortService;
+        this.generalService = generalService;
     }
 
-    //TODO : Getters
 
-    @GetMapping("/get/pending")
-    private List<RequestEntity>getPendingRequests()
+
+    @GetMapping("/get/pending/{id}")
+    private List<RequestEntity>getPendingRequests(@PathVariable int id)
     {
-        return null;
+        return generalService.getAllRequestsByState(id,"PENDING");
     }
 
 
-    @GetMapping("/get/inProgress")
-    private List<RequestEntity>getInProgressRequests()
+    @GetMapping("/get/inProgress/{id}")
+    private List<RequestEntity>getInProgressRequests(@PathVariable int id)
     {
-        return null;
+        return generalService.getAllRequestsByState(id,"IN-PROGRESS");
     }
 
-    @GetMapping("/get/completed")
+    @GetMapping("/get/completed/{id}")
 
-    private List<RequestEntity>getCompletedRequests()
+    private List<RequestEntity>getCompletedRequests(@PathVariable int id)
     {
-        return null;
+        return generalService.getAllRequestsByState(id,"COMPLETED");
     }
 
 
 
 
 
-    @GetMapping("/filter")
+    @PostMapping("/filter")
 
     private List<RequestEntity>filterRequests(@RequestBody RequestsPayload payload)
     {
@@ -64,7 +65,7 @@ public class TechnicianRequestsController {
 
 
 
-    @GetMapping("/search")
+    @PostMapping("/search")
 
     private List<RequestEntity>searchRequests(@RequestBody RequestsPayload payload)
     {
@@ -72,10 +73,23 @@ public class TechnicianRequestsController {
     }
 
 
-    @GetMapping("/sort")
+    @PostMapping("/sort")
     private List<RequestEntity>sortRequests(@RequestBody SortRequestsPayload payload)
     {
         return this.sortService.sortRequests(payload.getId(), payload.getType(), payload.getState());
     }
+
+    @PostMapping("/Accept")
+    private void receiveAccept(@RequestBody RequestStatusPayload acceptancePayload )
+    {
+        this.generalService.resolveAcceptance(acceptancePayload);
+    }
+
+    @PostMapping("refuse")
+    private void receiveRefusal(@RequestBody RequestStatusPayload refusalPayload)
+    {
+        this.generalService.resolveRefusal(refusalPayload);
+    }
+
 
 }
