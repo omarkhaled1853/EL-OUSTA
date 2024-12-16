@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.TechnicianRequests;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.filterRequestsPayload;
+import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.*;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.filterRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.searchRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.sortRequestsService;
@@ -57,18 +57,25 @@ public class TechnicianRequestsController {
 
     @GetMapping("/filter")
 
-    private List<RequestEntity>filterRequests(@RequestBody filterRequestsPayload payload)
+    private List<RequestEntity>filterRequests(@RequestBody RequestsPayload payload)
     {
         return this.filterService.filterRequests(payload.getId(),payload.getState(), payload.getQuery());
     }
 
 
 
+    @GetMapping("/search")
+
+    private List<RequestEntity>searchRequests(@RequestBody RequestsPayload payload)
+    {
+        return this.searchService.searchRequests(payload.getId(), payload.getState(), payload.getQuery());
+    }
 
 
-    //TODO: searching
-
-
-    //TODO: sorting
+    @GetMapping("/sort")
+    private List<RequestEntity>sortRequests(@RequestBody SortRequestsPayload payload)
+    {
+        return this.sortService.sortRequests(payload.getId(), payload.getType(), payload.getState());
+    }
 
 }
