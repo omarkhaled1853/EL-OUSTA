@@ -48,8 +48,7 @@ public class SecurityConfig {
                                 "/tech/signUp", "/tech/signIn",
                                 "/user/signIn/google", "/tech/signIn/google",
                                 "/user/resetPassword", "/tech/resetPassword",
-                                "/user/fetchUser", "/tech/fetchTch","/tech/requests/get/pending/{id}","/tech/requests/filter","/tech/requests/search","/tech/requests/sort").permitAll()
-
+                                "/user/fetchUser", "/tech/fetchTch").permitAll()
                         .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()

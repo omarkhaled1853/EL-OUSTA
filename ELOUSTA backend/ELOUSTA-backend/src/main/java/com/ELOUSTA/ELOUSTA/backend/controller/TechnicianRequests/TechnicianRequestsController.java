@@ -79,7 +79,7 @@ public class TechnicianRequestsController {
         return this.sortService.sortRequests(payload.getId(), payload.getType(), payload.getState());
     }
 
-    @PostMapping("/Accept")
+    @PostMapping("/accept")
     private void receiveAccept(@RequestBody RequestStatusPayload acceptancePayload )
     {
         this.generalService.resolveAcceptance(acceptancePayload);
