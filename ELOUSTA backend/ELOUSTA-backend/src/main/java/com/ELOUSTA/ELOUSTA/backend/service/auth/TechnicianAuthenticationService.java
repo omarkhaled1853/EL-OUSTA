@@ -43,9 +43,7 @@ public class TechnicianAuthenticationService implements UserDetailsService {
 
     public String addTechnician(TechnicianEntity technicianEntity){
         technicianEntity.setPassword(encoder.encode(technicianEntity.getPassword()));
-        technicianRepository.save(technicianEntity);
-
-        return ValidationStatus.VALID.getMessage();
+        return technicianRepository.save(technicianEntity).getId().toString();
     }
 
     public String resetPassword(ResetPasswordRequest request){
