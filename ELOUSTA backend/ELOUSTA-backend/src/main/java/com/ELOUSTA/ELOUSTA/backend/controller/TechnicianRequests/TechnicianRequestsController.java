@@ -85,7 +85,7 @@ public class TechnicianRequestsController {
         this.generalService.resolveAcceptance(acceptancePayload);
     }
 
-    @PostMapping("refuse")
+    @PostMapping("/refuse")
     private void receiveRefusal(@RequestBody RequestStatusPayload refusalPayload)
     {
         this.generalService.resolveRefusal(refusalPayload);

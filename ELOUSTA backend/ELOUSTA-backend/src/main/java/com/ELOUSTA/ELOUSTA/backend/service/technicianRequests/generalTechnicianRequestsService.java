@@ -47,10 +47,11 @@ public class generalTechnicianRequestsService {
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
 
         //WILL be used in notification
-        String message=technician.getUsername()+" Refused your request ";
+        String message=technician.getUsername()+" Accepted your request ";
         ClientEntity client=clientRepository.findById(acceptancePayload.getClientId())
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
         int clientID=client.getId();
+
     }
 
     @Transactional
