@@ -31,7 +31,7 @@ public class ClientRequestsServiceImpl implements ClientRequestsService {
 
     @Override
     public List<ClientRequestDTO> getClientCompletedRequests(int id) {
-        List<RequestEntity> clientRequestEntityList = requestRepository.getClientRequestsByState(id, "IN-PROGRESS");
+        List<RequestEntity> clientRequestEntityList = requestRepository.getClientRequestsByState(id, "COMPLETED");
         return RequestEntityListToClientRequestDTOList(clientRequestEntityList);
     }
 }
