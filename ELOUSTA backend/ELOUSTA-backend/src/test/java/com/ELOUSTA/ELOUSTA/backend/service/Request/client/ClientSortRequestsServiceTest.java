@@ -3,8 +3,8 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request.client;
 import com.ELOUSTA.ELOUSTA.backend.dto.ClientRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientSortRequestsService;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.SortByEndDate;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.SortByStartDate;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.ClientSortByEndDate;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.ClientSortByStartDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,10 +21,10 @@ import static org.mockito.Mockito.*;
 
 public class ClientSortRequestsServiceTest {
     @Mock
-    private SortByEndDate sortByEndDate;
+    private ClientSortByEndDate clientSortByEndDate;
 
     @Mock
-    private SortByStartDate sortByStartDate;
+    private ClientSortByStartDate clientSortByStartDate;
 
     @InjectMocks
     private ClientSortRequestsService clientSortRequestsService;
@@ -52,15 +52,15 @@ public class ClientSortRequestsServiceTest {
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ClientRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(mockRequestEntityList);
 
-        when(sortByStartDate.sort(id, state)).thenReturn(mockRequestEntityList);
+        when(clientSortByStartDate.sort(id, state)).thenReturn(mockRequestEntityList);
 
         // Act
         List<ClientRequestDTO> actualDTOList = clientSortRequestsService.sortRequests(id, type, state);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
-        verify(sortByStartDate, times(1)).sort(id, state);
-        verify(sortByEndDate, never()).sort(anyInt(), anyString());
+        verify(clientSortByStartDate, times(1)).sort(id, state);
+        verify(clientSortByEndDate, never()).sort(anyInt(), anyString());
     }
 
     @Test
@@ -81,15 +81,15 @@ public class ClientSortRequestsServiceTest {
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ClientRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(mockRequestEntityList);
 
-        when(sortByEndDate.sort(id, state)).thenReturn(mockRequestEntityList);
+        when(clientSortByEndDate.sort(id, state)).thenReturn(mockRequestEntityList);
 
         // Act
         List<ClientRequestDTO> actualDTOList = clientSortRequestsService.sortRequests(id, type, state);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
-        verify(sortByEndDate, times(1)).sort(id, state);
-        verify(sortByStartDate, never()).sort(anyInt(), anyString());
+        verify(clientSortByEndDate, times(1)).sort(id, state);
+        verify(clientSortByStartDate, never()).sort(anyInt(), anyString());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ClientSortRequestsServiceTest {
 
         // Assert
         assertNull(actualDTOList);
-        verify(sortByStartDate, never()).sort(anyInt(), anyString());
-        verify(sortByEndDate, never()).sort(anyInt(), anyString());
+        verify(clientSortByStartDate, never()).sort(anyInt(), anyString());
+        verify(clientSortByEndDate, never()).sort(anyInt(), anyString());
     }
 }

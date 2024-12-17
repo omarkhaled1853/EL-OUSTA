@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SortByEndDate implements IRequestSort {
+public class ClientSortByEndDate implements IRequestSort {
     @Autowired
     private RequestRepository repository;
 

@@ -4,9 +4,9 @@ package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.payloads;
 import lombok.Data;
 
 @Data
-public class SortRequestsPayload {
+public class ClientRequestsPayload {
 
     private int id;
-    private String type;
     private String state;
+    private String query;
 }

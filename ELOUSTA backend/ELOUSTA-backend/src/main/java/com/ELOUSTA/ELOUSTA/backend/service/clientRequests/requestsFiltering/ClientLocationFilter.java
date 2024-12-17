@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSearch;
+package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsFiltering;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RequestsSearch {
+public class ClientLocationFilter implements IRequestFilter {
     @Autowired
     private RequestRepository repository;
 
-    public List<RequestEntity> searchRequests(int id, String state, String Query)
-    {
-        return repository.searchClientRequestsByDescription(id, state, Query);
+    @Override
+    public List<RequestEntity> Filter(int id, String state, String query) {
+        return this.repository.filterClientRequestsByLocation(id, state, query);
     }
 }

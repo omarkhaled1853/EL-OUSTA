@@ -23,6 +23,7 @@ public class ClientRequestsController {
     private final ClientSortRequestsService clientSortRequestsService;
     private final ClientFilterRequestsService clientFilterRequestsService;
 
+    @Autowired
     public ClientRequestsController(ClientRequestsServiceImpl clientRequestsService,
                                     ClientSearchRequestsService clientSearchRequestsService,
                                     ClientSortRequestsService clientSortRequestsService,
@@ -33,7 +34,6 @@ public class ClientRequestsController {
         this.clientFilterRequestsService = clientFilterRequestsService;
     }
 
-    @Autowired
 
     @GetMapping("/pending/{id}")
     public ResponseEntity<?> getPendingRequests(@PathVariable Integer id) {

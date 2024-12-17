@@ -3,7 +3,7 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request.client;
 import com.ELOUSTA.ELOUSTA.backend.dto.ClientRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientFilterRequestsService;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsFiltering.LocationFilter;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsFiltering.ClientLocationFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class ClientFilterRequestsServiceTest {
     @Mock
-    private LocationFilter locationFilter;
+    private ClientLocationFilter clientLocationFilter;
 
     @InjectMocks
     private ClientFilterRequestsService clientFilterRequestsService;
@@ -51,7 +51,7 @@ public class ClientFilterRequestsServiceTest {
         List<ClientRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(requestEntityList);
 
         // Mock behavior of LocationFilter
-        when(locationFilter.Filter(id, state, query)).thenReturn(requestEntityList);
+        when(clientLocationFilter.Filter(id, state, query)).thenReturn(requestEntityList);
 
         // Act
         List<ClientRequestDTO> actualDTOList = clientFilterRequestsService.filterRequests(id, state, query);
@@ -60,6 +60,6 @@ public class ClientFilterRequestsServiceTest {
         assertEquals(expectedDTOList, actualDTOList);
 
         // Verify that the filter method was called exactly once
-        verify(locationFilter, times(1)).Filter(id, state, query);
+        verify(clientLocationFilter, times(1)).Filter(id, state, query);
     }
 }
