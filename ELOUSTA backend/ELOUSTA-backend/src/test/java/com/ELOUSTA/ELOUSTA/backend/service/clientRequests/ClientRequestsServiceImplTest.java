@@ -12,8 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsTestData.testInProgressRequestEntityList;
-import static com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsTestData.testPendingRequestEntityList;
+import static com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,6 +62,80 @@ public class ClientRequestsServiceImplTest {
         List<ClientRequestDTO> clientRequestDTOList = clientRequestService.getClientPendingRequests(clientId);
 
         verify(requestRepository).getClientRequestsByState(clientId, pendingState);
+
+        assertEquals(0, clientRequestDTOList.size());
+    }
+
+    @Test
+    void testGetClientInProgressRequestsWithExistRequests() {
+        int clientId = 1;
+        String inProgressState = "IN-PROGRESS";
+
+        List<RequestEntity> requestEntityList = testInProgressRequestEntityList();
+
+        when(requestRepository.getClientRequestsByState(clientId, inProgressState)).thenReturn(requestEntityList);
+
+        List<ClientRequestDTO> clientRequestDTOList = clientRequestService.getClientInProgressRequests(clientId);
+
+        verify(requestRepository).getClientRequestsByState(clientId, inProgressState);
+
+        assertEquals(2, clientRequestDTOList.size());
+        assertEquals(1, clientRequestDTOList.getFirst().getId());
+        assertEquals(101, clientRequestDTOList.getFirst().getTechId());
+        assertEquals("IN-PROGRESS", clientRequestDTOList.getFirst().getState());
+        assertEquals("Request 1", clientRequestDTOList.getFirst().getDescription());
+        assertEquals("Location A", clientRequestDTOList.getFirst().getLocation());
+    }
+
+    @Test
+    void testGetClientInProgressRequestsWithNoExistRequests() {
+        int clientId = 1;
+        String inProgressState = "IN-PROGRESS";
+
+        List<RequestEntity> pendingRequestEntityList = List.of();
+
+        when(requestRepository.getClientRequestsByState(clientId, inProgressState)).thenReturn(pendingRequestEntityList);
+
+        List<ClientRequestDTO> clientRequestDTOList = clientRequestService.getClientInProgressRequests(clientId);
+
+        verify(requestRepository).getClientRequestsByState(clientId, inProgressState);
+
+        assertEquals(0, clientRequestDTOList.size());
+    }
+
+    @Test
+    void testGetClientCompletedRequestsWithExistRequests() {
+        int clientId = 1;
+        String completedState = "COMPLETED";
+
+        List<RequestEntity> requestEntityList = testCompletedRequestEntityList();
+
+        when(requestRepository.getClientRequestsByState(clientId, completedState)).thenReturn(requestEntityList);
+
+        List<ClientRequestDTO> clientRequestDTOList = clientRequestService.getClientCompletedRequests(clientId);
+
+        verify(requestRepository).getClientRequestsByState(clientId, completedState);
+
+        assertEquals(2, clientRequestDTOList.size());
+        assertEquals(1, clientRequestDTOList.getFirst().getId());
+        assertEquals(101, clientRequestDTOList.getFirst().getTechId());
+        assertEquals("COMPLETED", clientRequestDTOList.getFirst().getState());
+        assertEquals("Request 1", clientRequestDTOList.getFirst().getDescription());
+        assertEquals("Location A", clientRequestDTOList.getFirst().getLocation());
+    }
+
+    @Test
+    void testGetClientCompletedRequestsWithNoExistRequests() {
+        int clientId = 1;
+        String completedState = "COMPLETED";
+
+        List<RequestEntity> pendingRequestEntityList = List.of();
+
+        when(requestRepository.getClientRequestsByState(clientId, completedState)).thenReturn(pendingRequestEntityList);
+
+        List<ClientRequestDTO> clientRequestDTOList = clientRequestService.getClientCompletedRequests(clientId);
+
+        verify(requestRepository).getClientRequestsByState(clientId, completedState);
 
         assertEquals(0, clientRequestDTOList.size());
     }
