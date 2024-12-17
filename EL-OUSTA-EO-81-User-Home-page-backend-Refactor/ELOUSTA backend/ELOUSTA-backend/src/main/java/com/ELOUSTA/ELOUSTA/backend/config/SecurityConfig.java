@@ -47,7 +47,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
                                 "/client/home/filtercard",
-                                "client/home/search/",
+                                "client/home/searchbyname/**",
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch").permitAll()

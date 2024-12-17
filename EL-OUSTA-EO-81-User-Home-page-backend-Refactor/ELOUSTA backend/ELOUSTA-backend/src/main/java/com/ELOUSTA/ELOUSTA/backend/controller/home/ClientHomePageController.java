@@ -44,8 +44,34 @@ public class ClientHomePageController {
     public List<HomeTechnicianDTO>searchTechnicians(@RequestBody String query) throws IOException {
         return searchService.searchTechnician(query);
     }
+    @PostMapping("/searchbyname/{domainname}")
+    public List<TechCardDTO>searchTechnicianswithdomainname(@RequestBody String query,@PathVariable String domainname) throws IOException {
+        int domainid = domainService.getIDWithName(domainname).getId();
+        System.out.println(domainid);
+        // Fetch the filtered list of HomeTechnicianDTO
+        List<HomeTechnicianDTO> techcards =  searchService.searchTechniciansOfSpecificProfession(query,domainid);
+        System.out.println("size of returned data :::" + techcards.size());
+        List<TechCardDTO> techCardDTOList = new ArrayList<>();
+        for (int i = 0; i < techcards.size(); i++) {
+            HomeTechnicianDTO tech = techcards.get(i);
+            techCardDTOList.add(new TechCardDTO(
+                    tech.getId(),
+                    tech.getFirstName() + " " + tech.getLastName(), // Combine first name and last name
+                    tech.getCity(),
+                    tech.getExperience(),
+                    tech.getRate() != null ? tech.getRate().toString() : "0.0" // Handle null ratings
+            ));
+        }
 
-    @PostMapping("/search/{id}")
+        // Print the final list for debugging
+        System.out.println("Mapped TechCardDTO List: " + techCardDTOList);
+
+        // Return the list of TechCardDTOs
+        return techCardDTOList;
+    }
+
+
+        @PostMapping("/search/{id}")
     public List<HomeTechnicianDTO>searchTechniciansWithSpecificDomain(@RequestBody String query,@PathVariable int id) throws IOException {
         return searchService.searchTechniciansOfSpecificProfession(query,id);
     }
