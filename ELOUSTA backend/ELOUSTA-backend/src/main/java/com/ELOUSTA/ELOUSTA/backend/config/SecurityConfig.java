@@ -44,11 +44,13 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/client/signUp", "/client/signIn",
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                                "/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
-                                "/client/fetchUser", "/tech/fetchTch").permitAll()
+                                "/client/fetchUser", "/tech/fetchTch",
+                                "/elousta-websocket/**").permitAll()
                         .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()

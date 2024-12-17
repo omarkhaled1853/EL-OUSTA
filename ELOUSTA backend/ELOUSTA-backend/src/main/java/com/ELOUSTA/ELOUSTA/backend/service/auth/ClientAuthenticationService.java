@@ -46,9 +46,7 @@ public class ClientAuthenticationService implements UserDetailsService {
 
     public String addUser(ClientEntity clientEntity){
         clientEntity.setPassword(encoder.encode(clientEntity.getPassword()));
-        userRepository.save(clientEntity);
-
-        return ValidationStatus.VALID.getMessage();
+        return userRepository.save(clientEntity).getId().toString();
     }
     public String resetPassword(ResetPasswordRequest request){
         Optional<ClientEntity> userInfo = userRepository.findByUsername(request.getUsername());
