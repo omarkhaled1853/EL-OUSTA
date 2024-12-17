@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class filterRequestsService {
+public class ClientFilterRequestsService {
 
     @Autowired
     private LocationFilter locationFilter;
