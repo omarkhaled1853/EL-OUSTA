@@ -15,7 +15,7 @@ public class ClientRequestDTO {
     private int techId;
     private String state;
     private String description;
-    private String Location;
+    private String location;
     private Date startDate;
     private Date endDate;
 }
