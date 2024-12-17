@@ -2,8 +2,8 @@ package com.ELOUSTA.ELOUSTA.backend.service.clientRequests;
 
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsSorting.SortByEndDate;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsSorting.SortByStartDate;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.SortByEndDate;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting.SortByStartDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

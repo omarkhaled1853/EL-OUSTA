@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.Payloads;
+package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.payloads;
 
 
 import lombok.Data;

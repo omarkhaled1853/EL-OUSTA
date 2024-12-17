@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsFiltering;
+package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsFiltering;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 

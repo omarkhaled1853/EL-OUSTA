@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.clientRequests;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsFiltering.LocationFilter;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsFiltering.LocationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

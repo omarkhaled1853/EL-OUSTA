@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsSorting;
+package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
@@ -15,6 +15,6 @@ public class SortByStartDate implements IRequestSort {
 
     @Override
     public List<RequestEntity> sort(int id,String state) {
-       return repository.sortRequestsByStartDate(id,state);
+       return repository.sortClientRequestsByStartDate(id,state);
     }
 }

@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.RequestsSorting;
+package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.requestsSorting;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 
