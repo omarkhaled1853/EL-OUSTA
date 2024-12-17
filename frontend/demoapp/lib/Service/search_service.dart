@@ -3,18 +3,18 @@ import 'dart:convert';
 import 'package:demoapp/model/TechCard.dart';
 
 Future<List<TechCard>> service_search(
-    String searchQuery, String profession) async {
+    String searchQuery, String Profession) async {
   print(
-      "Searching for technicians with query: $searchQuery in domain: $profession");
+      "Searching for technicians with query: $searchQuery in domain ID: $Profession");
   var client = http.Client();
-  var uri =
-      Uri.parse("http://192.168.1.12:8088/client/home/search/$profession");
+  var uri = Uri.parse(
+      "http://192.168.1.12:8088/client/home/searchbyname/$Profession");
 
   try {
     var response = await client.post(
       uri,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"query": searchQuery}),
+      body: searchQuery, // Send `searchQuery` as plain text
     );
 
     if (response.statusCode == 200) {

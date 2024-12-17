@@ -11,6 +11,7 @@ import 'package:demoapp/model/TechCard.dart';
 import 'package:http/http.dart' as http;
 
 List<TechCard>? techcards;
+String newprofession = "Electrical";
 
 class ProfessionsScreen extends StatefulWidget {
   final String professionType; // Variable to accept data
@@ -33,7 +34,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
 
   void _performSearch(String query) async {
     try {
-      List<TechCard>? results = await service_search(query, "ElEctrical");
+      List<TechCard>? results = await service_search(query, newprofession);
       setState(() {
         techcards = results;
       });
@@ -78,7 +79,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   Future<void> searchTechnicians(String searchQuery) async {
     try {
       List<TechCard>? searchResults =
-          await service_search(searchQuery, "Electrical");
+          await service_search(searchQuery, newprofession);
 
       if (searchResults != null) {
         setState(() {
@@ -215,6 +216,7 @@ class FilterSectionState extends State<FilterSection> {
             onSelected: (value) async {
               setState(() {
                 selectedProfession = value; // Update the selected value
+                newprofession = value;
               });
 
               List<TechCard>? filteredCards = [];
