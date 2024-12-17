@@ -68,11 +68,16 @@ public class NotificationService {
         // WebSocket destination path for the technician (for real-time message delivery)
         String destination = "/subscribe/tech/" + technicianId;
 
+        TechnicianNotification notification = TechnicianNotification.builder()
+                .message(message)
+                .date(new Date()) // Set the current date as the notification date
+                .build();
+
         // Save the notification to the database
         saveTechnicianNotification(message, technicianId);
 
         // Send the message to the technician's WebSocket destination
-        messagingTemplate.convertAndSend(destination, message);
+        messagingTemplate.convertAndSend(destination, notification);
     }
 
     /**
