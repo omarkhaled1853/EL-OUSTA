@@ -12,3 +12,8 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
+<!-- =======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project> -->

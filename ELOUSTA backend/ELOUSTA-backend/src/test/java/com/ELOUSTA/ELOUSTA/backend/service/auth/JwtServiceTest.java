@@ -1,6 +1,5 @@
 package com.ELOUSTA.ELOUSTA.backend.service.auth;
 
-import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
