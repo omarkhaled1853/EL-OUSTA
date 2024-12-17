@@ -61,7 +61,7 @@ class JwtAuthFilterTest {
 
         when(request.getHeader("Authorization")).thenReturn(authHeader);
         when(jwtService.extractUsername(token)).thenReturn(username);
-        when(request.getRequestURI()).thenReturn("/user");
+        when(request.getRequestURI()).thenReturn("/client");
         when(clientAuthenticationService.loadUserByUsername(username)).thenReturn(userDetails);
         when(jwtService.validateToken(token, userDetails)).thenReturn(true);
         when(userDetails.getAuthorities()).thenReturn(null);
