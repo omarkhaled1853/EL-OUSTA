@@ -26,4 +26,18 @@ public class ClientRequestsController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(pendingClientRequestDtoList);
     }
+
+    @GetMapping("/inprogress/{id}")
+    public ResponseEntity<?> getInProgressRequests(@PathVariable Integer id) {
+        List<ClientRequestDTO> pendingClientRequestDtoList = clientRequestsService.getClientInProgressRequests(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(pendingClientRequestDtoList);
+    }
+
+    @GetMapping("/completed/{id}")
+    public ResponseEntity<?> getCompletedRequests(@PathVariable Integer id) {
+        List<ClientRequestDTO> pendingClientRequestDtoList = clientRequestsService.getClientCompletedRequests(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(pendingClientRequestDtoList);
+    }
 }
