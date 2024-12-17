@@ -26,5 +26,13 @@ public class DomainService {
 
         return answer;
     }
+    // Fetch domain by profession name
+    public DomainDTO getIDWithName(String professionname) throws IOException {
+        List<DomainEntity> domainEntities = repository.getDomains(professionname);
+        if (domainEntities.isEmpty()) {
+            throw new RuntimeException("Domain not found with name: " + professionname);
+        }
+        return TechnicianMapper.domainEntityToDomainDto(domainEntities.get(0));
+    }
 
 }
