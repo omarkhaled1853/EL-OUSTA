@@ -7,6 +7,7 @@ import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
+import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.RequestStatusPayload;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class generalTechnicianRequestsService {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private NotificationService notificationService;
 
 
 
@@ -52,6 +55,8 @@ public class generalTechnicianRequestsService {
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
         int clientID=client.getId();
 
+        notificationService.sendNotificationToClient(message, clientID);
+
     }
 
     @Transactional
@@ -70,7 +75,6 @@ public class generalTechnicianRequestsService {
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
         int clientID=client.getId();
 
-
-
+        notificationService.sendNotificationToClient(message, clientID);
     }
 }
