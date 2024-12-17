@@ -1,5 +1,7 @@
-import 'package:elousta/client_requests/request_button.dart';
-import 'package:elousta/client_requests/request_card.dart';
+import 'package:elousta/client_requests/api_service.dart';
+import 'package:elousta/client_requests/completed_requests.dart';
+import 'package:elousta/client_requests/in_progress_requests.dart';
+import 'package:elousta/client_requests/pending_requests.dart';
 import 'package:elousta/client_requests/request_class.dart';
 import 'package:elousta/client_requests/requests_appbar.dart';
 import 'package:flutter/material.dart';
@@ -10,35 +12,55 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
-  List<Request> pendingRequests = List.generate(
-    5,
-    (index) => Request(
-      id: index + 1,
-      description: "Pending Task ${index + 1}",
-      startDate: "2024-12-01",
-      endDate: "2024-12-${index + 5}",
-    ),
-  );
+  final ApiService apiService = ApiService();
 
-  List<Request> inProgressRequests = List.generate(
-    8,
-    (index) => Request(
-      id: index + 1,
-      description: "In progress Task ${index + 1}",
-      startDate: "2024-12-01",
-      endDate: "2024-12-${index + 5}",
-    ),
-  );
+  late Future<List<Request>> pendingRequests;
+  late Future<List<Request>> inProgressRequests;
+  late Future<List<Request>> completedRequests;
 
-  List<Request> completedRequests = List.generate(
-    10,
-    (index) => Request(
-      id: index + 1,
-      description: "Completed Task ${index + 1}",
-      startDate: "2024-12-01",
-      endDate: "2024-12-${index + 5}",
-    ),
-  );
+  @override
+  void initState() {
+    super.initState();
+    pendingRequests = apiService.fetchPendingRequests();
+    inProgressRequests = apiService.fetchInProgressRequests();
+    completedRequests = apiService.fetchCompletedRequests();
+  }
+
+  // List<Request> pendingRequests = List.generate(
+  //   5,
+  //   (index) => Request(
+  //     id: index + 1,
+  //     techId: index,
+  //     location: "location $index",
+  //     description: "Pending Task ${index + 1}",
+  //     startDate: "2024-12-01",
+  //     endDate: "2024-12-${index + 5}",
+  //   ),
+  // );
+
+  // List<Request> inProgressRequests = List.generate(
+  //   8,
+  //   (index) => Request(
+  //     id: index + 1,
+  //     techId: index,
+  //     location: "location $index",
+  //     description: "Pending Task ${index + 1}",
+  //     startDate: "2024-12-01",
+  //     endDate: "2024-12-${index + 5}",
+  //   ),
+  // );
+
+  // List<Request> completedRequests = List.generate(
+  //   10,
+  //   (index) => Request(
+  //     id: index + 1,
+  //     techId: index,
+  //     location: "location $index",
+  //     description: "Pending Task ${index + 1}",
+  //     startDate: "2024-12-01",
+  //     endDate: "2024-12-${index + 5}",
+  //   ),
+  // );
 
   @override
   Widget build(BuildContext context) {
@@ -47,83 +69,39 @@ class _RequestsPageState extends State<RequestsPage> {
       child: Scaffold(
         appBar: const RequestsAppBar(),
         body: TabBarView(children: [
-          ListView.builder(
-            itemCount: pendingRequests.length,
-            itemBuilder: (context, index) {
-              final request = pendingRequests[index];
-              return RequestCard(
-                request: request,
-                requestButtons: [
-                  RequestButton(
-                    text: "Cancel",
-                    color: Colors.red,
-                    icon: Icons.cancel,
-                    onPressed: () {},
-                  ),
-                ],
-                icon: const Icon(
-                  Icons.pending,
-                  color: Colors.orange,
-                ),
-              );
-            },
+          _buildRequestTab(
+            pendingRequests,
+            (requests) => Pendingrequests(pendingRequests: requests),
           ),
-          ListView.builder(
-            itemCount: pendingRequests.length,
-            itemBuilder: (context, index) {
-              final request = pendingRequests[index];
-              return RequestCard(
-                request: request,
-                requestButtons: [
-                  RequestButton(
-                    text: "Cancel",
-                    color: Colors.red,
-                    icon: Icons.cancel,
-                    onPressed: () {},
-                  ),
-                  RequestButton(
-                    text: "Done",
-                    color: Colors.green,
-                    icon: Icons.check,
-                    onPressed: () {},
-                  ),
-                ],
-                icon: const Icon(
-                  Icons.work,
-                  color: Colors.blue,
-                ),
-              );
-            },
+          _buildRequestTab(
+            inProgressRequests,
+            (requests) => InProgressRequests(inProgressRequests: requests),
           ),
-          ListView.builder(
-            itemCount: pendingRequests.length,
-            itemBuilder: (context, index) {
-              final request = pendingRequests[index];
-              return RequestCard(
-                request: request,
-                requestButtons: [
-                  RequestButton(
-                    text: "Rating",
-                    color: Colors.amber,
-                    icon: Icons.star,
-                    onPressed: () {},
-                  ),
-                  RequestButton(
-                    text: "Complaint",
-                    color: Colors.redAccent,
-                    icon: Icons.report,
-                    onPressed: () {},
-                  ),
-                ],
-                icon: const Icon(
-                  Icons.done,
-                  color: Colors.green,
-                ),
-              );
-            },
+          _buildRequestTab(
+            completedRequests,
+            (requests) => CompletedRequests(completedRequests: requests),
           ),
         ]),
       ),
+    );
+  }
+
+  Widget _buildRequestTab(Future<List<Request>> futureRequests,
+      Widget Function(List<Request>) customWidget) {
+    return FutureBuilder<List<Request>>(
+      future: futureRequests,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData) {
+          final requests = snapshot.data!;
+          return customWidget(requests);
+        } else {
+          return const Center(child: Text("No requests available"));
+        }
+      },
     );
   }
 }

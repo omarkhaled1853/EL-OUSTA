@@ -29,12 +29,15 @@ class RequestCard extends StatelessWidget {
                 icon,
                 const SizedBox(width: 8),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       request.description,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),
                     ),
+                    const SizedBox(height: 8),
+                    Text('Location ${request.location}'),
                     const SizedBox(height: 8),
                     Text('Start: ${request.startDate}'),
                     Text('End: ${request.endDate}'),

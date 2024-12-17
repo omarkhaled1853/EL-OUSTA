@@ -20,8 +20,8 @@ class RequestButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon), // Add the icon
-          const SizedBox(width: 4), // Spacing between icon and text
+          Icon(icon),
+          const SizedBox(width: 4),
           Text(text),
         ],
       ),
