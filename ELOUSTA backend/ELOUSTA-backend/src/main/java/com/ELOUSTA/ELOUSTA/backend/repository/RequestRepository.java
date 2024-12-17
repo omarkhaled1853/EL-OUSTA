@@ -28,4 +28,7 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
 
 //    @Query(value = "SELECT * FROM REQUEST WHERE ID= :id AND TECHID= :techId AND USERID = :clientId")
 
+    @Query(value = "SELECT * FROM REQUEST WHERE USERID = :userId AND STATE= :state", nativeQuery = true)
+    List<RequestEntity> getClientRequestsByState(@Param("userId")int techId,@Param("state")String state);
+
 }
