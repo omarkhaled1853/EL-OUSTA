@@ -1,23 +1,33 @@
 package com.ELOUSTA.ELOUSTA.backend.service.clientRequests.impl;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ClientRequestDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientRequestsService;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
+import java.util.List;
+
+import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
 
 public class ClientRequestsServiceImpl implements ClientRequestsService {
+    @Autowired
+    private RequestRepository requestRepository;
+
+
     @Override
-    public Optional<ClientRequestDTO> getClientPendingRequests(int id) {
-        return Optional.empty();
+    public List<ClientRequestDTO> getClientPendingRequests(int id) {
+        List<RequestEntity> clientRequestEntityList = requestRepository.getClientRequestsByState(id, "PENDING");
+        return RequestEntityListToClientRequestDTOList(clientRequestEntityList);
     }
 
     @Override
-    public Optional<ClientRequestDTO> getClientInProgressRequests(int id) {
-        return Optional.empty();
+    public List<ClientRequestDTO> getClientInProgressRequests(int id) {
+        return null;
     }
 
     @Override
-    public Optional<ClientRequestDTO> getClientCompletedRequests(int id) {
-        return Optional.empty();
+    public List<ClientRequestDTO> getClientCompletedRequests(int id) {
+        return null;
     }
 }
