@@ -2,6 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.controller.auth;
 
 import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AuthRequest;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.Credentials;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.GoogleAuthRequest;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.ClientAuthenticationService;
@@ -29,30 +30,57 @@ public class ClientAuthentication {
     public String addNewUser(@RequestBody ClientEntity clientEntity){
         String validationStatus = userService.validateUniqueUsernameAndEmail(clientEntity);
         if(validationStatus.equals(ValidationStatus.VALID.getMessage())){
-            return userService.addUser(clientEntity);
+            return userService.addUser(clientEntity); // return the Id of the new user
         }
         return validationStatus;
     }
 
     @PostMapping("/signIn")
-    public String authenticateAndGetTokenUser(@RequestBody AuthRequest authRequest) {
+    public Credentials authenticateAndGetTokenUser(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
+
+        Credentials credentials;
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
+            int id = userService.loadUserByUsernameAsUserInfo(authRequest.getUsername()).getId();
+
+            credentials = Credentials
+                    .builder()
+                    .token(jwtService.generateToken(authRequest.getUsername()))
+                    .status(ValidationStatus.VALID.getMessage())
+                    .id(String.valueOf(id))
+                    .build();
         } else {
-            return ValidationStatus.FAIL.getMessage();
+            credentials = Credentials
+                    .builder().
+                    status(ValidationStatus.FAIL.getMessage()).
+                    build();
         }
+
+        return credentials;
     }
     @PostMapping("/signIn/google")
-    public String googleAuthenticationUser(@RequestBody GoogleAuthRequest googleAuthRequest){
+    public Credentials googleAuthenticationUser(@RequestBody GoogleAuthRequest googleAuthRequest){
         Boolean isAuthenticated = userService.validAuthenticationWithGoogle(googleAuthRequest);
 
-        if(isAuthenticated){
-            String username = userService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
-            return jwtService.generateToken(username);
+        Credentials credentials;
+        if (isAuthenticated) {
+            ClientEntity client = userService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress());
+
+            credentials = Credentials
+                    .builder()
+                    .token(jwtService.generateToken(client.getUsername()))
+                    .status(ValidationStatus.VALID.getMessage())
+                    .id(String.valueOf(client.getId()))
+                    .build();
+        } else {
+            credentials = Credentials
+                    .builder().
+                    status(ValidationStatus.FAIL.getMessage()).
+                    build();
         }
-        return ValidationStatus.FAIL.getMessage();
+
+        return credentials;
     }
 }
