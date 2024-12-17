@@ -5,11 +5,13 @@ import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientRequestsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
 
+@Service
 public class ClientRequestsServiceImpl implements ClientRequestsService {
     @Autowired
     private RequestRepository requestRepository;
