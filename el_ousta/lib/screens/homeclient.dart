@@ -5,6 +5,7 @@ import 'package:el_ousta/screens/user_profile.dart'; // Import the User Profile 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../widgets/appBarWithNotification.dart';
 const storage = FlutterSecureStorage();
 class ClientPage extends StatefulWidget {
   const ClientPage({Key? key}) : super(key: key);
@@ -176,26 +177,7 @@ class _ClientPageState extends State<ClientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('El Ousta'),
-        backgroundColor: Colors.purple,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.black,
-            ),
-            onPressed: () async {
-              await storage.delete(key: 'auth_token');
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                      builder: (ctx) => UserTechScreen()
-                  )
-              );
-            },
-          )
-        ],
-      ),
+      appBar: NotificationScreen(),
       body: Column(
         children: [
           // Search Bar and Actions

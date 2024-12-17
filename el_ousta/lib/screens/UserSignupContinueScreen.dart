@@ -73,7 +73,8 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
           dob: DateTime.parse(_dobController.text),
           phoneNumber: _phoneNumberController.text,
           city: _cityController.text,
-          roles: 'ROLE_USER'
+          roles: 'ROLE_USER',
+          clientNotifications: [],
       );
       var url = Uri.parse(ServerAPI.baseURL + '/client/signUp');
       // make http get request
@@ -87,7 +88,8 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
       // check the status code for the result
       if (response.statusCode == 200) {
         log(response.body);
-        if(response.body == 'valid') {
+        if(response.body != 'Invalid username' && response.body != 'Invalid email address') {
+          String id = response.body;
           url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
           // make http get request
           response = await http.post(
@@ -104,6 +106,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
             log(response.body);
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: response.body);
+            await secureStorage.write(key: 'id', value: id);
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => const ClientPage()

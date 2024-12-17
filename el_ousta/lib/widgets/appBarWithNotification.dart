@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:el_ousta/models/Notification.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../screens/homeclient.dart';
+import '../screens/userTechScreen.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -22,25 +27,36 @@ import 'package:el_ousta/models/Notification.dart';
 //   }
 // }
 
-class NotificationScreen extends StatefulWidget {
+class NotificationScreen extends StatefulWidget implements PreferredSizeWidget {
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size.fromHeight(kToolbarHeight); // Standard AppBar height
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
   late StompClient stompClient;
   bool isConnected = false;
   int notificationCount = 0;
+  final secureStorage = const FlutterSecureStorage();
   final int userId = 1; // Change to the actual user ID
-  final String token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM0NDI3MTI1LCJleHAiOjE3MzQ1MTM1MjV9.ys0dqqEwTETu4igdTWLvAds9-AnGEdPzl8Lev0vGt50'; // Replace with your Bearer token
-
+  // final String token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM0NDI3MTI1LCJleHAiOjE3MzQ1MTM1MjV9.ys0dqqEwTETu4igdTWLvAds9-AnGEdPzl8Lev0vGt50'; // Replace with your Bearer token
+  String? token = "";
   List<NotificationObject> notifications = [];
 
   @override
   void initState() {
     super.initState();
-    fetchNotifications(); // Fetch notifications from backend on initial load
-    initializeWebSocket();
+    initializeData(); // Initialize the token and notifications
+  }
+
+  Future<void> initializeData() async {
+    token = await secureStorage.read(key: 'auth_token'); // Await the asynchronous call
+    print(token);
+    initializeWebSocket(); // Initialize WebSocket
+    fetchNotifications(); // Fetch notifications only after token is retrieved
   }
 
   @override
@@ -51,7 +67,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   // Fetch notifications from backend
   Future<void> fetchNotifications() async {
-    final url = 'http://10.0.2.2:8080/client/notifications/$userId';
+    final url = ServerAPI.baseURL + '/client/notifications/$userId';
 
     final response = await http.get(
       Uri.parse(url),
@@ -74,7 +90,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initializeWebSocket() {
     stompClient = StompClient(
       config: StompConfig(
-        url: 'ws://10.0.2.2:8080/elousta-websocket', // Replace with your WebSocket URL
+        url: ServerAPI.baseURLSocket + '/elousta-websocket',
         onConnect: (frame) {
           setState(() {
             isConnected = true;
@@ -117,8 +133,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('Notification App'),
+      title: const Text('El Ousta'),
+      backgroundColor: Colors.purple,
       actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.logout,
+            color: Colors.black,
+          ),
+          onPressed: () async {
+            await storage.delete(key: 'auth_token');
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (ctx) => UserTechScreen()
+                )
+            );
+          },
+        ),
         PopupMenuButton<String>(
           icon: Stack(
             children: [

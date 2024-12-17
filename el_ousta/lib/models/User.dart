@@ -21,7 +21,7 @@ class User {
       required this.dob,
       required this.phoneNumber,
       required this.city,
-      required this.roles,
+      required this.roles, required List clientNotifications,
     }
   );
 
@@ -53,6 +53,7 @@ class User {
       'phoneNumber': String phoneNumber,
       'city': String city,
       'roles': String roles,
+      'clientNotifications': []
       } =>
           User(
               username: username,
@@ -64,6 +65,7 @@ class User {
               phoneNumber: phoneNumber,
               city: city,
               roles: roles,
+              clientNotifications: [],
           ),
       _ => throw const FormatException('Failed to load User.'),
     };

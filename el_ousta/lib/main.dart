@@ -11,6 +11,8 @@ const secureStorage = FlutterSecureStorage();
 Future<bool> isUserLoggedIn() async {
   String? token = await secureStorage.read(key: 'auth_token');
   print(token);
+  String? id = await secureStorage.read(key: 'id');
+  print(id);
   return token != null;
 }
 

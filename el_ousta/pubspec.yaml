@@ -47,12 +47,8 @@ dependencies:
   intl: ^0.20.1
   http: ^1.2.2
   flutter_secure_storage: ^9.2.2
-<<<<<<< HEAD
   stomp_dart_client: ^0.4.0
-
-=======
   flutter_stripe: ^11.3.0
->>>>>>> 0f30c054a9206673123a4b2ca557b7bff766b518
 
 
 dev_dependencies:
