@@ -7,18 +7,18 @@ class ApiService {
       "http://10.0.2.2:8080"; // Replace with your backend URL
 
   // Fetch Pending Requests
-  Future<List<Request>> fetchPendingRequests() async {
-    return _fetchRequests('$baseUrl/client/requests/pending');
+  Future<List<Request>> fetchPendingRequests(int id) async {
+    return _fetchRequests('$baseUrl/client/requests/pending/$id');
   }
 
   // Fetch In Progress Requests
-  Future<List<Request>> fetchInProgressRequests() async {
-    return _fetchRequests('$baseUrl/client/requests/inprogress');
+  Future<List<Request>> fetchInProgressRequests(int id) async {
+    return _fetchRequests('$baseUrl/client/requests/inprogress/$id');
   }
 
   // Fetch Completed Requests
-  Future<List<Request>> fetchCompletedRequests() async {
-    return _fetchRequests('$baseUrl/client/requests/completed');
+  Future<List<Request>> fetchCompletedRequests(int id) async {
+    return _fetchRequests('$baseUrl/client/requests/completed/$id');
   }
 
   // Generic function to fetch data

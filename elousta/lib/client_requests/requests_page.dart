@@ -6,6 +6,9 @@ import 'package:elousta/client_requests/request_class.dart';
 import 'package:elousta/client_requests/requests_appbar.dart';
 import 'package:flutter/material.dart';
 
+//TODO: will be taken from localStorage
+const id = 3;
+
 class RequestsPage extends StatefulWidget {
   @override
   _RequestsPageState createState() => _RequestsPageState();
@@ -21,9 +24,9 @@ class _RequestsPageState extends State<RequestsPage> {
   @override
   void initState() {
     super.initState();
-    pendingRequests = apiService.fetchPendingRequests();
-    inProgressRequests = apiService.fetchInProgressRequests();
-    completedRequests = apiService.fetchCompletedRequests();
+    pendingRequests = apiService.fetchPendingRequests(id);
+    inProgressRequests = apiService.fetchInProgressRequests(id);
+    completedRequests = apiService.fetchCompletedRequests(id);
   }
 
   // List<Request> pendingRequests = List.generate(
