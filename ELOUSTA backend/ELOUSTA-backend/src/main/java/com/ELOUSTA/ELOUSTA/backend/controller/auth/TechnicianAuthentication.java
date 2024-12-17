@@ -2,6 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.controller.auth;
 
 import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AuthRequest;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.Credentials;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.GoogleAuthRequest;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
@@ -35,24 +36,51 @@ public class TechnicianAuthentication {
     }
 
     @PostMapping("/signIn")
-    public String authenticateAndGetTokenTechnician(@RequestBody AuthRequest authRequest) {
+    public Credentials authenticateAndGetTokenTechnician(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
         );
+
+        Credentials credentials;
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
+            int id = technicianAuthenticationService.loadUserByUsernameAsTechnician(authRequest.getUsername()).getId();
+
+            credentials = Credentials
+                    .builder()
+                    .token(jwtService.generateToken(authRequest.getUsername()))
+                    .status(ValidationStatus.VALID.getMessage())
+                    .id(String.valueOf(id))
+                    .build();
         } else {
-            return ValidationStatus.FAIL.getMessage();
+            credentials = Credentials
+                    .builder().
+                    status(ValidationStatus.FAIL.getMessage()).
+                    build();
         }
+
+        return credentials;
     }
     @PostMapping("/signIn/google")
-    public String googleAuthenticationTech(@RequestBody GoogleAuthRequest googleAuthRequest){
+    public Credentials googleAuthenticationTech(@RequestBody GoogleAuthRequest googleAuthRequest){
          Boolean isAuthenticated = technicianAuthenticationService.validAuthenticationWithGoogle(googleAuthRequest);
 
-        if(isAuthenticated){
-            String username = technicianAuthenticationService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress()).getUsername();
-            return jwtService.generateToken(username);
+        Credentials credentials;
+        if (isAuthenticated) {
+            TechnicianEntity technician = technicianAuthenticationService.loadUserByEmailAddress(googleAuthRequest.getEmailAddress());
+
+            credentials = Credentials
+                    .builder()
+                    .token(jwtService.generateToken(technician.getUsername()))
+                    .status(ValidationStatus.VALID.getMessage())
+                    .id(String.valueOf(technician.getId()))
+                    .build();
+        } else {
+            credentials = Credentials
+                    .builder().
+                    status(ValidationStatus.FAIL.getMessage()).
+                    build();
         }
-        return ValidationStatus.FAIL.getMessage();
+
+        return credentials;
     }
 }
