@@ -19,21 +19,28 @@ public class RequestEntity {
 
     @Column(name = "USERID")
     private int userId;
+
     @Column(name = "TECHID")
     private int techId;
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "STATE")
     private String state;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
     @Column(name = "LOCATION")
     private String Location;
+
     @Column(name = "START_DATE")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date startDate;
+
     @Column(name = "END_DATE")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date endDate;
