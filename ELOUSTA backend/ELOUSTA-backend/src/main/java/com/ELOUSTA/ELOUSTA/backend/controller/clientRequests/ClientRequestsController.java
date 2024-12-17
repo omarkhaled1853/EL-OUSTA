@@ -1,7 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.clientRequests;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ClientRequestDTO;
-import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientFilterRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientSearchRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientSortRequestsService;
@@ -58,25 +57,30 @@ public class ClientRequestsController {
     }
 
     @PostMapping("/filter")
-
-    private List<RequestEntity>filterRequests(@RequestBody RequestsPayload payload)
-    {
-        return this.clientFilterRequestsService.filterRequests(payload.getId(),payload.getState(), payload.getQuery());
+    private ResponseEntity<?>filterRequests(@RequestBody RequestsPayload payload) {
+        List<ClientRequestDTO> clientFilterRequests =
+                clientFilterRequestsService.filterRequests(payload.getId(),payload.getState(), payload.getQuery());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clientFilterRequests);
     }
 
 
 
     @PostMapping("/search")
 
-    private List<RequestEntity>searchRequests(@RequestBody RequestsPayload payload)
-    {
-        return this.clientSearchRequestsService.searchRequests(payload.getId(), payload.getState(), payload.getQuery());
+    private ResponseEntity<?>searchRequests(@RequestBody RequestsPayload payload) {
+        List<ClientRequestDTO> clientSearchRequests =
+                clientSearchRequestsService.searchRequests(payload.getId(), payload.getState(), payload.getQuery());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clientSearchRequests);
     }
 
 
     @PostMapping("/sort")
-    private List<RequestEntity>sortRequests(@RequestBody SortRequestsPayload payload)
-    {
-        return this.clientSortRequestsService.sortRequests(payload.getId(), payload.getType(), payload.getState());
+    private ResponseEntity<?>sortRequests(@RequestBody SortRequestsPayload payload) {
+        List<ClientRequestDTO> clientSortRequests =
+                clientSortRequestsService.sortRequests(payload.getId(), payload.getType(), payload.getState());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(clientSortRequests);
     }
 }
