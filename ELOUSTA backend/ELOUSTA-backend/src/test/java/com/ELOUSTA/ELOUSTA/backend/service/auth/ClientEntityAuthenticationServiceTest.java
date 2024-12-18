@@ -41,6 +41,7 @@ class ClientEntityAuthenticationServiceTest {
                 .password("123456")
                 .emailAddress("testEmailAddress")
                 .roles("User_roles")
+                .id(1)
                 .build();
 
     }
@@ -82,8 +83,10 @@ class ClientEntityAuthenticationServiceTest {
     void addUser(){
         when(clientRepository.save(clientEntity)).thenReturn(clientEntity);
         when(encoder.encode(clientEntity.getPassword())).thenReturn("encodedPassword");
-        String validationStatus = clientAuthenticationService.addUser(clientEntity);
-        assertEquals(ValidationStatus.VALID.getMessage(), validationStatus);
+        String user_id = clientAuthenticationService.addUser(clientEntity);
+
+        assertNotNull(user_id);
+        assertEquals("1", user_id);
     }
 
     @Test
@@ -95,15 +98,16 @@ class ClientEntityAuthenticationServiceTest {
     }
     @Test
     void resetPasswordTest_userExist(){
-        when(clientRepository.findByUsername("testUser")).thenReturn(Optional.of(clientEntity));
+        when(clientRepository.findByUsername("test_user")).thenReturn(Optional.of(clientEntity));
 
         String encodedPassword = "encodedNewPassword";
         when(encoder.encode("new password")).thenReturn(encodedPassword);
+        when(clientRepository.save(clientEntity)).thenReturn(clientEntity);
 
-        ResetPasswordRequest request = new ResetPasswordRequest("testUser", "new password");
-        String result = clientAuthenticationService.resetPassword(request);
+        ResetPasswordRequest request = new ResetPasswordRequest("test_user", "new password");
+        String id = clientAuthenticationService.resetPassword(request);
         
-        assertEquals(ValidationStatus.VALID.getMessage(), result);
+        assertEquals("1", id);
         assertEquals(encodedPassword, clientEntity.getPassword());
     }
 

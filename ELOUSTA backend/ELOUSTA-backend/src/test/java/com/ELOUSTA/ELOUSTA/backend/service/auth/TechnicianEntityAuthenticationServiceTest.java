@@ -41,6 +41,7 @@ class TechnicianEntityAuthenticationServiceTest {
                 .password("123456")
                 .emailAddress("testEmailAddress")
                 .roles("User_roles")
+                .id(1)
                 .build();
 
     }
@@ -77,13 +78,14 @@ class TechnicianEntityAuthenticationServiceTest {
                 () -> {
                     technicianAuthenticationService.loadUserByUsernameAsTechnician("NotExistUsername");});
     }
-
     @Test
     void addTechnician(){
         when(technicianRepository.save(technicianEntity)).thenReturn(technicianEntity);
         when(encoder.encode(technicianEntity.getPassword())).thenReturn("encodedPassword");
-        String validationStatus = technicianAuthenticationService.addTechnician(technicianEntity);
-        assertEquals(ValidationStatus.VALID.getMessage(), validationStatus);
+        String user_id = technicianAuthenticationService.addTechnician(technicianEntity);
+
+        assertNotNull(user_id);
+        assertEquals("1", user_id);
     }
     @Test
     void resetPasswordTest_userNotExist(){
@@ -94,15 +96,16 @@ class TechnicianEntityAuthenticationServiceTest {
     }
     @Test
     void resetPasswordTest_userExist(){
-        when(technicianRepository.findByUsername("testUser")).thenReturn(Optional.of(technicianEntity));
+        when(technicianRepository.findByUsername("test_user")).thenReturn(Optional.of(technicianEntity));
 
         String encodedPassword = "encodedNewPassword";
         when(encoder.encode("new password")).thenReturn(encodedPassword);
+        when(technicianRepository.save(technicianEntity)).thenReturn(technicianEntity);
 
-        ResetPasswordRequest request = new ResetPasswordRequest("testUser", "new password");
-        String result = technicianAuthenticationService.resetPassword(request);
+        ResetPasswordRequest request = new ResetPasswordRequest("test_user", "new password");
+        String id = technicianAuthenticationService.resetPassword(request);
 
-        assertEquals(ValidationStatus.VALID.getMessage(), result);
+        assertEquals("1", id);
         assertEquals(encodedPassword, technicianEntity.getPassword());
     }
     @Test
