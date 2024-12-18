@@ -5,8 +5,8 @@ import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientFilterRequestsSe
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientSearchRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.ClientSortRequestsService;
 import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.impl.ClientRequestsServiceImpl;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.RequestsPayload;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.SortRequestsPayload;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.payloads.ClientRequestsPayload;
+import com.ELOUSTA.ELOUSTA.backend.service.clientRequests.payloads.ClientSortRequestsPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,7 @@ public class ClientRequestsController {
     }
 
     @PostMapping("/filter")
-    private ResponseEntity<?>filterRequests(@RequestBody RequestsPayload payload) {
+    private ResponseEntity<?>filterRequests(@RequestBody ClientRequestsPayload payload) {
         List<ClientRequestDTO> clientFilterRequests =
                 clientFilterRequestsService.filterRequests(payload.getId(),payload.getState(), payload.getQuery());
         return ResponseEntity.status(HttpStatus.OK)
@@ -68,7 +68,7 @@ public class ClientRequestsController {
 
     @PostMapping("/search")
 
-    private ResponseEntity<?>searchRequests(@RequestBody RequestsPayload payload) {
+    private ResponseEntity<?>searchRequests(@RequestBody ClientRequestsPayload payload) {
         List<ClientRequestDTO> clientSearchRequests =
                 clientSearchRequestsService.searchRequests(payload.getId(), payload.getState(), payload.getQuery());
         return ResponseEntity.status(HttpStatus.OK)
@@ -77,7 +77,7 @@ public class ClientRequestsController {
 
 
     @PostMapping("/sort")
-    private ResponseEntity<?>sortRequests(@RequestBody SortRequestsPayload payload) {
+    private ResponseEntity<?>sortRequests(@RequestBody ClientSortRequestsPayload payload) {
         List<ClientRequestDTO> clientSortRequests =
                 clientSortRequestsService.sortRequests(payload.getId(), payload.getType(), payload.getState());
         return ResponseEntity.status(HttpStatus.OK)
