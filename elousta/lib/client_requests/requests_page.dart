@@ -1,6 +1,3 @@
-import 'package:elousta/client_requests/api_service.dart';
-import 'package:elousta/client_requests/completed_requests.dart';
-import 'package:elousta/client_requests/in_progress_requests.dart';
 import 'package:elousta/client_requests/pending_requests.dart';
 import 'package:elousta/client_requests/request_class.dart';
 import 'package:elousta/client_requests/request_list.dart';
@@ -15,43 +12,7 @@ class RequestsPage extends StatefulWidget {
   _RequestsPageState createState() => _RequestsPageState();
 }
 
-class _RequestsPageState extends State<RequestsPage>
-    with SingleTickerProviderStateMixin {
-  // late TabController _tabController;
-  // final ApiService apiService = ApiService();
-
-  // late Future<List<Request>> pendingRequests;
-  // late Future<List<Request>> inProgressRequests;
-  // late Future<List<Request>> completedRequests;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _tabController = TabController(length: 3, vsync: this);
-  //   _tabController.addListener(_handleTabChange);
-
-  //   // Initial API call for the first tab
-  //   _handleTabChange();
-  // }
-
-  // void _handleTabChange() {
-  //   if (_tabController.indexIsChanging) return;
-
-  //   setState(() {
-  //     switch (_tabController.index) {
-  //       case 0:
-  //         pendingRequests = apiService.fetchPendingRequests(id);
-  //         break;
-  //       case 1:
-  //         inProgressRequests = apiService.fetchInProgressRequests(id);
-  //         break;
-  //       case 2:
-  //         completedRequests = apiService.fetchCompletedRequests(id);
-  //         break;
-  //     }
-  //   });
-  // }
-
+class _RequestsPageState extends State<RequestsPage> {
   List<Request> pendingRequests = List.generate(
     5,
     (index) => Request(
@@ -90,52 +51,16 @@ class _RequestsPageState extends State<RequestsPage>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return const DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: const RequestsAppBar(),
+        appBar: RequestsAppBar(),
         body: TabBarView(children: [
-          RequestList(
-              requests: Pendingrequests(pendingRequests: pendingRequests)),
-          RequestList(
-              requests:
-                  InProgressRequests(inProgressRequests: inProgressRequests)),
-          RequestList(
-              requests:
-                  CompletedRequests(completedRequests: completedRequests)),
-          // _buildRequestTab(
-          //   pendingRequests,
-          //   (requests) => Pendingrequests(pendingRequests: requests),
-          // ),
-          // _buildRequestTab(
-          //   inProgressRequests,
-          //   (requests) => InProgressRequests(inProgressRequests: requests),
-          // ),
-          // _buildRequestTab(
-          //   completedRequests,
-          //   (requests) => CompletedRequests(completedRequests: requests),
-          // ),
+          RequestList(state: "PENDING", endpoint: "pending"),
+          RequestList(state: "IN-PROGRESS", endpoint: "inProgress"),
+          RequestList(state: "COMPLETED", endpoint: "completed"),
         ]),
       ),
-    );
-  }
-
-  Widget _buildRequestTab(Future<List<Request>> futureRequests,
-      Widget Function(List<Request>) customWidget) {
-    return FutureBuilder<List<Request>>(
-      future: futureRequests,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData) {
-          final requests = snapshot.data!;
-          return customWidget(requests);
-        } else {
-          return const Center(child: Text("No requests available"));
-        }
-      },
     );
   }
 }
