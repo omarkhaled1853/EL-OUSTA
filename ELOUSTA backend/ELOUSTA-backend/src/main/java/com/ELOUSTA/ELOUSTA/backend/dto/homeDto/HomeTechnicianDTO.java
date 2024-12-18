@@ -16,6 +16,6 @@ public class HomeTechnicianDTO {
     private String lastName;
     private String city;
     private DomainDTO domainDTO;
-    private int experience;    //TODO : Calculate experience
+    private int experience;
     private Double rate;
 }

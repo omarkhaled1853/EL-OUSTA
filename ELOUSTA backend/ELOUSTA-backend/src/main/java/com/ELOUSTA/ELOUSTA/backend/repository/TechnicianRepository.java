@@ -6,12 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface TechnicianRepository extends JpaRepository<TechnicianEntity, Integer> {
     Optional<TechnicianEntity> findByUsername(String username);
     Optional<TechnicianEntity> findByEmailAddress(String emailAddress);
+
+    @Query(value = "SELECT * from TECHNICIAN WHERE domain_id = :domainID",nativeQuery = true)
+    List<TechnicianEntity>findTechniciansByDomain(@Param("domainID")int domainID);
     @Query("SELECT t " +
             "FROM TechnicianEntity t " +
             "JOIN FETCH t.domainEntity d " +

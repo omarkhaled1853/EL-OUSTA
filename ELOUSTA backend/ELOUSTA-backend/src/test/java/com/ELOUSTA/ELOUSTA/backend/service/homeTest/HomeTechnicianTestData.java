@@ -3,10 +3,12 @@ package com.ELOUSTA.ELOUSTA.backend.service.homeTest;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class HomeTechnicianTestData {
-
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public static DomainEntity domainOneTest() {
         return DomainEntity.builder()
                 .name("Carpentry")
@@ -31,7 +33,7 @@ public final class HomeTechnicianTestData {
                 .build();
     }
 
-    public static TechnicianEntity technicianOneTest (DomainEntity domain) {
+    public static TechnicianEntity technicianOneTest (DomainEntity domain) throws ParseException {  //Carpentry
         return TechnicianEntity.builder()
                 .username("joe44")
                 .password("12345678")
@@ -39,15 +41,15 @@ public final class HomeTechnicianTestData {
                 .emailAddress("john.doe@gmail.com")
                 .firstName("youssef")
                 .lastName("Mahmoud")
-                .dob(new Date(1985, 7, 20))
+                .dob(sdf.parse("1985-07-20"))
                 .phoneNumber("5551234567")
                 .city("Alexandria")
-                .jobStartDate(new Date(2020, 1, 15))
+                .jobStartDate(sdf.parse("2020-01-15"))
                 .rate(1.0)
                 .build();
     }
 
-    public static TechnicianEntity technicianTwoTest (DomainEntity domain) {
+    public static TechnicianEntity technicianTwoTest (DomainEntity domain) throws ParseException {  //Electrical
         return TechnicianEntity.builder()
                 .username("Omar123")
                 .password("safePassword321")
@@ -55,15 +57,15 @@ public final class HomeTechnicianTestData {
                 .emailAddress("omar@gmail.com")
                 .firstName("Omar")
                 .lastName("Khaled")
-                .dob(new Date(1990, 3, 25))
+                .dob(sdf.parse("1990-03-25"))
                 .phoneNumber("5559876543")
                 .city("Cairo")
-                .jobStartDate(new Date(2001, 5, 10))
+                .jobStartDate(sdf.parse("2001-05-10"))
                 .rate(2.0)
                 .build();
     }
 
-    public static TechnicianEntity technicianThreeTest (DomainEntity domain) {
+    public static TechnicianEntity technicianThreeTest (DomainEntity domain) throws ParseException {  //Cleaning
         return TechnicianEntity.builder()
                 .username("Nada312")
                 .password("pass456Secure")
@@ -71,15 +73,15 @@ public final class HomeTechnicianTestData {
                 .emailAddress("Nada@gmail.com")
                 .firstName("Nada")
                 .lastName("Fouad")
-                .dob(new Date(1990, 11, 12))
+                .dob(sdf.parse("1990-11-12"))
                 .phoneNumber("5552223333")
                 .city("AlBehira")
-                .jobStartDate(new Date(2019, 8, 1))
+                .jobStartDate(sdf.parse("2019-08-01"))
                 .rate(3.0)
                 .build();
     }
 
-    public static TechnicianEntity technicianFourTest (DomainEntity domain)  {
+    public static TechnicianEntity technicianFourTest (DomainEntity domain) throws ParseException {  //Electrical
         return TechnicianEntity.builder()
                 .username("Mahmoud123")
                 .password("strongPass789")
@@ -87,15 +89,15 @@ public final class HomeTechnicianTestData {
                 .emailAddress("Mahmoud515@gmail.com")
                 .firstName("Mahmoud")
                 .lastName("Adds")
-                .dob(new Date(1995, 1, 15))
+                .dob(sdf.parse("1995-01-15"))
                 .phoneNumber("01003207216")
                 .city("Alexandria")
-                .jobStartDate(new Date(2022, 3, 20))
+                .jobStartDate(sdf.parse("2022-03-20"))
                 .rate(4.0)
                 .build();
     }
 
-    public static TechnicianEntity technicianFiveTest (DomainEntity domain)  {
+    public static TechnicianEntity technicianFiveTest (DomainEntity domain) throws ParseException {  //Building
         return TechnicianEntity.builder()
                 .username("Meedo")
                 .password("simplePass101")
@@ -103,10 +105,10 @@ public final class HomeTechnicianTestData {
                 .emailAddress("Meedo@gmail.com")
                 .firstName("mohammed")
                 .lastName("mounir")
-                .dob(new Date(1992, 6, 30))
+                .dob(sdf.parse("1992-05-30"))
                 .phoneNumber("5556667777")
                 .city("Cairo")
-                .jobStartDate(new Date(2021, 7, 5))
+                .jobStartDate(sdf.parse("2021-07-05"))
                 .rate(5.0)
                 .build();
     }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @SpringBootTest
@@ -28,8 +29,7 @@ public class sortTechnicianTesting {
     private DomainRepository domainRepository;
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() throws ParseException {
 //        delete technicians first
         technicianRepository.deleteAll();
 //        delete domains
@@ -55,6 +55,7 @@ public class sortTechnicianTesting {
         );
 //        save technicians data test
         technicianRepository.saveAll(technicianEntities);
+
     }
 
     @Test
@@ -74,6 +75,23 @@ public class sortTechnicianTesting {
         List<HomeTechnicianDTO>DTOs=sortService.sortTechnicians("password");
         Assertions.assertEquals(DTOs.size(),5);
         Assertions.assertEquals(DTOs.get(0).getFirstName(),"youssef"); //they came in same order
+    }
+
+    @Test
+    void sortElectricalTechsByRate() throws IOException {
+        List<HomeTechnicianDTO>DTOs=sortService.sortTechniciansOfASpecificProfession("rate",domainRepository.getDomainByName("Electrical").getId());
+
+        Assertions.assertEquals(2,DTOs.size());
+        Assertions.assertEquals("Mahmoud",DTOs.get(0).getFirstName());
+
+    }
+
+    @Test
+    void sortElectricalTechsByExperience() throws IOException {
+        List<HomeTechnicianDTO>DTOs=sortService.sortTechniciansOfASpecificProfession("experience",domainRepository.getDomainByName("Electrical").getId());
+
+        Assertions.assertEquals(2,DTOs.size());
+        Assertions.assertEquals("Omar",DTOs.get(0).getFirstName());
     }
 
 }

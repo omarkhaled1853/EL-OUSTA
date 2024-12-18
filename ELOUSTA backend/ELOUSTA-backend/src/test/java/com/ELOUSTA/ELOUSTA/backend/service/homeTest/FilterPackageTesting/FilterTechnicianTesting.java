@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @SpringBootTest
@@ -32,8 +33,7 @@ public class FilterTechnicianTesting {
     private DomainRepository domainRepository;
 
     @BeforeEach
-    public void setup()
-    {
+    public void setup() throws ParseException {
 //        delete technicians first
         technicianRepository.deleteAll();
 //        delete domains
@@ -69,14 +69,21 @@ public class FilterTechnicianTesting {
 
     @Test
     void filterByDomain() throws IOException {
-        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electrical");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("Domain","Electric");
         Assertions.assertEquals(DTOs.size(),2);
     }
 
     @Test
     void shouldNotReturnAnyOne() throws IOException {
-        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","elRaml2");
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechnician("City","Raml2");
         Assertions.assertEquals(DTOs.size(),0);
+    }
+
+    @Test
+    void shouldReturnMahmoud() throws IOException {
+        List<HomeTechnicianDTO>DTOs=filterTechnicianService.filterTechniciansOfASpecificProfession("City","alex",domainRepository.getDomainByName("Electrical").getId());
+        Assertions.assertEquals(DTOs.size(),1);
+        Assertions.assertEquals("Mahmoud",DTOs.get(0).getFirstName());
     }
 
     @Test
