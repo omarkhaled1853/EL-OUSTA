@@ -137,6 +137,7 @@ public class NotificationService {
         TechnicianNotification technicianNotification = TechnicianNotification.builder()
                 .technicianEntity(technicianEntity)
                 .message(message)
+                .date(new Date())
                 .build();
 
         // Save the notification to the database

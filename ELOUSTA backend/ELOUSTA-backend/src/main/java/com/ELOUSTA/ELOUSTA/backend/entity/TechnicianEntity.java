@@ -1,6 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.entity;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.notification.TechnicianNotification;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,6 +20,7 @@ import java.util.List;
 @Table(name = "technician")
 public class TechnicianEntity extends UserEntity {
     private Double rate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date jobStartDate;
     private String description;
 

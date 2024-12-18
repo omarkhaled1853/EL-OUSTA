@@ -26,7 +26,7 @@ public class TechnicianAuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<TechnicianEntity> technician = technicianRepository.findByUsername(username);
-
+        System.out.println(username);
         if(technician.isPresent()){
             return new TechnicianAuthenticationDetails(technician.get());
         }

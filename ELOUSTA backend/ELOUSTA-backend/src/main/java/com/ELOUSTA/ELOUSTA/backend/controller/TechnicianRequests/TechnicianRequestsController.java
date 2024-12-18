@@ -35,6 +35,7 @@ public class TechnicianRequestsController {
     @GetMapping("/get/pending/{id}")
     private List<RequestEntity>getPendingRequests(@PathVariable int id)
     {
+        System.out.println("pending");
         return generalService.getAllRequestsByState(id,"PENDING");
     }
 
@@ -42,6 +43,7 @@ public class TechnicianRequestsController {
     @GetMapping("/get/inProgress/{id}")
     private List<RequestEntity>getInProgressRequests(@PathVariable int id)
     {
+        System.out.println("inprogress");
         return generalService.getAllRequestsByState(id,"IN-PROGRESS");
     }
 
@@ -49,6 +51,7 @@ public class TechnicianRequestsController {
 
     private List<RequestEntity>getCompletedRequests(@PathVariable int id)
     {
+        System.out.println("completed");
         return generalService.getAllRequestsByState(id,"COMPLETED");
     }
 

@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,11 +23,13 @@ public class UserEntity {
     private Integer id;
     private String firstName;
     private String lastName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     private String username;
     private String phoneNumber;
     private String emailAddress;
     private String password;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date signUpDate;
     private String city;
     private String profilePicture;
