@@ -1,32 +1,51 @@
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/widgets/CheckoutButton.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-//TODO: will be taken from localStorage
-const id = 3;
-
-void main() {
-  runApp(RequestsApp());
-}
-
-class RequestsApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: RequestHomePage(),
-    );
-  }
-}
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+const techSecureStorage = FlutterSecureStorage();
+late int id;
+late String token;
+//
+// void main() {
+//   runApp(RequestsApp());
+// }
+//
+// class RequestsApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: RequestHomePage(),
+//     );
+//   }
+// }
 
 class RequestHomePage extends StatefulWidget {
+
   @override
   _RequestHomePageState createState() => _RequestHomePageState();
 }
 
 class _RequestHomePageState extends State<RequestHomePage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    initId();
+  }
+  Future<void> initId() async {
+    String? idString = await techSecureStorage.read(key: 'id');
+    id = int.parse(idString!);
+    String? stringToken = (await techSecureStorage.read(key: 'auth_token')) as String;
+    token = stringToken;
+    print(token);
+  }
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -103,6 +122,7 @@ class _RequestListState extends State<RequestList> {
   @override
   void initState() {
     super.initState();
+    initId();
     fetchRequests();
   }
 
@@ -111,9 +131,9 @@ class _RequestListState extends State<RequestList> {
       isLoading = true;
     });
 
-    print("HELLO FROM HERE");
-    final url = Uri.parse('http://10.3.75.138:8083${widget.endpoint}/$id');
-    final response = await http.get(url);
+    // print("HELLO FROM HERE");
+    final url = Uri.parse(ServerAPI.baseURL + '${widget.endpoint}/$id');
+    final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
@@ -130,10 +150,10 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applyFilter() async {
-    final url = Uri.parse('http://10.3.75.138:8083/tech/requests/filter');
+    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/filter');
     final body = json.encode({"id": id, "state": widget.state, "query": filterQuery});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
@@ -149,10 +169,10 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applySearch() async {
-    final url = Uri.parse('http://10.3.75.138:8083/tech/requests/search');
+    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/search');
     final body = json.encode({"id": id, "state": widget.state, "query": searchQuery});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
@@ -168,10 +188,10 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applySort() async {
-    final url = Uri.parse('http://10.3.75.138:8083/tech/requests/sort');
+    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/sort');
     final body = json.encode({"id": id, "type": sortType, "state": widget.state});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
@@ -187,14 +207,14 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> refuseTask(Request request) async {
-    final url = Uri.parse('http://10.3.75.138:8083/tech/requests/refuse');
+    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/refuse');
     final body = json.encode({
       "id": request.id,
       "techId": request.techId,
       "clientId": request.userId,
     });
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       setState(() {
@@ -327,13 +347,7 @@ class _RequestListState extends State<RequestList> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle AcceptTask functionality here
-                              },
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                              child: const Text("Accept Task"),
-                            ),
+                            CheckoutButton(token: token, id: request.id, userId: request.userId, techId: request.techId),
                             ElevatedButton(
                               onPressed: () => refuseTask(request),
                               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -350,6 +364,14 @@ class _RequestListState extends State<RequestList> {
         ),
       ],
     );
+  }
+
+  Future<void> initId() async {
+    String? idString = await techSecureStorage.read(key: 'id');
+    id = int.parse(idString!);
+    String? stringToken = (await techSecureStorage.read(key: 'auth_token')) as String;
+    token = stringToken;
+    print(token);
   }
 }
 

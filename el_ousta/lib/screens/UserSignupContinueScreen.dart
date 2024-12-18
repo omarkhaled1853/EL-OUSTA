@@ -87,7 +87,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
       );
       // check the status code for the result
       if (response.statusCode == 200) {
-        log(response.body);
+
         if(response.body != 'Invalid username' && response.body != 'Invalid email address') {
           String id = response.body;
           url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
@@ -103,9 +103,11 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
             }),
           );
           if(response.statusCode == 200) {
-            log(response.body);
+            final data = jsonDecode(response.body);
+            print(data); // Prints the parsed JSON object (Map or List)
+            print(data['token']); // Access a specific field
             // Storing the token
-            await secureStorage.write(key: 'auth_token', value: response.body);
+            await secureStorage.write(key: 'auth_token', value: data['token']);
             await secureStorage.write(key: 'id', value: id);
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(

@@ -16,6 +16,8 @@ import '../API/googleSigninApi.dart';
 import '../main.dart';
 import 'TechSignupContinueScreen.dart';
 import 'homeclient.dart';
+import 'dart:convert';
+
 
 class SignupScreen extends StatefulWidget {
   final dynamic type;
@@ -68,8 +70,10 @@ class _SignupScreenState extends State<SignupScreen> {
       );
       // check the status code for the result
       if (response.statusCode == 200) {
-        log(response.body);
-        if(response.body != 'fail') {
+        final data = jsonDecode(response.body);
+        print(data); // Prints the parsed JSON object (Map or List)
+        print(data['status']); // Access a specific field
+        if(data['status'] != 'fail') {
           log(response.body);
           // Storing the token
           await secureStorage.write(key: 'auth_token', value: response.body);

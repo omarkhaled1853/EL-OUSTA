@@ -9,7 +9,13 @@ class Technician {
   final String roles;
   final String city;
   final String domain;
-  final DateTime startDate;
+  final DateTime signUpDate;
+  final List technicianNotifications;
+  final String description;
+  final DateTime jobStartDate;
+  final String profilePicture;
+  final Map<int, int> domainEntity;
+  final double rates;
 
   Technician(
       {
@@ -23,7 +29,16 @@ class Technician {
         required this.city,
         required this.roles,
         required this.domain,
-        required this.startDate
+        // required this.startDate,
+        required this.technicianNotifications,
+
+        required this.signUpDate,
+
+        required this.description,
+        required this.jobStartDate,
+        required this.profilePicture,
+        required this.domainEntity,
+        required this.rates,
       }
     );
   Map<String, dynamic> toJson() {
@@ -38,7 +53,8 @@ class Technician {
       'city': city,
       'roles': roles,
       'domain': domain,
-      'startDate': startDate.toIso8601String(), // Convert DateTime to ISO format
+      'startDate': signUpDate.toIso8601String(), // Convert DateTime to ISO format
+      'clientNotifications': []
     };
   }
 }

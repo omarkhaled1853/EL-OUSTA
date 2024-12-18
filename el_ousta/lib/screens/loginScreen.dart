@@ -9,6 +9,7 @@ import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:el_ousta/screens/enterUsernameScreen.dart';
 import 'package:el_ousta/screens/forgetPasswordScreen.dart';
 import 'package:el_ousta/screens/techinican_home.dart';
+import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -67,14 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       // check the status code for the result
       if (response.statusCode == 200) {
-        log(response.body);
-        if(response.body != 'fail') {
+        final data = jsonDecode(response.body);
+        print(data); // Prints the parsed JSON object (Map or List)
+        print(data['token']); // Access a specific field
+        if(data['status'] != 'fail') {
           log(response.body);
           // Storing the token
-          await secureStorage.write(key: 'auth_token', value: response.body);
+          await secureStorage.write(key: 'auth_token', value: data['token']);
+          await secureStorage.write(key: 'id', value: data['id']);
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : TechnicianHome()
+                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : RequestHomePage()
               )
           );
         }
@@ -169,13 +173,16 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
       );
       if(response.statusCode == 200) {
-        log(response.body);
+        final data = jsonDecode(response.body);
+        print(data); // Prints the parsed JSON object (Map or List)
+        print(data['token']); // Access a specific field
         // Storing the token
-        if(response.body != 'fail') {
-          await secureStorage.write(key: 'auth_token', value: response.body);
+        if(data['status'] != 'fail') {
+          await secureStorage.write(key: 'auth_token', value: data['token']);
+          await secureStorage.write(key: 'id', value: data['id']);
           result = Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
+                  builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : RequestHomePage()
               )
           );
         }

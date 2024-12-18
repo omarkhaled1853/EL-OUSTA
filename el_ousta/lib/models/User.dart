@@ -21,7 +21,8 @@ class User {
       required this.dob,
       required this.phoneNumber,
       required this.city,
-      required this.roles, required List clientNotifications,
+      required this.roles,
+      required List clientNotifications,
     }
   );
 
