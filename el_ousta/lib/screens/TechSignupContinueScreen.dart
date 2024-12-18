@@ -4,7 +4,7 @@ import 'dart:ffi';
 
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/models/Technician.dart';
-import 'package:el_ousta/screens/techinican_home.dart';
+import 'package:el_ousta/old%20files/techinican_home.dart';
 import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import '../API/serverAPI.dart';
 import '../data/professions.dart';
 import '../main.dart';
-import 'homeclient.dart';
+import '../old files/homeclient.dart';
 
 class TechSignupContinueScreen extends StatefulWidget {
   final dynamic email;
@@ -109,9 +109,9 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             },
             'signUpDate': (new DateTime.now()).toIso8601String(), // Convert DateTime to ISO format
             'technicianNotifications': [],
-            'jobStartDate': null,
+            'jobStartDate': '1923-07-23',
             'profilePicture': null,
-            'rates': 50.0
+            'rate': 50.0
           })
       );
       // check the status code for the result

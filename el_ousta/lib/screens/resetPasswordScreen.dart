@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:el_ousta/screens/techinican_home.dart';
+import 'package:el_ousta/old%20files/techinican_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:el_ousta/common/userTech.dart';
 import 'package:http/http.dart' as http;
 import '../API/serverAPI.dart';
-import 'homeclient.dart';
+import '../old files/homeclient.dart';
 class Resetpasswordscreen extends StatefulWidget {
   final dynamic type;
   final dynamic user;

@@ -8,7 +8,8 @@ import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:el_ousta/screens/enterUsernameScreen.dart';
 import 'package:el_ousta/screens/forgetPasswordScreen.dart';
-import 'package:el_ousta/screens/techinican_home.dart';
+import 'package:el_ousta/screens/profesions.dart';
+import 'package:el_ousta/old%20files/techinican_home.dart';
 import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ import 'package:el_ousta/common/userTech.dart';
 import 'package:http/http.dart' as http;
 import '../API/googleSigninApi.dart';
 import 'TechSignupContinueScreen.dart';
-import 'homeclient.dart';
+import '../old files/homeclient.dart';
 
 class LoginScreen extends StatefulWidget {
   final dynamic type;
@@ -78,21 +79,21 @@ class _LoginScreenState extends State<LoginScreen> {
           await secureStorage.write(key: 'id', value: data['id']);
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : RequestHomePage()
+                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: "Electrical", token: data['token'],) : RequestHomePage()
               )
           );
         }
         else {
           log("Sign in failed with status: ${response.statusCode}.");
           if(widget.type == Type.USER) {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => UserSignupContinueScreen(email: user.email, password: user.id,)
                 )
             );
           }
           else {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => TechSignupContinueScreen(email: user.email, password: user.id,)
                 )
@@ -182,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await secureStorage.write(key: 'id', value: data['id']);
           result = Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : RequestHomePage()
+                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: data['token'],) : RequestHomePage()
               )
           );
         }
@@ -284,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       // const SizedBox(height: 16.0),
                       TextButton(
                           onPressed: () {
-                            Navigator.of(context).push(
+                            Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (ctx) => EnterusernameScreen(type: widget.type)
                                 )

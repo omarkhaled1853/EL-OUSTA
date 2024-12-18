@@ -1,42 +1,42 @@
-// import 'package:demoapp/profesions.dart';
-// import 'package:test_app/API/serverAPI.dart';
+// import 'package:el_ousta/screens/profesions.dart';
+// import 'package:el_ousta/API/serverAPI.dart';
 // import 'package:flutter/material.dart';
 // import 'user_profile.dart';
-// import 'package:test_app/screens/userTechScreen.dart';
+// import 'package:el_ousta/screens/userTechScreen.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // import 'dart:convert';
 // import 'package:http/http.dart' as http;
-
+//
 // const storage = FlutterSecureStorage();
-
+//
 // class DomainPage extends StatefulWidget {
 //   const DomainPage({Key? key}) : super(key: key);
-
+//
 //   @override
 //   State<DomainPage> createState() => _DomainPageState();
 // }
-
+//
 // class _DomainPageState extends State<DomainPage> {
 //   List<Map<String, dynamic>> domainList = []; // List to store DomainDTO data
 //   bool isLoading = false;
-
+//
 //   @override
 //   void initState() {
 //     super.initState();
 //     fetchAllDomains();
 //   }
-
+//
 //   // Fetch the DomainDTO list from the backend
 //   Future<void> fetchAllDomains() async {
 //     setState(() {
 //       isLoading = true;
 //     });
-
+//
 //     try {
 //       final response = await http.get(
 //         Uri.parse(ServerAPI.baseURL + 'client/home/'), // Replace with your API endpoint
 //       );
-
+//
 //       if (response.statusCode == 200) {
 //         final List<dynamic> responseData = json.decode(response.body);
 //         setState(() {
@@ -53,7 +53,7 @@
 //       });
 //     }
 //   }
-
+//
 //   void _showSnackBar(String message, Color color) {
 //     ScaffoldMessenger.of(context).showSnackBar(
 //       SnackBar(
@@ -63,7 +63,7 @@
 //     );
 //   }
 //   int _currentIndex = 0;
-
+//
 //   void onTabTapped(int index) {
 //     if (index == 3) {
 //       // Navigate to ProfilePage if "Profile" tab is selected
@@ -77,7 +77,7 @@
 //       });
 //     }
 //   }
-
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -109,7 +109,7 @@
 //         itemCount: domainList.length,
 //         itemBuilder: (context, index) {
 //           final domain = domainList[index];
-
+//
 //           // Render a clickable card for each DomainDTO
 //           return GestureDetector(
 //             onTap: () {             // TODO   change the pagename to your page

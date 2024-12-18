@@ -24,7 +24,7 @@ class CustomSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search by name of tech',
           filled: true,
-          fillColor: const Color.fromARGB(255, 146, 146, 146),
+          // fillColor: const Color.fromARGB(255, 146, 146, 146),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none,

@@ -1,21 +1,25 @@
 import 'dart:convert';
 
-import 'package:demoapp/Service/gettechcards.dart';
-import 'package:demoapp/Service/search_service.dart';
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/Service/gettechcards.dart';
+import 'package:el_ousta/Service/search_service.dart';
 import 'package:flutter/material.dart';
-import 'package:demoapp/CustomSearchBar.dart';
-import 'package:demoapp/ProfessionCard.dart';
-import 'package:demoapp/common/navigationbar.dart';
-import 'common/CustomAppBar.dart';
-import 'package:demoapp/model/TechCard.dart';
+import 'package:el_ousta/widgets/CustomSearchBar.dart';
+import 'package:el_ousta/widgets/ProfessionCard.dart';
+import 'package:el_ousta/common/navigationbar.dart';
+import 'package:el_ousta/common/CustomAppBar.dart';
+import 'package:el_ousta/models/TechCard.dart';
 import 'package:http/http.dart' as http;
+import 'package:el_ousta/common/userTech.dart';
+import '../widgets/appBarWithNotification.dart';
 
 List<TechCard>? techcards;
 String newprofession = "Electrical";
 
 class ProfessionsScreen extends StatefulWidget {
-  final String professionType; // Variable to accept data
-  const ProfessionsScreen({super.key, required this.professionType});
+  final String professionType;
+  final dynamic token;
+  const ProfessionsScreen({super.key, required this.professionType, required this.token});
 
   @override
   _ProfessionsScreenState createState() => _ProfessionsScreenState();
@@ -34,7 +38,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
 
   void _performSearch(String query) async {
     try {
-      List<TechCard>? results = await service_search(query, newprofession);
+      List<TechCard>? results = await service_search(query, newprofession, widget.token);
       setState(() {
         techcards = results;
       });
@@ -61,7 +65,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   /// get cards in initialization
   Future<void> fetchTechniciansdefault() async {
     try {
-      featched = await Gettechcards().getcardsinstarting();
+      featched = await Gettechcards().getcardsinstarting(widget.token);
       setState(() {
         techcards = featched;
         isLoaded = true; // Mark as loaded after data is fetched
@@ -79,7 +83,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   Future<void> searchTechnicians(String searchQuery) async {
     try {
       List<TechCard>? searchResults =
-          await service_search(searchQuery, newprofession);
+          await service_search(searchQuery, newprofession, widget.token);
 
       if (searchResults != null) {
         setState(() {
@@ -105,21 +109,22 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
     }
 
     return Scaffold(
-      appBar: const CustomAppBar(), // Custom AppBar
+      appBar: NotificationScreen(type: Type.USER), // Custom AppBar
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Professions',
-              style: TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.all(16.0),
+          //   child: Text(
+          //     'Professions',
+          //     style: TextStyle(
+          //       fontSize: 35,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          // ),
           FilterSection(
-              onFilterApplied: reloadPageWithFilteredData), // Pass callback
+              onFilterApplied: reloadPageWithFilteredData,
+              token: widget.token,), // Pass callback
           CustomSearchBar(
             searchController: _searchController,
             focusNode: _searchFocusNode,
@@ -138,7 +143,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
               itemCount: techcards!.length, // Number of cards
               itemBuilder: (context, index) {
                 final techCard = techcards![index];
-                return ProfessionCard(techCard: techCard);
+                return ProfessionCard(techCard: techCard, token: widget.token,);
               },
             ),
           ),
@@ -152,7 +157,9 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
 class FilterSection extends StatefulWidget {
   final Function(List<TechCard>) onFilterApplied;
 
-  const FilterSection({super.key, required this.onFilterApplied});
+  final dynamic token;
+
+  const FilterSection({super.key, required this.onFilterApplied, required this.token});
 
   @override
   FilterSectionState createState() => FilterSectionState();
@@ -165,7 +172,7 @@ class FilterSectionState extends State<FilterSection> {
     print("search on $profession");
     List<TechCard> testData = [];
     var client = http.Client();
-    var uri = Uri.parse("http://192.168.1.12:8088/client/home/filtercard");
+    var uri = Uri.parse(ServerAPI.baseURL + "/client/home/filtercard");
 
     try {
       // The body must contain the "field" and "query" parameters for filtering
@@ -173,7 +180,7 @@ class FilterSectionState extends State<FilterSection> {
 
       var response = await client.post(
         uri,
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ${widget.token}'},
         body: requestBody,
       );
 
@@ -211,7 +218,7 @@ class FilterSectionState extends State<FilterSection> {
             options: [
               'Building',
               'Plumbing',
-              'Electric'
+              'Electrical'
             ], // editing when create admin so admin can add new
             onSelected: (value) async {
               setState(() {
@@ -235,7 +242,7 @@ class FilterSectionState extends State<FilterSection> {
 
   Future<List<TechCard>?> _getFilteredCards(String profession) async {
     try {
-      return await getCardsWithSpecificProfession(profession);
+      return await getCardsWithSpecificProfession(profession, );
     } catch (e) {
       print("Error fetching filtered cards: $e");
       return [];
@@ -261,13 +268,14 @@ class FilterSectionState extends State<FilterSection> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 146, 146, 146),
+          // color: const Color.fromARGB(255, 146, 146, 146),
           borderRadius: BorderRadius.circular(4),
+
         ),
         child: Row(
           children: [
-            Text(text, style: const TextStyle(color: Colors.white)),
-            const Icon(Icons.arrow_drop_down, color: Colors.white),
+            Text(text, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+            const Icon(Icons.arrow_drop_down, color: Colors.black),
           ],
         ),
       ),

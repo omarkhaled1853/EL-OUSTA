@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:demoapp/model/TechCard.dart';
-import 'package:demoapp/RequestForm.dart';
-import 'package:demoapp/FilterSection.dart';
+import 'package:el_ousta/models/TechCard.dart';
+import 'package:el_ousta/widgets/RequestForm.dart';
+import 'package:el_ousta/widgets/FilterSection.dart';
 
 class ProfessionCard extends StatelessWidget {
   final TechCard techCard;
-
-  const ProfessionCard({super.key, required this.techCard});
+  final String token;
+  const ProfessionCard({super.key, required this.techCard, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -253,12 +253,13 @@ class ProfessionCard extends StatelessWidget {
                               techid: this
                                   .techCard
                                   .techId, // Pass variables directly
+                              token: this.token,
                             );
                           },
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 2, 61, 89),
+                        backgroundColor: Colors.deepPurple,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),
@@ -287,7 +288,7 @@ class ProfessionCard extends StatelessWidget {
                       //   );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 2, 61, 89),
+                        backgroundColor: Colors.deepPurple,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6),

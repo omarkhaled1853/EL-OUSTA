@@ -5,7 +5,9 @@ import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/loginScreen.dart';
-import 'package:el_ousta/screens/techinican_home.dart';
+import 'package:el_ousta/old%20files/techinican_home.dart';
+import 'package:el_ousta/screens/profesions.dart';
+import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,7 +17,7 @@ import 'package:http/http.dart' as http;
 import '../API/googleSigninApi.dart';
 import '../main.dart';
 import 'TechSignupContinueScreen.dart';
-import 'homeclient.dart';
+import '../old files/homeclient.dart';
 import 'dart:convert';
 
 
@@ -76,10 +78,13 @@ class _SignupScreenState extends State<SignupScreen> {
         if(data['status'] != 'fail') {
           log(response.body);
           // Storing the token
-          await secureStorage.write(key: 'auth_token', value: response.body);
+          print(data['token']);
+          print(data['id']);
+          await secureStorage.write(key: 'auth_token', value: data['token']);
+          await secureStorage.write(key: 'id', value: data['id']);
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ClientPage() : TechnicianHome()
+                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: data['token'],) : RequestHomePage()
               )
           );
         }

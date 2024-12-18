@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // For date formatting
@@ -15,7 +16,8 @@ class RequestService {
       String location,
       DateTime startDate,
       DateTime endDate,
-      BuildContext context) async {
+      BuildContext context,
+      String token) async {
     // Format the dates to 'dd/MM/yyyy' format
     String formattedStartDate = DateFormat('dd/MM/yyyy').format(startDate);
     String formattedEndDate = DateFormat('dd/MM/yyyy').format(endDate);
@@ -30,11 +32,12 @@ class RequestService {
       'startdate': formattedStartDate,
       'enddate': formattedEndDate,
     };
-
+    print(token);
     final response = await http.post(
-      Uri.parse('$baseUrl/request/addRequest'),
+      Uri.parse(ServerAPI.baseURL + '/client/request/addRequest'),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
       },
       body: json.encode(requestDto),
     );

@@ -1,7 +1,9 @@
+import 'package:el_ousta/API/serverAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:demoapp/Service/request_service.dart';
-
+import 'package:el_ousta/Service/request_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+FlutterSecureStorage requestFormSecureStorage = const FlutterSecureStorage();
 class RequestForm extends StatefulWidget {
   final Function(DateTime, DateTime, String, String) onSubmit;
 
@@ -153,13 +155,14 @@ class RequestPopupDialog extends StatelessWidget {
   final double rating;
   final String professionName;
   final int techid;
-
+  final String token;
   const RequestPopupDialog({
     super.key,
     required this.techid,
     required this.professionName,
     required this.techName,
     required this.rating,
+    required this.token,
   });
 
   @override
@@ -183,15 +186,18 @@ class RequestPopupDialog extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               RequestForm(
-                onSubmit: (startDate, endDate, details, location) {
+                onSubmit: (startDate, endDate, details, location) async {
                   // Handle the form submission
                   // -----------------------------------------------------
-                  final int userId = 123; // Replace with actual user ID
+                  final String? userStringId = await requestFormSecureStorage.read(key: 'id'); // Replace with actual user ID
+                  final int userId = int.parse(userStringId!);
+                  print(userId);
                   final int techId =
                       this.techid; // Replace with actual technician ID
                   // ---------------------------------------------
                   // Call your service to send the request
-                  RequestService(baseUrl: 'http://192.168.1.12:8085')
+                  print(techId);
+                  RequestService(baseUrl: ServerAPI.baseURL)
                       .sendRequest(
                     userId,
                     techId,
@@ -200,6 +206,7 @@ class RequestPopupDialog extends StatelessWidget {
                     startDate,
                     endDate,
                     context,
+                    this.token
                   )
                       .then((success) {
                     if (success) {

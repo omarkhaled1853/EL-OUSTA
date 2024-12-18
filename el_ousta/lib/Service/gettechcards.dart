@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:demoapp/model/TechCard.dart';
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/models/TechCard.dart';
 import 'package:http/http.dart' as http;
 
 class Gettechcards {
-  Future<List<TechCard>?> getcardsinstarting() async {
+  Future<List<TechCard>?> getcardsinstarting(String token) async {
+    print(token);
     List<TechCard> testData = [];
     var client = http.Client();
-    var uri = Uri.parse("http://192.168.1.12:8088/client/home/filtercard");
+    var uri = Uri.parse(ServerAPI.baseURL + "/client/home/filtercard");
 
     try {
       // The body must contain the "field" and "query" parameters for filtering
@@ -15,7 +17,7 @@ class Gettechcards {
 
       var response = await client.post(
         uri,
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
         body: requestBody,
       );
 

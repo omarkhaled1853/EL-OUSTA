@@ -49,6 +49,7 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   stomp_dart_client: ^0.4.0
   flutter_stripe: ^11.3.0
+  shared_preferences: ^2.3.3
 
 
 dev_dependencies:

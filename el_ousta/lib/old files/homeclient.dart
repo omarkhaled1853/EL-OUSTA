@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../widgets/appBarWithNotification.dart';
+import 'package:el_ousta/common/userTech.dart';
 const storage = FlutterSecureStorage();
 class ClientPage extends StatefulWidget {
   const ClientPage({Key? key}) : super(key: key);
@@ -177,7 +178,7 @@ class _ClientPageState extends State<ClientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NotificationScreen(),
+      appBar: NotificationScreen(type: Type.USER),
       body: Column(
         children: [
           // Search Bar and Actions

@@ -6,6 +6,7 @@ import 'dart:ffi';
 
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/screens/profesions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,7 +15,7 @@ import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/User.dart';
-import 'homeclient.dart';
+import '../old files/homeclient.dart';
 
 class UserSignupContinueScreen extends StatefulWidget {
   final dynamic email;
@@ -111,7 +112,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
             await secureStorage.write(key: 'id', value: id);
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (ctx) => const ClientPage()
+                    builder: (ctx) => ProfessionsScreen(professionType: "Electrical", token: data['token'],),
                 )
             );
           }

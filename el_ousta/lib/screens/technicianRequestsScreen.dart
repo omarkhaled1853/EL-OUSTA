@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:el_ousta/common/userTech.dart';
+import '../widgets/appBarWithNotification.dart';
 const techSecureStorage = FlutterSecureStorage();
 late int id;
 late String token;
@@ -49,46 +51,50 @@ class _RequestHomePageState extends State<RequestHomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Requests'),
-          bottom: TabBar(
-            indicatorColor: Colors.white,
-            tabs: const [
-              Tab(icon: Icon(Icons.pending), text: "Pending"),
-              Tab(icon: Icon(Icons.work), text: "In Progress"),
-              Tab(icon: Icon(Icons.done), text: "Completed"),
-            ],
-            onTap: (index) {
-              // Call fetchRequests() when a tab is tapped
-              final requestList = context.findAncestorStateOfType<_RequestListState>();
-              print(requestList);
-              if (requestList != null) {
-                requestList.fetchRequests();
-              }
-            },
+        appBar: NotificationScreen(type: Type.TECHNICIAN),
+        body: Scaffold(
+          appBar: AppBar(
+            // title: const Text('Requests'),
+            automaticallyImplyLeading: false,
+            bottom: TabBar(
+              indicatorColor: Colors.white,
+              tabs: const [
+                Tab(icon: Icon(Icons.pending), text: "Pending"),
+                Tab(icon: Icon(Icons.work), text: "In Progress"),
+                Tab(icon: Icon(Icons.done), text: "Completed"),
+              ],
+              onTap: (index) {
+                // Call fetchRequests() when a tab is tapped
+                final requestList = context.findAncestorStateOfType<_RequestListState>();
+                print(requestList);
+                if (requestList != null) {
+                  requestList.fetchRequests();
+                }
+              },
+            ),
           ),
-        ),
-        body: TabBarView(
-          children: [
-            RequestList(
-              state: "PENDING",
-              isPending: true,
-              endpoint: "/tech/requests/get/pending",
-              boxColor: Colors.orange[50],
-            ),
-            RequestList(
-              state: "IN-PROGRESS",
-              isPending: false,
-              endpoint: "/tech/requests/get/inProgress",
-              boxColor: Colors.blue[50],
-            ),
-            RequestList(
-              state: "COMPLETED",
-              isPending: false,
-              endpoint: "/tech/requests/get/completed",
-              boxColor: Colors.green[50],
-            ),
-          ],
+          body: TabBarView(
+            children: [
+              RequestList(
+                state: "PENDING",
+                isPending: true,
+                endpoint: "/tech/requests/get/pending",
+                boxColor: Colors.orange[50],
+              ),
+              RequestList(
+                state: "IN-PROGRESS",
+                isPending: false,
+                endpoint: "/tech/requests/get/inProgress",
+                boxColor: Colors.blue[50],
+              ),
+              RequestList(
+                state: "COMPLETED",
+                isPending: false,
+                endpoint: "/tech/requests/get/completed",
+                boxColor: Colors.green[50],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -130,7 +136,7 @@ class _RequestListState extends State<RequestList> {
     setState(() {
       isLoading = true;
     });
-
+    initId();
     // print("HELLO FROM HERE");
     final url = Uri.parse(ServerAPI.baseURL + '${widget.endpoint}/$id');
     final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
