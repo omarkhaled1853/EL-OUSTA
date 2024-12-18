@@ -42,7 +42,7 @@ public class ClientRequestsController {
                 .body(pendingClientRequestDtoList);
     }
 
-    @GetMapping("/inprogress/{id}")
+    @GetMapping("/inProgress/{id}")
     public ResponseEntity<?> getInProgressRequests(@PathVariable Integer id) {
         List<ClientRequestDTO> pendingClientRequestDtoList = clientRequestsService.getClientInProgressRequests(id);
         return ResponseEntity.status(HttpStatus.OK)
