@@ -18,5 +18,7 @@ public interface DomainRepository extends JpaRepository<DomainEntity, Integer> {
     @Query(value = "SELECT * FROM DOMAIN WHERE name= :Dname", nativeQuery = true)
     List<DomainEntity> getDomains(@Param("Dname") String Dname);
 
-
+    ///////////// ADMIN home queries
+    @Query(value = "SELECT * FROM DOMAIN", nativeQuery = true)
+    List<DomainEntity> getall();
 }

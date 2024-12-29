@@ -50,6 +50,14 @@ public class SecurityConfig {
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch",
+                                "/client/request/addRequest",
+                                "/client/request/Done_Requests/**",
+                                "/client/request/photos",
+                                "/profession/addprofession",
+                                "/profession/get_techs",
+                                "/profession/deletetech/**",
+                                "/profession/get_dialog/**",
+                                "/search/**",
                                 "/elousta-websocket/**").permitAll()
                         .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
