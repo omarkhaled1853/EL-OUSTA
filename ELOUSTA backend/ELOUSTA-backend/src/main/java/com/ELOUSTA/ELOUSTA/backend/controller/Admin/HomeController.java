@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
-@RequestMapping("/admin/home/")
+@RequestMapping("/admin/home")
 public class HomeController {
     @Autowired
     private RequestService requestService;
