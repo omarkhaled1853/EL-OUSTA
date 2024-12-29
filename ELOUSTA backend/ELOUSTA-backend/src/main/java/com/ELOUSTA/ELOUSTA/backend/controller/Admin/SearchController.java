@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/admin/search")
 public class SearchController {
     @Autowired
     private SearchTechnicianService searchTechnicianService;

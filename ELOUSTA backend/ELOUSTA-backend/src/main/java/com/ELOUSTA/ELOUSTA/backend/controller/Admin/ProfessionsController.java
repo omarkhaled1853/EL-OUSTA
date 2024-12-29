@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/profession")
+@RequestMapping("/admin/profession")
 public class ProfessionsController {
     @Autowired
     RequestService requestService;

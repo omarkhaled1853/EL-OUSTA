@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/filter")
+@RequestMapping("/admin/filter")
 public class FilterController {
     @Autowired
     private RequestService requestService;
