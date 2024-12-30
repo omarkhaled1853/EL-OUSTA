@@ -11,6 +11,7 @@ import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestSear
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestSortService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
+import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestStatusPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,35 +28,22 @@ public class ClientRequestController {
     private final ClientRequestFilterService requestFilterService;
     private final ClientRequestSearchService requestSearchService;
     private final ClientRequestSortService requestSortService;
-    private final NotificationService notificationService;
 
     public ClientRequestController(ClientRequestService clientRequestsService,
                                    ClientRequestFilterService requestFilterService,
                                    ClientRequestSearchService requestSearchService,
-                                   ClientRequestSortService requestSortService,
-                                   NotificationService notificationService) {
+                                   ClientRequestSortService requestSortService) {
 
         this.clientRequestsService = clientRequestsService;
         this.requestFilterService = requestFilterService;
         this.requestSearchService = requestSearchService;
         this.requestSortService = requestSortService;
-        this.notificationService = notificationService;
     }
 
 
     @PostMapping("/addRequest")
-    public ResponseEntity<?> addRequest(@RequestBody OrderRequestDTO orderRequestDto) {
-        clientRequestsService.addRequest(orderRequestDto);
-
-        String message = orderRequestDto.getDescription()
-                +"\n" + "Location: " + orderRequestDto.getLocation()
-                +"\nstart date: " + orderRequestDto.getStartDate()
-                +"\nend date: " + orderRequestDto.getEndDate();
-
-        notificationService.sendNotificationToTechnician(message, orderRequestDto.getTechId());
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Request successfully saved");
+    public void addRequest(@RequestBody OrderRequestDTO orderRequestDTO) {
+        clientRequestsService.addRequest(orderRequestDTO);
     }
 
     @GetMapping("/pending/{id}")
@@ -119,5 +107,17 @@ public class ClientRequestController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clientSortRequests);
+    }
+
+    @PostMapping("/done")
+    private void doneRequest(@RequestBody RequestStatusPayload donePayload ) {
+
+        clientRequestsService.doneRequest(donePayload);
+    }
+
+    @PostMapping("/refuse")
+    private void cancelRequest(@RequestBody RequestStatusPayload cancelPayload) {
+
+        clientRequestsService.cancelRequest(cancelPayload);
     }
 }
