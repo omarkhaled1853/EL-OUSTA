@@ -88,11 +88,10 @@ public class ClientRequestController {
                 .body(pendingViewRequestDtoList);
     }
 
-    @GetMapping("/filter/{id}")
-    private ResponseEntity<?>filterRequests(@PathVariable Integer id,
-                                            @RequestParam RequestPayload payload) {
+    @GetMapping("/filter")
+    private ResponseEntity<?>filterRequests(@RequestParam RequestPayload payload) {
 
-        List<ViewRequestDTO> clientFilterRequests = requestFilterService.filterRequests(id, payload);
+        List<ViewRequestDTO> clientFilterRequests = requestFilterService.filterRequests(payload);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clientFilterRequests);
@@ -100,25 +99,23 @@ public class ClientRequestController {
 
 
 
-    @GetMapping("/search/{id}")
+    @GetMapping("/search")
 
-    private ResponseEntity<?>searchRequests(@PathVariable Integer id,
-                                            @RequestParam RequestPayload payload) {
+    private ResponseEntity<?>searchRequests(@RequestParam RequestPayload payload) {
 
         List<ViewRequestDTO> clientSearchRequests =
-                requestSearchService.searchRequests(id, payload);
+                requestSearchService.searchRequests(payload);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clientSearchRequests);
     }
 
 
-    @GetMapping("/sort/{id}")
-    private ResponseEntity<?>sortRequests(@PathVariable Integer id,
-                                          @RequestParam RequestPayload payload) {
+    @GetMapping("/sort")
+    private ResponseEntity<?>sortRequests(@RequestParam RequestPayload payload) {
 
         List<ViewRequestDTO> clientSortRequests =
-                requestSortService.sortRequests(id, payload);
+                requestSortService.sortRequests(payload);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clientSortRequests);

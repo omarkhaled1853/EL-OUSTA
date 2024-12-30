@@ -6,5 +6,5 @@ import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import java.util.List;
 
 public interface RequestSearchService {
-    List<ViewRequestDTO> searchRequests(int id, RequestPayload requestPayload);
+    List<ViewRequestDTO> searchRequests(RequestPayload requestPayload);
 }

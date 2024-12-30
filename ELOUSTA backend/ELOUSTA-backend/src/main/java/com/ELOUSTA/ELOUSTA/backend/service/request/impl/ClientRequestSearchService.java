@@ -22,10 +22,10 @@ public class ClientRequestSearchService implements RequestSearchService {
         this.requestSearch = requestSearch;
     }
 
-    public List<ViewRequestDTO> searchRequests(int id, RequestPayload requestPayload) {
+    public List<ViewRequestDTO> searchRequests(RequestPayload requestPayload) {
 
         List<RequestEntity> requestEntityList = requestSearch.search(
-                id,
+                requestPayload.getId(),
                 requestPayload.getState(),
                 requestPayload.getQuery()
         );

@@ -23,10 +23,10 @@ public class ClientRequestFilterService implements RequestFilterService {
         this.requestFilter = requestFilter;
     }
 
-    public List<ViewRequestDTO> filterRequests(int id , RequestPayload requestPayload) {
+    public List<ViewRequestDTO> filterRequests(RequestPayload requestPayload) {
 
         List<RequestEntity> requestEntityList = requestFilter.Filter(
-                id,
+                requestPayload.getId(),
                 requestPayload.getState(),
                 requestPayload.getQuery()
         );

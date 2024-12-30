@@ -33,8 +33,8 @@ public class ClientRequestFilterServiceTest {
     @Test
     void testFilterRequests() {
         // Arrange
-        int id = 1;
         RequestPayload requestPayload = RequestPayload.builder()
+                .id(1)
                 .query("Location A")
                 .state("PENDING")
                 .build();
@@ -54,17 +54,18 @@ public class ClientRequestFilterServiceTest {
         List<ViewRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(requestEntityList);
 
         // Mock behavior of LocationFilter
-        when(clientRequestFilter.Filter(id, requestPayload.getState(), requestPayload.getQuery()))
+        when(clientRequestFilter
+                .Filter(requestPayload.getId(), requestPayload.getState(), requestPayload.getQuery()))
                 .thenReturn(requestEntityList);
 
         // Act
-        List<ViewRequestDTO> actualDTOList = requestFilterService.filterRequests(id, requestPayload);
+        List<ViewRequestDTO> actualDTOList = requestFilterService.filterRequests(requestPayload);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
 
         // Verify that the filter method was called exactly once
         verify(clientRequestFilter, times(1))
-                .Filter(id, requestPayload.getState(), requestPayload.getQuery());
+                .Filter(requestPayload.getId(), requestPayload.getState(), requestPayload.getQuery());
     }
 }

@@ -34,8 +34,8 @@ public class ClientSearchRequestServiceTest {
     @Test
     void testSearchRequests() {
         // Arrange
-        int id = 1;
         RequestPayload requestPayload = RequestPayload.builder()
+                .id(1)
                 .state("COMPLETED")
                 .query("Search Query")
                 .build();
@@ -55,11 +55,12 @@ public class ClientSearchRequestServiceTest {
         List<ViewRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(mockRequestEntityList);
 
         // Mock behavior of RequestsSearch
-        when(clientRequestSearch.search(id, requestPayload.getState(), requestPayload.getQuery()))
+        when(clientRequestSearch
+                .search(requestPayload.getId(), requestPayload.getState(), requestPayload.getQuery()))
                 .thenReturn(mockRequestEntityList);
 
         // Act
-        List<ViewRequestDTO> actualDTOList = clientRequestSearchService.searchRequests(id, requestPayload);
+        List<ViewRequestDTO> actualDTOList = clientRequestSearchService.searchRequests(requestPayload);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
@@ -67,6 +68,6 @@ public class ClientSearchRequestServiceTest {
 
         // Verify that the search method was called exactly once
         verify(clientRequestSearch, times(1))
-                .search(id, requestPayload.getState(), requestPayload.getQuery());
+                .search(requestPayload.getId(), requestPayload.getState(), requestPayload.getQuery());
     }
 }

@@ -6,5 +6,5 @@ import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import java.util.List;
 
 public interface RequestFilterService {
-    List<ViewRequestDTO> filterRequests(int id, RequestPayload requestPayload);
+    List<ViewRequestDTO> filterRequests(RequestPayload requestPayload);
 }

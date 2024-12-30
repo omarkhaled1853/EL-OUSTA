@@ -38,8 +38,8 @@ public class ClientSortRequestServiceTest {
     @Test
     void testSortRequestsByStartDate() {
         // Arrange
-        int id = 1;
         RequestPayload requestPayload = RequestPayload.builder()
+                .id(1)
                 .query("startDate")
                 .state("PENDING")
                 .build();
@@ -56,24 +56,24 @@ public class ClientSortRequestServiceTest {
         List<ViewRequestDTO> expectedDTOList =
                 RequestEntityListToClientRequestDTOList(mockRequestEntityList);
 
-        when(clientRequestSortByStartDate.sort(id, requestPayload.getState()))
+        when(clientRequestSortByStartDate.sort(requestPayload.getId(), requestPayload.getState()))
                 .thenReturn(mockRequestEntityList);
 
         // Act
-        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(id, requestPayload);
+        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(requestPayload);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
         verify(clientRequestSortByStartDate, times(1))
-                .sort(id, requestPayload.getState());
+                .sort(requestPayload.getId(), requestPayload.getState());
         verify(clientRequestSortByEndDate, never()).sort(anyInt(), anyString());
     }
 
     @Test
     void testSortRequestsByEndDate() {
         // Arrange
-        int id = 1;
         RequestPayload payload = RequestPayload.builder()
+                .id(1)
                 .state("COMPLETED")
                 .query("endDate")
                 .build();
@@ -90,28 +90,30 @@ public class ClientSortRequestServiceTest {
         List<ViewRequestDTO> expectedDTOList =
                 RequestEntityListToClientRequestDTOList(mockRequestEntityList);
 
-        when(clientRequestSortByEndDate.sort(id, payload.getState())).thenReturn(mockRequestEntityList);
+        when(clientRequestSortByEndDate.sort(payload.getId(), payload.getState()))
+                .thenReturn(mockRequestEntityList);
 
         // Act
-        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(id, payload);
+        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(payload);
 
         // Assert
         assertEquals(expectedDTOList, actualDTOList);
-        verify(clientRequestSortByEndDate, times(1)).sort(id, payload.getState());
+        verify(clientRequestSortByEndDate, times(1))
+                .sort(payload.getId(), payload.getState());
         verify(clientRequestSortByStartDate, never()).sort(anyInt(), anyString());
     }
 
     @Test
     void testSortRequestsInvalidType() {
         // Arrange
-        int id = 1;
         RequestPayload requestPayload = RequestPayload.builder()
+                .id(1)
                 .query("invalidType")
                 .state("PENDING")
                 .build();
 
         // Act
-        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(id, requestPayload);
+        List<ViewRequestDTO> actualDTOList = clientRequestSortService.sortRequests(requestPayload);
 
         // Assert
         assertNull(actualDTOList);

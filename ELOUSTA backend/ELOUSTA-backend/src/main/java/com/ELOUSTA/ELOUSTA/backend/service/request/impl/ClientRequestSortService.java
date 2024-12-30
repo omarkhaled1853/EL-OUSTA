@@ -29,14 +29,14 @@ public class ClientRequestSortService implements RequestSortService {
         this.clientRequestSortByStartDate = clientRequestSortByStartDate;
     }
 
-    public List<ViewRequestDTO>sortRequests(int id, RequestPayload requestPayload) {
+    public List<ViewRequestDTO>sortRequests(RequestPayload requestPayload) {
 
         String type = requestPayload.getQuery().toLowerCase();
 
         if("startdate".equals(type)) {
 
             List<RequestEntity> requestEntityList = clientRequestSortByStartDate.sort(
-                    id,
+                    requestPayload.getId(),
                     requestPayload.getState()
             );
 
@@ -45,7 +45,7 @@ public class ClientRequestSortService implements RequestSortService {
         } else if ("enddate".equals(type)) {
 
             List<RequestEntity> requestEntityList = clientRequestSortByEndDate.sort(
-                    id,
+                    requestPayload.getId(),
                     requestPayload.getState()
             );
 

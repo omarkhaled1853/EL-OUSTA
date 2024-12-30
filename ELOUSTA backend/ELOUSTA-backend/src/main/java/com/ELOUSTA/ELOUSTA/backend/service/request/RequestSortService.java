@@ -6,5 +6,5 @@ import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import java.util.List;
 
 public interface RequestSortService {
-    List<ViewRequestDTO> sortRequests(int id, RequestPayload requestPayload);
+    List<ViewRequestDTO> sortRequests(RequestPayload requestPayload);
 }
