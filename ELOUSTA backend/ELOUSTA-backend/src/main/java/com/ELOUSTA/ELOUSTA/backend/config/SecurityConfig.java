@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.config;
 
+import com.ELOUSTA.ELOUSTA.backend.service.auth.AdminAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.filter.JwtAuthFilter;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.ClientAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.TechnicianAuthenticationService;
@@ -31,12 +32,16 @@ public class SecurityConfig {
     private JwtAuthFilter authFilter;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService clientDetailsService(){
         return new ClientAuthenticationService();
     }
     @Bean
     public UserDetailsService technicianDetailsService(){
         return new TechnicianAuthenticationService();
+    }
+    @Bean
+    public UserDetailsService adminDetailsService(){
+        return new AdminAuthenticationService();
     }
 
     @Bean
@@ -47,6 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                                 "/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
+                                "/admin/signIn", "/admin/register",
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch",
@@ -69,7 +75,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider userAuthenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setUserDetailsService(clientDetailsService());
 
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
@@ -80,6 +86,16 @@ public class SecurityConfig {
     public AuthenticationProvider technicianAuthenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(technicianDetailsService());
+
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+
+        return authenticationProvider;
+    }
+
+    @Bean
+    public AuthenticationProvider adminAuthenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(adminDetailsService());
 
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
@@ -108,6 +124,10 @@ public class SecurityConfig {
                     return technicianAuthenticationProvider().authenticate(authentication);
                 }
 
+                // If the URL is related to admin, use AdminService AuthenticationProvider
+                if(requestURI.startsWith("/admin")){
+                    return adminAuthenticationProvider().authenticate(authentication);
+                }
                 // Default: Use UserInfo if no match
                 return userAuthenticationProvider().authenticate(authentication);
             }

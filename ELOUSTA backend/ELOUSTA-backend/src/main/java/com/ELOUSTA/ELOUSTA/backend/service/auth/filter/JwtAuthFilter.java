@@ -1,5 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.service.auth.filter;
 
+//import com.ELOUSTA.ELOUSTA.backend.service.auth.AdminAuthenticationService;
+import com.ELOUSTA.ELOUSTA.backend.service.auth.AdminAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.ClientAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.TechnicianAuthenticationService;
@@ -29,6 +31,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private TechnicianAuthenticationService technicianAuthenticationService;
 
+    @Autowired
+    private AdminAuthenticationService adminAuthenticationService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
@@ -47,7 +52,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 userDetails = userService.loadUserByUsername(username);
             } else if (requestURI.startsWith("/tech")) {
                 userDetails = technicianAuthenticationService.loadUserByUsername(username);
-            }else{
+            } else if(requestURI.startsWith("/admin")){
+                userDetails = adminAuthenticationService.loadUserByUsername(username);
+            }
+            else{
                 throw new IllegalArgumentException();
             }
 
