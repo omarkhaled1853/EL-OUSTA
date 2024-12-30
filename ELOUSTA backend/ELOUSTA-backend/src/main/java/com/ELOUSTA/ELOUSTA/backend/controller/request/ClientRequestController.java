@@ -24,9 +24,9 @@ import java.util.List;
 public class ClientRequestController {
     @Autowired
     private final ClientRequestService clientRequestsService;
-    private final RequestFilterService requestFilterService;
-    private final RequestSearchService requestSearchService;
-    private final RequestSortService requestSortService;
+    private final ClientRequestFilterService requestFilterService;
+    private final ClientRequestSearchService requestSearchService;
+    private final ClientRequestSortService requestSortService;
     private final NotificationService notificationService;
 
     public ClientRequestController(ClientRequestService clientRequestsService,

@@ -16,7 +16,7 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 @Service
 public class ClientRequestSearchService implements RequestSearchService {
     @Autowired
-    private final IRequestSearch requestSearch;
+    private final ClientRequestSearch requestSearch;
 
     public ClientRequestSearchService(ClientRequestSearch requestSearch) {
         this.requestSearch = requestSearch;

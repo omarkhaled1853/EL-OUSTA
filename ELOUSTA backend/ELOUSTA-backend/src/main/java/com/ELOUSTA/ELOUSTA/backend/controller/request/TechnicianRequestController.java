@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.TechnicianRequests;
+package com.ELOUSTA.ELOUSTA.backend.controller.request;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestFilterService;
@@ -20,9 +20,9 @@ import java.util.List;
 public class TechnicianRequestController {
 
     @Autowired
-    private final RequestFilterService filterService;
-    private final RequestSearchService searchService;
-    private final RequestSortService sortService;
+    private final TechnicianRequestFilterService filterService;
+    private final TechnicianRequestSearchService searchService;
+    private final TechnicianRequestSortService sortService;
     private final TechnicianRequestService generalService;
 
 

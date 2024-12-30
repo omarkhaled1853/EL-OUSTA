@@ -3,8 +3,9 @@ package com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestFilterService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.filter.IRequestFilter;
+import com.ELOUSTA.ELOUSTA.backend.service.request.filter.TechnicianRequestFilter;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.RequestsFiltering.TechnicianRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,11 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 public class TechnicianRequestFilterService implements RequestFilterService {
 
     @Autowired
-    private TechnicianRequestFilter technicianRequestFilter ;
+    private final TechnicianRequestFilter technicianRequestFilter ;
+
+    public TechnicianRequestFilterService(TechnicianRequestFilter technicianRequestFilter) {
+        this.technicianRequestFilter = technicianRequestFilter;
+    }
 
     public List<ViewRequestDTO> filterRequests(RequestPayload payload) {
 

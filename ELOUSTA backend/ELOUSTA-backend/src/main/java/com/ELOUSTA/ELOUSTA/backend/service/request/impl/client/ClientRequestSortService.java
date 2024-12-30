@@ -19,8 +19,8 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 public class ClientRequestSortService implements RequestSortService {
 
     @Autowired
-    private final IRequestSort clientRequestSortByEndDate;
-    private final IRequestSort clientRequestSortByStartDate;
+    private final ClientRequestSortByEndDate clientRequestSortByEndDate;
+    private final ClientRequestSortByStartDate clientRequestSortByStartDate;
 
     public ClientRequestSortService(ClientRequestSortByEndDate clientRequestSortByEndDate,
                                     ClientRequestSortByStartDate clientRequestSortByStartDate) {

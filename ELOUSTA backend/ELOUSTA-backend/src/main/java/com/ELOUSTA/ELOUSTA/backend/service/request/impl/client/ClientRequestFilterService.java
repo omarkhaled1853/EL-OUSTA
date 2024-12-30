@@ -17,7 +17,7 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 public class ClientRequestFilterService implements RequestFilterService {
 
     @Autowired
-    private final IRequestFilter requestFilter;
+    private final ClientRequestFilter requestFilter;
 
     public ClientRequestFilterService(ClientRequestFilter requestFilter) {
         this.requestFilter = requestFilter;

@@ -16,7 +16,7 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 @Service
 public class TechnicianRequestSearchService implements RequestSearchService {
     @Autowired
-    private final IRequestSearch requestSearch;
+    private final TechnicianRequestSearch requestSearch;
 
     public TechnicianRequestSearchService(TechnicianRequestSearch requestSearch) {
         this.requestSearch = requestSearch;

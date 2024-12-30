@@ -17,8 +17,8 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListT
 public class TechnicianRequestSortService implements RequestSortService {
 
     @Autowired
-    private final IRequestSort techRequestSortByEndDate;
-    private final IRequestSort techRequestSortByStartDate;
+    private final TechnicianRequestSortByEndDate techRequestSortByEndDate;
+    private final TechnicianRequestSortByStartDate techRequestSortByStartDate;
 
     public TechnicianRequestSortService (TechnicianRequestSortByEndDate techRequestSortByEndDate,
                                     TechnicianRequestSortByStartDate techRequestSortByStartDate) {
