@@ -2,7 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request.client;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.request.impl.ClientRequestSearchService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestSearchService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import com.ELOUSTA.ELOUSTA.backend.service.request.search.ClientRequestSearch;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -52,7 +52,7 @@ public class ClientSearchRequestServiceTest {
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
 
         // Expected DTO list
-        List<ViewRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(mockRequestEntityList);
+        List<ViewRequestDTO> expectedDTOList = RequestEntityListToViewRequestDTOList(mockRequestEntityList);
 
         // Mock behavior of RequestsSearch
         when(clientRequestSearch

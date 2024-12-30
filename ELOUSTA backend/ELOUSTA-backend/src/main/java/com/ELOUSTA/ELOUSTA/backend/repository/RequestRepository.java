@@ -11,21 +11,20 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
 
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE= :state", nativeQuery = true)
-    List<RequestEntity> getRequestsByState(@Param("techId")int techId,@Param("state")String state);
+    List<RequestEntity> getTechnicianRequestsByState(@Param("techId")int techId, @Param("state")String state);
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE= :state ORDER BY START_DATE", nativeQuery = true)
-    List<RequestEntity> sortRequestsByStartDate(@Param("techId") int techId,@Param("state")String state);
+    List<RequestEntity> sortTechnicianRequestsByStartDate(@Param("techId") int techId, @Param("state")String state);
 
 
     @Query(value="SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE= :state ORDER BY END_DATE", nativeQuery = true)
-    List<RequestEntity> sortRequestsByEndDate(@Param("techId") int techId,@Param("state")String state);
+    List<RequestEntity> sortTechnicianRequestsByEndDate(@Param("techId") int techId, @Param("state")String state);
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND LOCATION LIKE CONCAT('%', :filterTerm, '%')", nativeQuery = true)
-    List<RequestEntity> filterRequestsByLocation(@Param("techId") int techId, @Param("state") String state, @Param("filterTerm") String filterTerm);
+    List<RequestEntity> filterTechnicianRequestsByLocation(@Param("techId") int techId, @Param("state") String state, @Param("filterTerm") String filterTerm);
 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND DESCRIPTION LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
-    List<RequestEntity> searchRequestsByDescription(@Param("techId") int techId, @Param("state") String state, @Param("searchTerm") String searchTerm);
-
+    List<RequestEntity> searchTechnicianRequestsByDescription(@Param("techId") int techId, @Param("state") String state, @Param("searchTerm") String searchTerm);
 
     @Query(value = "SELECT * FROM REQUEST WHERE USERID = :userId AND STATE= :state", nativeQuery = true)
     List<RequestEntity> getClientRequestsByState(@Param("userId")int userId,@Param("state")String state);

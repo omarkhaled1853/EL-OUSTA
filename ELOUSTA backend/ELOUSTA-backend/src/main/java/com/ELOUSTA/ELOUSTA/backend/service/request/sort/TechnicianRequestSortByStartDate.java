@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.RequestsSorting;
+package com.ELOUSTA.ELOUSTA.backend.service.request.sort;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SortByEndDate implements IRequestSort{
+public class TechnicianRequestSortByStartDate implements IRequestSort {
+
     @Autowired
     private RequestRepository repository;
 
     @Override
     public List<RequestEntity> sort(int id,String state) {
-       return repository.sortRequestsByEndDate(id,state);
+       return repository.sortTechnicianRequestsByStartDate(id,state);
     }
 }

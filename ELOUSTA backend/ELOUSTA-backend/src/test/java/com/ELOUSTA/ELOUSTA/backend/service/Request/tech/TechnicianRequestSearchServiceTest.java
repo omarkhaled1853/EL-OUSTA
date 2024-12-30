@@ -1,8 +1,10 @@
-package com.ELOUSTA.ELOUSTA.backend.service.Request;
+package com.ELOUSTA.ELOUSTA.backend.service.Request.tech;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.filterRequestsService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech.TechnicianRequestSearchService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-public class filterRequestServiceTesting {
-
+public class TechnicianRequestSearchServiceTest {
     @Autowired
     private RequestRepository repository;
     @Autowired
-    private filterRequestsService service;
+    private TechnicianRequestSearchService service;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     @BeforeEach
     void setup() throws ParseException {
@@ -34,9 +35,9 @@ public class filterRequestServiceTesting {
         RequestEntity entity1 = new RequestEntity();
         entity1.setUserId(1);
         entity1.setTechId(3);
-        entity1.setState("PENDING");
-        entity1.setDescription("Fixing server issues");
-        entity1.setLocation("Boston");
+        entity1.setState("IN-PROGRESS");
+        entity1.setDescription("solving leakage problems");
+        entity1.setLocation("New York");
         entity1.setStartDate(dateFormat.parse("2/2/2024"));
         entity1.setEndDate(dateFormat.parse("5/1/2024"));
         requestEntities.add(entity1);
@@ -45,9 +46,9 @@ public class filterRequestServiceTesting {
         RequestEntity entity2 = new RequestEntity();
         entity2.setUserId(7);
         entity2.setTechId(3);
-        entity2.setState("PENDING");
+        entity2.setState("COMPLETED");
         entity2.setDescription("Testing security patches");
-        entity2.setLocation("Boston");
+        entity2.setLocation("Seattle");
         entity2.setStartDate(dateFormat.parse("20/03/2024"));
         entity2.setEndDate(dateFormat.parse("25/03/2024"));
         requestEntities.add(entity2);
@@ -90,7 +91,7 @@ public class filterRequestServiceTesting {
         entity6.setUserId(5);
         entity6.setTechId(3);
         entity6.setState("IN-PROGRESS");
-        entity6.setDescription("Troubleshooting network issues");
+        entity6.setDescription("solving leakage problems");
         entity6.setLocation("Houston");
         entity6.setStartDate(dateFormat.parse("05/03/2024"));
         entity6.setEndDate(dateFormat.parse("15/03/2024"));
@@ -123,7 +124,7 @@ public class filterRequestServiceTesting {
         entity9.setUserId(9);
         entity9.setTechId(7);
         entity9.setState("IN-PROGRESS");
-        entity9.setDescription("Cloud migration setup");
+        entity9.setDescription("solving leakage problems");
         entity9.setLocation("Boston");
         entity9.setStartDate(dateFormat.parse("12/02/2024"));
         entity9.setEndDate(dateFormat.parse("18/02/2024"));
@@ -144,20 +145,20 @@ public class filterRequestServiceTesting {
         this.repository.saveAll(requestEntities);
     }
 
-    @Test
 
-    void shouldReturnTwoRequests()
-    {
-        List<RequestEntity>answer=service.filterRequests(3,"PENDING","bost");
+    @Test
+    void shouldReturnTwo() {
+
+        RequestPayload requestPayload = RequestPayload.builder()
+                .id(3)
+                .state("IN-PROGRESS")
+                .query("leak")
+                .build();
+
+        List<ViewRequestDTO> answer = service.searchRequests(requestPayload);
+
         Assertions.assertEquals(2,answer.size());
-    }
-
-    @Test
-    void shouldReturnOneRequest()
-    {
-        List<RequestEntity>answer=service.filterRequests(4,"PENDING","iami");
-        Assertions.assertEquals(1,answer.size());
-        Assertions.assertEquals("Database optimization",answer.get(0).getDescription());
+        Assertions.assertEquals("Houston",answer.get(1).getLocation());
     }
 
 }

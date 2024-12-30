@@ -12,8 +12,8 @@ public class ClientRequestSearch implements IRequestSearch {
     @Autowired
     private RequestRepository requestRepository;
 
-    public List<RequestEntity> search (int id, String state, String Query)
-    {
+    public List<RequestEntity> search (int id, String state, String Query) {
+
         return requestRepository.searchClientRequestsByDescription(id, state, Query);
     }
 }

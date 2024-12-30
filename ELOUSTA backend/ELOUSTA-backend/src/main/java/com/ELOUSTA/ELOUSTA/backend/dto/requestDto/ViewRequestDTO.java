@@ -13,6 +13,7 @@ import java.util.Date;
 public class ViewRequestDTO {
     private int id;
     private int techId;
+    private int clientId;
     private String state;
     private String description;
     private String location;

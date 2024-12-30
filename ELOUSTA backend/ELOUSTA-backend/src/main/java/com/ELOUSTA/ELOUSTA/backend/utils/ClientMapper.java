@@ -29,20 +29,4 @@ public final class ClientMapper {
                 .city(clientEntity.getCity())
                 .build();
     }
-    
-    public static List<ViewRequestDTO> RequestEntityListToClientRequestDTOList(
-            List<RequestEntity> requestEntityList) {
-        return requestEntityList.stream().map( requestEntity ->
-                ViewRequestDTO.builder()
-                        .id(requestEntity.getId())
-                        .techId(requestEntity.getTechId())
-                        .state(requestEntity.getState())
-                        .description(requestEntity.getDescription())
-                        .location(requestEntity.getLocation())
-                        .startDate(requestEntity.getStartDate())
-                        .endDate(requestEntity.getEndDate())
-                        .build()
-        )
-        .collect(Collectors.toList());
-    }
 }

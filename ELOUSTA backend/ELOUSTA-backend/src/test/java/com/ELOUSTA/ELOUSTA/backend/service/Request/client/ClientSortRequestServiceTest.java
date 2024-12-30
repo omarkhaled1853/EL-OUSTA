@@ -2,7 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request.client;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.service.request.impl.ClientRequestSortService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestSortService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import com.ELOUSTA.ELOUSTA.backend.service.request.sort.ClientRequestSortByEndDate;
 import com.ELOUSTA.ELOUSTA.backend.service.request.sort.ClientRequestSortByStartDate;
@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
@@ -54,7 +54,7 @@ public class ClientSortRequestServiceTest {
 
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ViewRequestDTO> expectedDTOList =
-                RequestEntityListToClientRequestDTOList(mockRequestEntityList);
+                RequestEntityListToViewRequestDTOList(mockRequestEntityList);
 
         when(clientRequestSortByStartDate.sort(requestPayload.getId(), requestPayload.getState()))
                 .thenReturn(mockRequestEntityList);
@@ -88,7 +88,7 @@ public class ClientSortRequestServiceTest {
 
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ViewRequestDTO> expectedDTOList =
-                RequestEntityListToClientRequestDTOList(mockRequestEntityList);
+                RequestEntityListToViewRequestDTOList(mockRequestEntityList);
 
         when(clientRequestSortByEndDate.sort(payload.getId(), payload.getState()))
                 .thenReturn(mockRequestEntityList);

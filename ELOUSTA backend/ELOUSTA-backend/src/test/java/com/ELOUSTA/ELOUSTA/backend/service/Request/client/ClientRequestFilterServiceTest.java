@@ -3,7 +3,7 @@ package com.ELOUSTA.ELOUSTA.backend.service.Request.client;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.request.filter.ClientRequestFilter;
-import com.ELOUSTA.ELOUSTA.backend.service.request.impl.ClientRequestFilterService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestFilterService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +51,7 @@ public class ClientRequestFilterServiceTest {
         List<RequestEntity> requestEntityList = Arrays.asList(request1, request2);
 
         // Expected DTO list
-        List<ViewRequestDTO> expectedDTOList = RequestEntityListToClientRequestDTOList(requestEntityList);
+        List<ViewRequestDTO> expectedDTOList = RequestEntityListToViewRequestDTOList(requestEntityList);
 
         // Mock behavior of LocationFilter
         when(clientRequestFilter

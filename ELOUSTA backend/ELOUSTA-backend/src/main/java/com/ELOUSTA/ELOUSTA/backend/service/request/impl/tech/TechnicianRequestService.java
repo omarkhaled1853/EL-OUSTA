@@ -1,6 +1,7 @@
-package com.ELOUSTA.ELOUSTA.backend.service.technicianRequests;
+package com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech;
 
 
+import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
@@ -8,35 +9,51 @@ import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
-import com.ELOUSTA.ELOUSTA.backend.service.technicianRequests.Payloads.RequestStatusPayload;
+import com.ELOUSTA.ELOUSTA.backend.service.request.RequestService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestStatusPayload;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+
 @Service
-@RequestMapping("/tech/requests")
-public class generalTechnicianRequestsService {
+public class TechnicianRequestService implements RequestService {
 
     @Autowired
     private RequestRepository requestRepository;
-
-    @Autowired
     private TechnicianRepository technicianRepository;
-
-    @Autowired
     private ClientRepository clientRepository;
-    @Autowired
     private NotificationService notificationService;
 
+    @Override
+    public List<ViewRequestDTO> getPendingRequests(int id) {
 
+        List<RequestEntity> technicianRequestEntityList =
+                requestRepository.getTechnicianRequestsByState(id, "PENDING");
 
-    public List<RequestEntity>getAllRequestsByState(int id,String state)
-    {
-        return requestRepository.getRequestsByState(id,state);
+        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
+    }
+
+    @Override
+    public List<ViewRequestDTO> getInProgressRequests(int id) {
+
+        List<RequestEntity> technicianRequestEntityList =
+                requestRepository.getTechnicianRequestsByState(id, "IN-PROGRESS");
+
+        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
+    }
+
+    @Override
+    public List<ViewRequestDTO> getCompletedRequests(int id) {
+
+        List<RequestEntity> technicianRequestEntityList =
+                requestRepository.getTechnicianRequestsByState(id, "COMPLETED");
+
+        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
     }
 
     @Transactional
@@ -77,4 +94,5 @@ public class generalTechnicianRequestsService {
 
         notificationService.sendNotificationToClient(message, clientID);
     }
+
 }

@@ -4,7 +4,7 @@ import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.OrderRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
-import com.ELOUSTA.ELOUSTA.backend.service.request.impl.ClientRequestService;
+import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

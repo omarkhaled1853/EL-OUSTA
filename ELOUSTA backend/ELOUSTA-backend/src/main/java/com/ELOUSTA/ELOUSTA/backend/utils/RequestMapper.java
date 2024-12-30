@@ -1,7 +1,11 @@
 package com.ELOUSTA.ELOUSTA.backend.utils;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.OrderRequestDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public final class RequestMapper {
@@ -16,5 +20,22 @@ public final class RequestMapper {
                 .description(orderRequestDTO.getDescription())
                 .state("PENDING")
                 .build();
+    }
+
+    public static List<ViewRequestDTO> RequestEntityListToViewRequestDTOList (
+            List<RequestEntity> requestEntityList) {
+        return requestEntityList.stream().map( requestEntity ->
+                        ViewRequestDTO.builder()
+                                .id(requestEntity.getId())
+                                .techId(requestEntity.getTechId())
+                                .clientId(requestEntity.getUserId())
+                                .state(requestEntity.getState())
+                                .description(requestEntity.getDescription())
+                                .location(requestEntity.getLocation())
+                                .startDate(requestEntity.getStartDate())
+                                .endDate(requestEntity.getEndDate())
+                                .build()
+                )
+                .collect(Collectors.toList());
     }
 }

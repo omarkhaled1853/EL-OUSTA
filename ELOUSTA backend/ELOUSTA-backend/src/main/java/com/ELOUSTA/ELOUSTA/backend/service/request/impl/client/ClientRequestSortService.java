@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.request.impl;
+package com.ELOUSTA.ELOUSTA.backend.service.request.impl.client;
 
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
 
 @Service
 public class ClientRequestSortService implements RequestSortService {
@@ -40,7 +40,7 @@ public class ClientRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToClientRequestDTOList(requestEntityList);
+            return RequestEntityListToViewRequestDTOList(requestEntityList);
 
         } else if ("enddate".equals(type)) {
 
@@ -49,7 +49,7 @@ public class ClientRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToClientRequestDTOList(requestEntityList);
+            return RequestEntityListToViewRequestDTOList(requestEntityList);
         }
 
         return null;

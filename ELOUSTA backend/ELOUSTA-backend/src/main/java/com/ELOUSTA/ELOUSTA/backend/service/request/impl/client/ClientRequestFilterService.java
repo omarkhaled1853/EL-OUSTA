@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.request.impl;
+package com.ELOUSTA.ELOUSTA.backend.service.request.impl.client;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ClientMapper.RequestEntityListToClientRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
 
 @Service
 public class ClientRequestFilterService implements RequestFilterService {
@@ -31,6 +31,6 @@ public class ClientRequestFilterService implements RequestFilterService {
                 requestPayload.getQuery()
         );
 
-        return RequestEntityListToClientRequestDTOList(requestEntityList);
+        return RequestEntityListToViewRequestDTOList(requestEntityList);
     }
 }
