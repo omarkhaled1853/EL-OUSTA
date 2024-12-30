@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.service.impl;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.ClientProfileProfileServiceImpl;
@@ -38,12 +38,12 @@ public class ClientProfileServiceImplTTest {
 
     @Test
     public void testThatFindByIdReturnsClientWhenExists() throws IOException {
-        final ClientProfileProfileDTO clientProfileDTO = testClientProfileDTO();
+        final ClientProfileDTO clientProfileDTO = testClientProfileDTO();
         final ClientEntity clientEntity = testClientEntity();
 
         when(clientRepository.findById(eq(clientProfileDTO.getId()))).thenReturn(Optional.of(clientEntity));
 
-        final Optional<ClientProfileProfileDTO> result = clientProfileProfileService.getClient(clientProfileDTO.getId());
+        final Optional<ClientProfileDTO> result = clientProfileProfileService.getClient(clientProfileDTO.getId());
 
         assertEquals(Optional.of(clientProfileDTO), result);
     }
@@ -54,7 +54,7 @@ public class ClientProfileServiceImplTTest {
 
         when(clientRepository.findById(eq(id))).thenReturn(Optional.empty());
 
-        final Optional<ClientProfileProfileDTO> result = clientProfileProfileService.getClient(id);
+        final Optional<ClientProfileDTO> result = clientProfileProfileService.getClient(id);
 
         assertEquals(Optional.empty(), result);
     }

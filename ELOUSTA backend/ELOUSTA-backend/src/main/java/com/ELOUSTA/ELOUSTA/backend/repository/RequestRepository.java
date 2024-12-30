@@ -26,7 +26,6 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
     @Query(value = "SELECT * FROM REQUEST WHERE TECHID = :techId AND STATE = :state AND DESCRIPTION LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
     List<RequestEntity> searchRequestsByDescription(@Param("techId") int techId, @Param("state") String state, @Param("searchTerm") String searchTerm);
 
-//    @Query(value = "SELECT * FROM REQUEST WHERE ID= :id AND TECHID= :techId AND USERID = :clientId")
 
     @Query(value = "SELECT * FROM REQUEST WHERE USERID = :userId AND STATE= :state", nativeQuery = true)
     List<RequestEntity> getClientRequestsByState(@Param("userId")int userId,@Param("state")String state);

@@ -1,10 +1,10 @@
 package com.ELOUSTA.ELOUSTA.backend.service.profile;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 
 import java.util.Optional;
 
 public interface TechnicianProfileService {
-    Optional<TechnicianProfileProfileDTO> getTechnician(Integer id);
+    Optional<TechnicianProfileDTO> getTechnician(Integer id);
 }
