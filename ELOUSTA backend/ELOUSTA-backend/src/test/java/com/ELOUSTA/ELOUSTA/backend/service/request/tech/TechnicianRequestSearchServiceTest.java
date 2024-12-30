@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.Request.tech;
+package com.ELOUSTA.ELOUSTA.backend.service.request.tech;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;

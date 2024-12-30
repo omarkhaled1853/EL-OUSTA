@@ -82,7 +82,14 @@ public class ClientRequestService implements RequestService {
         RequestEntity request = requestRepository.findById(donePayload.getId())
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
 
-        request.setState("COMPLETED");
+        if ("IN-PROGRESS".equals(request.getState())) {
+
+            request.setState("COMPLETED");
+
+        } else {
+
+            throw new IllegalStateException("Request cannot be done in its current state: " + request.getState());
+        }
 
         requestRepository.save(request);
 
@@ -100,7 +107,14 @@ public class ClientRequestService implements RequestService {
         RequestEntity request = requestRepository.findById(refusalPayload.getId())
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
 
-        request.setState("CANCELLED");
+        if ("PENDING".equals(request.getState()) || "IN-PROGRESS".equals(request.getState())) {
+
+            request.setState("CANCELLED");
+
+        } else {
+
+            throw new IllegalStateException("Request cannot be cancelled in its current state: " + request.getState());
+        }
 
         requestRepository.save(request);
 
