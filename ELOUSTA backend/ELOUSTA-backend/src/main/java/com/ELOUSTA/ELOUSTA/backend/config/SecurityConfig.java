@@ -57,10 +57,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
 
-                                "/client/signUp", "/client/signIn","/admin/client/requests","/admin/client/delete",
+                                "/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
-                                "/admin/signIn", "/admin/register",
-
+                                "/admin/signIn",
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch",

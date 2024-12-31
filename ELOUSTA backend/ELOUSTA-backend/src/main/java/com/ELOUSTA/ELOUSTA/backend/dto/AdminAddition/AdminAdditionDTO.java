@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.service.AdminAddition;
+package com.ELOUSTA.ELOUSTA.backend.dto.AdminAddition;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
