@@ -58,12 +58,12 @@ class ComplaintControllerTest {
         // Mock the admin to have permissions to access complaints
         AdminEntity admin = mockAdminEntity(true);
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
-        when(complaintRepository.existsById("1")).thenReturn(true);
+        when(complaintRepository.existsById(1)).thenReturn(true);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
-        verify(complaintRepository, times(1)).deleteById("1");
+        verify(complaintRepository, times(1)).deleteById(1);
     }
 
     @Test
@@ -71,12 +71,12 @@ class ComplaintControllerTest {
         // Mock the admin without permission to access complaints
         AdminEntity admin = mockAdminEntity(false);
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
-        when(complaintRepository.existsById("1")).thenReturn(true);
+        when(complaintRepository.existsById(1)).thenReturn(true);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
 
         assertEquals(403, response.getStatusCodeValue()); // Forbidden
-        verify(complaintRepository, never()).deleteById("1");
+        verify(complaintRepository, never()).deleteById(1);
     }
 
     @Test
@@ -84,12 +84,12 @@ class ComplaintControllerTest {
         // Mock the admin to have permissions to access complaints
         AdminEntity admin = mockAdminEntity(true);
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
-        when(complaintRepository.existsById("1")).thenReturn(false);
+        when(complaintRepository.existsById(1)).thenReturn(false);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
 
         assertEquals(404, response.getStatusCodeValue()); // Not Found
-        verify(complaintRepository, never()).deleteById("1");
+        verify(complaintRepository, never()).deleteById(1);
     }
 
     @Test
@@ -193,9 +193,9 @@ class ComplaintControllerTest {
         technician.setLastName("Smith");
         complaint.setTechnicianEntity(technician);
 
-        when(complaintRepository.findById("1")).thenReturn(Optional.of(complaint));
+        when(complaintRepository.findById(1)).thenReturn(Optional.of(complaint));
 
-        ResponseEntity<Map<String, String>> response = complaintController.getClientAndTechnicianNames("1");
+        ResponseEntity<Map<String, String>> response = complaintController.getClientAndTechnicianNames(1);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertNotNull(response.getBody());
