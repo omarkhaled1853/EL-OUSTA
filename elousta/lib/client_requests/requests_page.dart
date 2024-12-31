@@ -3,13 +3,14 @@ import 'package:elousta/client_requests/completed_requests.dart';
 import 'package:elousta/client_requests/in_progress_requests.dart';
 import 'package:elousta/client_requests/pending_requests.dart';
 import 'package:elousta/client_requests/request_class.dart';
+import 'package:elousta/client_requests/request_list.dart';
 import 'package:elousta/client_requests/requests_controller.dart';
 import 'package:elousta/client_requests/requests_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //TODO: will be taken from localStorage
-const id = 3;
+const id = 1;
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -49,16 +50,19 @@ class _RequestsPageState extends State<RequestsPage>
               children: [
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) => Pendingrequests(pendingRequests: requests),
+                  (requests) => RequestList(
+                      requests: Pendingrequests(pendingRequests: requests)),
                 ),
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) =>
-                      InProgressRequests(inProgressRequests: requests),
+                  (requests) => RequestList(
+                      requests:
+                          InProgressRequests(inProgressRequests: requests)),
                 ),
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) => CompletedRequests(completedRequests: requests),
+                  (requests) => RequestList(
+                      requests: CompletedRequests(completedRequests: requests)),
                 )
               ],
             ),
