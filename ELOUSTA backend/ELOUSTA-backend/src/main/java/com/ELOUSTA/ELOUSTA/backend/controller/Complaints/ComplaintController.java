@@ -57,7 +57,7 @@ public class ComplaintController {
                 .toList(); // Convert the stream to a List
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ComplaintDTO> getComplaintById(@PathVariable String id) {
+    public ResponseEntity<ComplaintDTO> getComplaintById(@PathVariable int id) {
         return complaintRepository.findById(id)
                 .map(complaint -> {
                     Integer clientId = complaint.getClientEntity() != null ? complaint.getClientEntity().getId() : null;
@@ -85,7 +85,7 @@ public class ComplaintController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComplaint(@PathVariable String id, @RequestParam String adminId) {
+    public ResponseEntity<Void> deleteComplaint(@PathVariable int id, @RequestParam String adminId) {
         // Check if admin has permission to access complaints
         AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
         if (admin == null || !admin.isCanAccessComplaints()) {
@@ -139,7 +139,7 @@ public class ComplaintController {
         return ResponseEntity.status(404).body("Technician not found.");
     }
     @GetMapping("/names/{id}")
-    public ResponseEntity<Map<String, String>> getClientAndTechnicianNames(@PathVariable String id) {
+    public ResponseEntity<Map<String, String>> getClientAndTechnicianNames(@PathVariable int id) {
         return complaintRepository.findById(id)
                 .map(complaint -> {
                     String clientName = complaint.getClientEntity() != null

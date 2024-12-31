@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ComplaintRepository extends JpaRepository<ComplaintEntity, String> {
+public interface ComplaintRepository extends JpaRepository<ComplaintEntity, Integer> {
     List<ComplaintEntity> findByState(String state);
     // Find complaints by client ID
     List<ComplaintEntity> findByClientEntityId(Integer clientId);
