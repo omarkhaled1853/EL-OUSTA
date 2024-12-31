@@ -1,10 +1,13 @@
 package com.ELOUSTA.ELOUSTA.backend.service.request.impl.client;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.OrderRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestService;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.ELOUSTA.ELOUSTA.backend.utils.ComplaintMapper.complaintDTOToClientComplaintEntity;
 import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.orderRequestDTOToRequestEntity;
 
@@ -25,14 +29,17 @@ public class ClientRequestService implements RequestService {
     private final RequestRepository requestRepository;
     private final ClientRepository clientRepository;
     private final NotificationService notificationService;
+    private final ComplaintRepository complaintRepository;
 
     public ClientRequestService(RequestRepository requestRepository,
                                 ClientRepository clientRepository,
-                                NotificationService notificationService) {
+                                NotificationService notificationService,
+                                ComplaintRepository complaintRepository) {
 
         this.requestRepository = requestRepository;
         this.clientRepository = clientRepository;
         this.notificationService = notificationService;
+        this.complaintRepository = complaintRepository;
     }
 
     public void addRequest (OrderRequestDTO orderRequestDTO) {
@@ -124,5 +131,20 @@ public class ClientRequestService implements RequestService {
         String message = client.getUsername() + " Cancel the request ";
 
         notificationService.sendNotificationToClient(message, refusalPayload.getTechId());
+    }
+
+    @Transactional
+    public void addComplaint(ComplaintDTO complaintDTO) {
+
+        ComplaintEntity complaintEntity = complaintDTOToClientComplaintEntity(complaintDTO);
+
+        complaintRepository.save(complaintEntity);
+
+        ClientEntity client = clientRepository.findById(complaintDTO.getClientId())
+                .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+
+        String message = client.getUsername() + " Complains you ";
+
+        notificationService.sendNotificationToClient(message, complaintDTO.getTechId());
     }
 }
