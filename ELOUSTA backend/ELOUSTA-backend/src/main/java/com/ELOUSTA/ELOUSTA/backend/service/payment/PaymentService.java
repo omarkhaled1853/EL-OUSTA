@@ -19,12 +19,13 @@ public class PaymentService {
         Map<String, Object> response = new HashMap<>();
         try {
             PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                    .setAmount((long) (amount * 100)) // Convert to cents
+                    .setAmount((long) (amount * 100))
                     .setCurrency(currency)
                     .build();
 
             PaymentIntent paymentIntent = PaymentIntent.create(params);
             response.put("clientSecret", paymentIntent.getClientSecret());
+
         } catch (Exception e) {
             response.put("error", e.getMessage());
         }

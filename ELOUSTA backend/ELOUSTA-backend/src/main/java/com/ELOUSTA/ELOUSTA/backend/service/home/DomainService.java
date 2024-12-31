@@ -22,6 +22,7 @@ public class DomainService {
         List<DomainDTO>answer=new ArrayList<>();
         for (DomainEntity entity:domainEntities) {
             answer.add(TechnicianMapper.domainEntityToDomainDto(entity));
+            System.out.println(answer.get(0).getPhoto().length);
         }
 
         return answer;
