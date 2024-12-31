@@ -33,7 +33,7 @@ public class ProfessionsController {
             cardDTO.setTechName(p.getFirstName());
             cardDTO.setEmail(p.getEmailAddress());
             cardDTO.setRate(p.getRate());
-            cardDTO.setComplainNumber(10);  // Placeholder for actual complain count
+//            cardDTO.setComplainNumber(complaintRepository.findById(p.getId()).size);  // Placeholder for actual complain count
             cardDTO.setProfessionName(p.getDomainEntity().getName());
             result.add(cardDTO);
         }

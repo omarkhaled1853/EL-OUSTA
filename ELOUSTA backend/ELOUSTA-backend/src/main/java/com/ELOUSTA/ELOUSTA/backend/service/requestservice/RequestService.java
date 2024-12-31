@@ -61,7 +61,7 @@ public class RequestService {
     public int complainsnumbers()
     {
         return 62;
-//        return comlainRepository.findAll().size();
+//        return complaintRepository.findAll();
     }
     public int requestnumbers()
     {
