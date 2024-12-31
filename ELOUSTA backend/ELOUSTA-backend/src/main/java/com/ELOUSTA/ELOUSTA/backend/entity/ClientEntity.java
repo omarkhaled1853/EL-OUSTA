@@ -20,4 +20,9 @@ public class ClientEntity extends UserEntity {
     @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ClientNotification>clientNotifications;
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ComplaintEntity> complaintEntites;
 }

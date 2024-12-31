@@ -1,27 +1,20 @@
-package com.ELOUSTA.ELOUSTA.backend.entity;
+package com.ELOUSTA.ELOUSTA.backend.service.AdminAddition;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Entity
-@Table(name = "admin")
-public class AdminEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdminAdditionDTO {
     private String username;
     private String password;
-    private boolean fixed;
+    private String email;
     private boolean canManipulateProfessions;
     private boolean canAccessComplaints;
     private boolean canAccessTechnician;
     private boolean canAccessUsers;
     private boolean canHireAdmins;
+
 }
