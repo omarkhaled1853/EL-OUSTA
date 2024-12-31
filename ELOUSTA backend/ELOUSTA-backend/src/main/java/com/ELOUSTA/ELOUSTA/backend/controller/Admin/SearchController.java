@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.admin;
+package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.home.SearchTechnicianService;

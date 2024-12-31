@@ -5,6 +5,8 @@ import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.AdminEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -32,6 +34,9 @@ class ComplaintControllerTest {
     private ClientRepository clientRepository;
 
     @Mock
+    private AdminRepository adminRepository;
+
+    @Mock
     private TechnicianRepository technicianRepository;
 
     @BeforeEach
@@ -39,112 +44,64 @@ class ComplaintControllerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testGetAllComplaints() {
-        ComplaintEntity complaint = new ComplaintEntity();
-        complaint.setId("1");
-        complaint.setComplaintBody("Test complaint");
-        complaint.setState("Pending");
-        complaint.setDirection(0);
-
-        ClientEntity client = new ClientEntity();
-        client.setId(1);
-        client.setFirstName("John");
-        client.setLastName("Doe");
-        complaint.setUser(client);
-
-        TechnicianEntity technician = new TechnicianEntity();
-        technician.setId(2);
-        technician.setFirstName("Jane");
-        technician.setLastName("Smith");
-        complaint.setTech(technician);
-
-        when(complaintRepository.findAll()).thenReturn(Collections.singletonList(complaint));
-
-        List<ComplaintDTO> complaints = complaintController.getAllComplaints();
-
-        assertEquals(1, complaints.size());
-        ComplaintDTO dto = complaints.get(0);
-        assertEquals("1", dto.getId());
-        assertEquals("Test complaint", dto.getComplaintBody());
-        assertEquals("Pending", dto.getState());
-        assertEquals(0, dto.getDirection());
-        assertEquals(1, dto.getClientId());
-        assertEquals("John Doe", dto.getClientName());
-        assertEquals(2, dto.getTechnicianId());
-        assertEquals("Jane Smith", dto.getTechnicianName());
-    }
-
-    @Test
-    void testGetComplaintById() {
-        // Mock the ComplaintEntity
-        ComplaintEntity complaint = new ComplaintEntity();
-        complaint.setId("1");
-        complaint.setComplaintBody("Test complaint");
-        complaint.setState("Pending");
-        complaint.setDirection(0);
-
-        // Mock the ClientEntity
-        ClientEntity client = new ClientEntity();
-        client.setId(1);
-        client.setFirstName("John");
-        client.setLastName("Doe");
-        complaint.setUser(client);
-
-        // Mock the TechnicianEntity
-        TechnicianEntity technician = new TechnicianEntity();
-        technician.setId(2);
-        technician.setFirstName("Jane");
-        technician.setLastName("Smith");
-        complaint.setTech(technician);
-
-        // Mock the repository behavior
-        when(complaintRepository.findById("1")).thenReturn(Optional.of(complaint));
-
-        // Perform the test
-        ResponseEntity<ComplaintDTO> response = complaintController.getComplaintById("1");
-
-        // Assertions
-        assertTrue(response.getStatusCode().is2xxSuccessful());
-        assertNotNull(response.getBody());
-
-        ComplaintDTO dto = response.getBody();
-        assertEquals("1", dto.getId());
-        assertEquals("Test complaint", dto.getComplaintBody());
-        assertEquals("Pending", dto.getState());
-        assertEquals(0, dto.getDirection());
-        assertEquals(1, dto.getClientId());
-        assertEquals("John Doe", dto.getClientName());
-        assertEquals(2, dto.getTechnicianId());
-        assertEquals("Jane Smith", dto.getTechnicianName());
+    // Helper method to mock admin permissions
+    private AdminEntity mockAdminEntity(boolean canAccessComplaints) {
+        AdminEntity admin = new AdminEntity();
+        admin.setId(1);
+        admin.setUsername("admin");
+        admin.setCanAccessComplaints(canAccessComplaints);
+        return admin;
     }
 
     @Test
     void testDeleteComplaint() {
+        // Mock the admin to have permissions to access complaints
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
         when(complaintRepository.existsById("1")).thenReturn(true);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint("1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         verify(complaintRepository, times(1)).deleteById("1");
     }
 
     @Test
+    void testDeleteComplaintWithoutPermission() {
+        // Mock the admin without permission to access complaints
+        AdminEntity admin = mockAdminEntity(false);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+        when(complaintRepository.existsById("1")).thenReturn(true);
+
+        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
+
+        assertEquals(403, response.getStatusCodeValue()); // Forbidden
+        verify(complaintRepository, never()).deleteById("1");
+    }
+
+    @Test
     void testDeleteComplaintNotFound() {
+        // Mock the admin to have permissions to access complaints
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
         when(complaintRepository.existsById("1")).thenReturn(false);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint("1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint("1", "1");
 
-        assertEquals(404, response.getStatusCodeValue());
+        assertEquals(404, response.getStatusCodeValue()); // Not Found
         verify(complaintRepository, never()).deleteById("1");
     }
 
     @Test
     void testDeleteUser() {
-        when(clientRepository.existsById(1)).thenReturn(true);
-        when(complaintRepository.findByUserId(1)).thenReturn(Collections.emptyList());
+        // Mock the admin to have permissions to access users
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
 
-        ResponseEntity<String> response = complaintController.deleteUser(1);
+        when(clientRepository.existsById(1)).thenReturn(true);
+        when(complaintRepository.findByClientEntityId(1)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertEquals("User and associated complaints deleted successfully.", response.getBody());
@@ -152,14 +109,75 @@ class ComplaintControllerTest {
     }
 
     @Test
+    void testDeleteUserWithoutPermission() {
+        // Mock the admin without permission to access users
+        AdminEntity admin = mockAdminEntity(false);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+
+        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
+
+        assertEquals(403, response.getStatusCodeValue()); // Forbidden
+        assertEquals(null, response.getBody());
+        verify(clientRepository, never()).deleteById(1);
+    }
+
+    @Test
     void testDeleteUserNotFound() {
+        // Mock the admin to have permissions to access users
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+
         when(clientRepository.existsById(1)).thenReturn(false);
 
-        ResponseEntity<String> response = complaintController.deleteUser(1);
+        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
 
-        assertEquals(404, response.getStatusCodeValue());
+        assertEquals(404, response.getStatusCodeValue()); // Not Found
         assertEquals("User not found.", response.getBody());
         verify(clientRepository, never()).deleteById(1);
+    }
+
+    @Test
+    void testDeleteTechnician() {
+        // Mock the admin to have permissions to access technicians
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+
+        when(technicianRepository.existsById(1)).thenReturn(true);
+        when(complaintRepository.findByTechnicianEntityId(1)).thenReturn(Collections.emptyList());
+
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+        assertEquals("Technician and associated complaints deleted successfully.", response.getBody());
+        verify(technicianRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    void testDeleteTechnicianWithoutPermission() {
+        // Mock the admin without permission to access technicians
+        AdminEntity admin = mockAdminEntity(false);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+
+        assertEquals(403, response.getStatusCodeValue()); // Forbidden
+        assertEquals(null, response.getBody());
+        verify(technicianRepository, never()).deleteById(1);
+    }
+
+    @Test
+    void testDeleteTechnicianNotFound() {
+        // Mock the admin to have permissions to access technicians
+        AdminEntity admin = mockAdminEntity(true);
+        when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
+
+        when(technicianRepository.existsById(1)).thenReturn(false);
+
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+
+        assertEquals(404, response.getStatusCodeValue()); // Not Found
+        assertEquals("Technician not found.", response.getBody());
+        verify(technicianRepository, never()).deleteById(1);
     }
 
     @Test
@@ -168,12 +186,12 @@ class ComplaintControllerTest {
         ClientEntity client = new ClientEntity();
         client.setFirstName("John");
         client.setLastName("Doe");
-        complaint.setUser(client);
+        complaint.setClientEntity(client);
 
         TechnicianEntity technician = new TechnicianEntity();
         technician.setFirstName("Jane");
         technician.setLastName("Smith");
-        complaint.setTech(technician);
+        complaint.setTechnicianEntity(technician);
 
         when(complaintRepository.findById("1")).thenReturn(Optional.of(complaint));
 

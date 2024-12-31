@@ -1,7 +1,9 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.Complaints;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.AdminEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -26,18 +28,20 @@ public class ComplaintController {
 
     @Autowired
     private TechnicianRepository technicianRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     @GetMapping
     public List<ComplaintDTO> getAllComplaints() {
         return complaintRepository.findAll().stream()
                 .map(complaint -> {
-                    Integer clientId = complaint.getUser() != null ? complaint.getUser().getId() : null;
-                    Integer technicianId = complaint.getTech() != null ? complaint.getTech().getId() : null;
-                    String clientName = complaint.getUser() != null
-                            ? complaint.getUser().getFirstName() + " " + complaint.getUser().getLastName()
+                    Integer clientId = complaint.getClientEntity() != null ? complaint.getClientEntity().getId() : null;
+                    Integer technicianId = complaint.getTechnicianEntity() != null ? complaint.getTechnicianEntity().getId() : null;
+                    String clientName = complaint.getClientEntity() != null
+                            ? complaint.getClientEntity().getFirstName() + " " + complaint.getClientEntity().getLastName()
                             : "Unknown Client";
-                    String technicianName = complaint.getTech() != null
-                            ? complaint.getTech().getFirstName() + " " + complaint.getTech().getLastName()
+                    String technicianName = complaint.getTechnicianEntity() != null
+                            ? complaint.getTechnicianEntity().getFirstName() + " " + complaint.getTechnicianEntity().getLastName()
                             : "Unknown Technician";
                     return new ComplaintDTO(
                             complaint.getId(),
@@ -56,13 +60,13 @@ public class ComplaintController {
     public ResponseEntity<ComplaintDTO> getComplaintById(@PathVariable String id) {
         return complaintRepository.findById(id)
                 .map(complaint -> {
-                    Integer clientId = complaint.getUser() != null ? complaint.getUser().getId() : null;
-                    Integer technicianId = complaint.getTech() != null ? complaint.getTech().getId() : null;
-                    String clientName = complaint.getUser() != null
-                            ? complaint.getUser().getFirstName() + " " + complaint.getUser().getLastName()
+                    Integer clientId = complaint.getClientEntity() != null ? complaint.getClientEntity().getId() : null;
+                    Integer technicianId = complaint.getTechnicianEntity() != null ? complaint.getTechnicianEntity().getId() : null;
+                    String clientName = complaint.getClientEntity() != null
+                            ? complaint.getClientEntity().getFirstName() + " " + complaint.getClientEntity().getLastName()
                             : "Unknown Client";
-                    String technicianName = complaint.getTech() != null
-                            ? complaint.getTech().getFirstName() + " " + complaint.getTech().getLastName()
+                    String technicianName = complaint.getTechnicianEntity() != null
+                            ? complaint.getTechnicianEntity().getFirstName() + " " + complaint.getTechnicianEntity().getLastName()
                             : "Unknown Technician";
                     ComplaintDTO dto = new ComplaintDTO(
                             complaint.getId(),
@@ -81,7 +85,14 @@ public class ComplaintController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComplaint(@PathVariable String id) {
+    public ResponseEntity<Void> deleteComplaint(@PathVariable String id, @RequestParam String adminId) {
+        // Check if admin has permission to access complaints
+        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+        if (admin == null || !admin.isCanAccessComplaints()) {
+            return ResponseEntity.status(403).build();
+        }
+
+        // Proceed with deletion if complaint exists
         if (complaintRepository.existsById(id)) {
             complaintRepository.deleteById(id);
             return ResponseEntity.ok().build();
@@ -89,12 +100,17 @@ public class ComplaintController {
         return ResponseEntity.notFound().build();
     }
 
+
     @DeleteMapping("/remove-user/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userId, @RequestParam String adminId) {
+        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+        if (admin == null || !admin.isCanAccessComplaints()) {
+            return ResponseEntity.status(403).build();
+        }
         // Check if the user exists
         if (clientRepository.existsById(userId)) {
             // Delete complaints associated with this user
-            List<ComplaintEntity> complaints = complaintRepository.findByUserId(userId);
+            List<ComplaintEntity> complaints = complaintRepository.findByClientEntityId(userId);
             complaintRepository.deleteAll(complaints);
 
             // Delete the user
@@ -105,11 +121,15 @@ public class ComplaintController {
     }
 
     @DeleteMapping("/remove-tech/{techId}")
-    public ResponseEntity<String> deleteTechnician(@PathVariable Integer techId) {
+    public ResponseEntity<String> deleteTechnician(@PathVariable Integer techId, @RequestParam String adminId) {
+        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+        if (admin == null || !admin.isCanAccessComplaints()) {
+            return ResponseEntity.status(403).build();
+        }
         // Check if the technician exists
         if (technicianRepository.existsById(techId)) {
             // Delete complaints associated with this technician
-            List<ComplaintEntity> complaints = complaintRepository.findByTechId(techId);
+            List<ComplaintEntity> complaints = complaintRepository.findByTechnicianEntityId(techId);
             complaintRepository.deleteAll(complaints);
 
             // Delete the technician
@@ -122,11 +142,11 @@ public class ComplaintController {
     public ResponseEntity<Map<String, String>> getClientAndTechnicianNames(@PathVariable String id) {
         return complaintRepository.findById(id)
                 .map(complaint -> {
-                    String clientName = complaint.getUser() != null
-                            ? complaint.getUser().getFirstName() + " " + complaint.getUser().getLastName()
+                    String clientName = complaint.getClientEntity() != null
+                            ? complaint.getClientEntity().getFirstName() + " " + complaint.getClientEntity().getLastName()
                             : "Unknown Client";
-                    String technicianName = complaint.getTech() != null
-                            ? complaint.getTech().getFirstName() + " " + complaint.getTech().getLastName()
+                    String technicianName = complaint.getTechnicianEntity() != null
+                            ? complaint.getTechnicianEntity().getFirstName() + " " + complaint.getTechnicianEntity().getLastName()
                             : "Unknown Technician";
 
                     // Create a response map
