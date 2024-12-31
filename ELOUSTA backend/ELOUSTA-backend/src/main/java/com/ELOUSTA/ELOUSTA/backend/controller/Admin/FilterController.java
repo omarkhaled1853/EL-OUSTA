@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
+package com.ELOUSTA.ELOUSTA.backend.controller.admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;

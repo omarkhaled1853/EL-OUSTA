@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
+package com.ELOUSTA.ELOUSTA.backend.controller.admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DialogDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
@@ -66,10 +66,10 @@ public class ProfessionsController {
         }
         return result;
     }
-    @DeleteMapping("/deletetech/{id}/{adminid}")
-    public boolean removetech(@PathVariable int id,@PathVariable int adminid) {
-        if (requestService.canDodelete(adminid)) {
-            System.out.println(adminid + "deleeeeeeeeeeeeeete");
+    @DeleteMapping("/deletetech/{id}/{adminId}")
+    public boolean removeTech(@PathVariable int id,@PathVariable int adminId) {
+        if (requestService.canDodelete(adminId)) {
+            System.out.println(adminId + "deleeeeeeeeeeeeeete");
             requestService.deletetech(id);
             return true;
         }
