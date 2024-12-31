@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.model;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
+import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -31,6 +31,6 @@ public class Technician {
    @JsonFormat(pattern = "yyyy-MM-dd")
    private Date startDate;
    private String description;
-   private List<PortfolioDto> portfolioDto;
+   private List<PortfolioDTO> portfolioDto;
    private DomainDTO domainDTO;
 }

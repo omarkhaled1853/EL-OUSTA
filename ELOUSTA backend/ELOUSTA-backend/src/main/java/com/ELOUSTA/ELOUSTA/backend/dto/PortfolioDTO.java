@@ -7,7 +7,7 @@ import lombok.ToString;
 @Builder
 @Data
 @ToString
-public class PortfolioDto {
+public class PortfolioDTO {
     private Integer id;
     private byte[] photo;
 }

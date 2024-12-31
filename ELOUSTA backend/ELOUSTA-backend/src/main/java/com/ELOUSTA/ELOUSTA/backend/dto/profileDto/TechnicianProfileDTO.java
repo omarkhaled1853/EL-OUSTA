@@ -1,7 +1,7 @@
 package com.ELOUSTA.ELOUSTA.backend.dto.profileDto;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
+import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -17,6 +17,6 @@ public class TechnicianProfileDTO extends UserProfileDTO {
     private Double rate;
     private int experience;
     private String description;
-    private List<PortfolioDto> portfolioDto;
+    private List<PortfolioDTO> portfolioDto;
     private DomainDTO domainDTO;
 }
