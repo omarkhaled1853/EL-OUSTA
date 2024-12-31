@@ -24,6 +24,8 @@ public class RequestService {
     AdminRepository adminRepository;
     @Autowired
     ClientRepository clientRepository;
+    @Autowired
+    ComplaintRepository complaintRepository;
     public RequestEntity Saverequest(RequestEntity request) {
         return requestRepo.save(request);
     }
@@ -60,8 +62,7 @@ public class RequestService {
     }
     public int complainsnumbers()
     {
-        return 62;
-//        return complaintRepository.findAll();
+        return complaintRepository.findAll().size();
     }
     public int requestnumbers()
     {

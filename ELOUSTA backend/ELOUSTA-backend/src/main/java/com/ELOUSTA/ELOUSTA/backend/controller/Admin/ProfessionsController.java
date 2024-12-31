@@ -5,6 +5,7 @@ import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.requestservice.RequestService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class ProfessionsController {
     RequestService requestService;
     @Autowired
     AdminRepository adminRepository;
+    @Autowired
+    ComplaintRepository complaintRepository;
     @PostMapping("/addprofession/{adminId}")
     public String addprofession(@RequestBody DomainEntity domainEntity , @PathVariable int adminId)
     {
