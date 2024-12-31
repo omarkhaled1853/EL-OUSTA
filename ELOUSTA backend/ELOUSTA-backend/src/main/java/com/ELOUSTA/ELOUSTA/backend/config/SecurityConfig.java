@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
-                                "/client/signUp", "/client/signIn",
+                                "/client/signUp", "/client/signIn","/admin/client/requests","/admin/client/delete",
                                 "/tech/signUp", "/tech/signIn",
                                 "/admin/signIn", "/admin/register",
                                 "/client/signIn/google", "/tech/signIn/google",
