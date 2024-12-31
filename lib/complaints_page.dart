@@ -5,6 +5,9 @@ import 'package:test_app/API/serverAPI.dart';
 import 'complaint_details_page.dart';
 
 class ComplaintsPage extends StatefulWidget {
+  final int adminId;
+
+  ComplaintsPage({required this.adminId});
   @override
   _ComplaintsPageState createState() => _ComplaintsPageState();
 }
@@ -89,7 +92,9 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
   }
 
   // Modified deleteComplaint with confirmation dialog
-  void deleteComplaint(String id) async {
+  void deleteComplaint(int id) async {
+    print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    print(id);
     // Show confirmation dialog before deleting
     bool confirmDelete = await showDialog(
       context: context,
@@ -118,14 +123,18 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
     // If the user confirmed, proceed with the deletion
     if (confirmDelete) {
       try {
-        final response = await http.delete(Uri.parse('${ServerAPI.baseURL}/api/complaints/$id'));
+        final response = await http.delete(Uri.parse('${ServerAPI.baseURL}/admin/$id?adminId=${widget.adminId}'));
         if (response.statusCode == 200) {
           setState(() {
             complaints.removeWhere((complaint) => complaint['id'] == id);
             filteredComplaints.removeWhere((complaint) => complaint['id'] == id);
           });
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Complaint deleted successfully.")));
-        } else {
+        }
+        else if(response.statusCode == 403){
+          showError("You don't have access.");
+        }
+        else {
           showError("Failed to delete complaint.");
         }
       } catch (e) {
@@ -210,7 +219,10 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ComplaintDetailsPage(complaintId: complaint['id']),
+                              builder: (context) => ComplaintDetailsPage(
+                                complaintId: complaint['id'],
+                                adminId: widget.adminId,
+                              ),
                             ),
                           );
                         },

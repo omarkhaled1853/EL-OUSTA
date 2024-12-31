@@ -5,9 +5,9 @@ import 'complaints_page.dart';
 import 'package:test_app/API/serverAPI.dart';
 
 class ComplaintDetailsPage extends StatefulWidget {
-  final String complaintId;
-
-  ComplaintDetailsPage({required this.complaintId});
+  final int complaintId;
+  final int adminId;
+  ComplaintDetailsPage({required this.complaintId, required this.adminId});
 
   @override
   _ComplaintDetailsPageState createState() => _ComplaintDetailsPageState();
@@ -72,7 +72,7 @@ class _ComplaintDetailsPageState extends State<ComplaintDetailsPage> {
     if (confirmDelete) {
       try {
         final response = await http.delete(
-          Uri.parse('${ServerAPI.baseURL}/admin/remove-user/${complaint['clientId']}'),
+          Uri.parse('${ServerAPI.baseURL}/admin/remove-user/${complaint['clientId']}?adminId=${widget.adminId}'),
           headers: {'Content-Type': 'application/json'},
         );
 
@@ -80,7 +80,9 @@ class _ComplaintDetailsPageState extends State<ComplaintDetailsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("User removed successfully!")),
           );
-        } else {
+        }  else if(response.statusCode == 403){
+          showError("You don't have access.");
+        }else {
           showError("Failed to remove user.");
         }
       } catch (e) {
@@ -119,7 +121,7 @@ class _ComplaintDetailsPageState extends State<ComplaintDetailsPage> {
     if (confirmDelete) {
       try {
         final response = await http.delete(
-          Uri.parse('${ServerAPI.baseURL}/admin/remove-tech/${complaint['technicianId']}'),
+          Uri.parse('${ServerAPI.baseURL}/admin/remove-tech/${complaint['technicianId']}?adminId=${widget.adminId}'),
           headers: {'Content-Type': 'application/json'},
         );
 
@@ -127,7 +129,10 @@ class _ComplaintDetailsPageState extends State<ComplaintDetailsPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Technician removed successfully!")),
           );
-        } else {
+        } else if(response.statusCode == 403){
+          showError("You don't have access.");
+        }
+        else {
           showError("Failed to remove technician.");
         }
       } catch (e) {
