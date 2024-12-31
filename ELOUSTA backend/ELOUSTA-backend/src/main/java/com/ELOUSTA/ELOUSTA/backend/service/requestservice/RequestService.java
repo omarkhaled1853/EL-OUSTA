@@ -3,6 +3,7 @@ package com.ELOUSTA.ELOUSTA.backend.service.requestservice;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.DomainRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepo;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -21,6 +22,8 @@ public class RequestService {
     private DomainRepository domainRepository;
     @Autowired
     TechnicianRepository technicianRepository;
+    @Autowired
+    ClientRepository clientRepository;
     public RequestEntity Saverequest(RequestEntity request) {
         return requestRepo.save(request);
     }
@@ -47,6 +50,24 @@ public class RequestService {
     {
         technicianRepository.deleteById(id);
     }
+    public int technumbers()
+    {
+        return technicianRepository.findAll().size();
+    }
+    public int clientnumbers()
+    {
+        return clientRepository.findAll().size();
+    }
+    public int complainsnumbers()
+    {
+        return 62;
+//        return comlainRepository.findAll().size();
+    }
+    public int requestnumbers()
+    {
+        return requestRepo.findAll().size();
+    }
+
 
 
 }

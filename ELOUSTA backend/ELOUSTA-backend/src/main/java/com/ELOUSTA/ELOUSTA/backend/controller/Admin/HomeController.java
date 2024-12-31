@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.AdminDashBoardDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.AdminHomeDto;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
@@ -32,7 +33,7 @@ public class HomeController {
             AdminHomeDto homedto = new AdminHomeDto(); // Create a new DTO instance for each request
             technicianRepository.findById(r.getTechId()).ifPresent(technician -> {
                 homedto.setLocation(r.getLocation());
-                homedto.setTechName(technician.getFirstName() +" "+ technician.getLastName()); // Adjust based on what `Techname` should represent
+                homedto.setTechName(technician.getFirstName()); // Adjust based on what `Techname` should represent
                 homedto.setDate(r.getEndDate());
                 homedto.setDescription(r.getDescription());
                 result.add(homedto);
@@ -50,6 +51,20 @@ public class HomeController {
             result.add(profession.getPhoto());
 
         }
+        return result;
+    }
+    @GetMapping("/dash_board")
+    public AdminDashBoardDTO getdashboarddata()
+    {
+        int clients = requestService.clientnumbers();
+        int techs = requestService.technumbers();
+        int complains = requestService.complainsnumbers();
+        int requests = requestService.requestnumbers();
+        AdminDashBoardDTO result = new AdminDashBoardDTO();
+        result.setNumofclients(clients);
+        result.setNumoftechs(techs);
+        result.setNumofcomplains(complains);
+        result.setNumofrequests(requests);
         return result;
     }
 }

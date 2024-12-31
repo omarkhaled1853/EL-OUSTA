@@ -37,6 +37,7 @@ public class ProfessionsController {
             cardDTO.setProfessionName(p.getDomainEntity().getName());
             result.add(cardDTO);
         }
+        System.out.println(result.toString());
         return result;
     }
     @GetMapping("/get_dialog/{id}")

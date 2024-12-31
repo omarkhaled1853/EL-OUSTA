@@ -57,6 +57,7 @@ public class SecurityConfig {
                                 "/admin/profession/get_techs",
                                 "/admin/profession/deletetech/**",
                                 "/admin/profession/get_dialog/**",
+                                "/admin/home/dash_board",
                                 "/admin/search/**",
                                 "/elousta-websocket/**").permitAll()
                         .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
