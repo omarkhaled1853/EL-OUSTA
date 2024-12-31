@@ -3,6 +3,7 @@ package com.ELOUSTA.ELOUSTA.backend.controller.admin.user.requests.page;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ClientRequestCountDTO;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientCountRequest;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +17,11 @@ public class AdminUserRequestsPage {
     private ClientCountRequest clientCountRequest;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/client/requests")
     public List<ClientRequestCountDTO> getClientRequestsCount(){
-        System.out.println("enter");
         List<Object[]> results = clientCountRequest.findClientRequestCounts();
 
         List<ClientRequestCountDTO> dtos = new ArrayList<>();
@@ -47,7 +49,11 @@ public class AdminUserRequestsPage {
         return dtos;
     }
     @DeleteMapping("/client/delete")
-    public void deleteClientFromSystem(@RequestParam int id){
-        clientRepository.deleteById(id);
+    public boolean deleteClientFromSystem(@RequestParam int clientId, @RequestParam int adminId){
+        if(adminService.adminCanDeleteClient(adminId)){
+            clientRepository.deleteById(clientId);
+            return true;
+        }
+        return false;
     }
 }

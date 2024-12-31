@@ -1,9 +1,9 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.auth;
 
 import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
+import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AdminAdditionDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AuthRequest;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.Credentials;
-import com.ELOUSTA.ELOUSTA.backend.entity.AdminEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.AdminAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,8 @@ public class AdminAuthentication {
         return credentials;
     }
     @PostMapping("/register")
-    public String addAdmin(@RequestBody AdminEntity adminEntity){
-        return adminAuthenticationService.addAdmin(adminEntity);
+    public boolean addAdmin(@RequestBody AdminAdditionDTO adminAdditionDTO, @RequestParam int adminId){
+        return adminAuthenticationService.addAdmin(adminAdditionDTO, adminId).equals(ValidationStatus.VALID.getMessage());
     }
 
 }
