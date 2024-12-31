@@ -110,7 +110,7 @@ public class ClientRequestService implements RequestService {
 
         String message = client.getUsername() + " Done the request ";
 
-        notificationService.sendNotificationToClient(message, donePayload.getTechId());
+        notificationService.sendNotificationToTechnician(message, donePayload.getTechId());
     }
 
     @Transactional
@@ -135,7 +135,7 @@ public class ClientRequestService implements RequestService {
 
         String message = client.getUsername() + " Cancel the request ";
 
-        notificationService.sendNotificationToClient(message, refusalPayload.getTechId());
+        notificationService.sendNotificationToTechnician(message, refusalPayload.getTechId());
     }
 
     @Transactional
@@ -155,6 +155,6 @@ public class ClientRequestService implements RequestService {
 
         String message = client.getUsername() + " Complains you ";
 
-        notificationService.sendNotificationToClient(message, complaintDTO.getTechId());
+        notificationService.sendNotificationToTechnician(message, complaintDTO.getTechId());
     }
 }
