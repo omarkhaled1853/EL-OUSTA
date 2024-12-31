@@ -55,7 +55,7 @@
       <recent name="com.ELOUSTA.ELOUSTA.backend.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in ELOUSTA-backend">
+  <component name="RunManager">
     <configuration name="AdminRequestsMapperTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="ELOUSTA-backend" />
       <extension name="coverage">
