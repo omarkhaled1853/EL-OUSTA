@@ -80,7 +80,8 @@ class _CompletedRequestsState extends State<CompletedRequests> {
     );
   }
 
-  Future<void> _submitRating(int requestId, int techId, int rating, String comments) async {
+  Future<void> _submitRating(
+      int requestId, int techId, int rating, String comments) async {
     final url = Uri.parse(ServerAPI.baseURL + '/client/feedback');
     String token = (await secureStorage.read(key: 'auth_token')) as String;
     String idString = (await secureStorage.read(key: 'id')) as String;
@@ -88,7 +89,10 @@ class _CompletedRequestsState extends State<CompletedRequests> {
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
         body: jsonEncode({
           'clientId': id,
           'techId': techId,
@@ -131,7 +135,20 @@ class _CompletedRequestsState extends State<CompletedRequests> {
               text: "Complaint",
               color: Colors.redAccent,
               icon: Icons.report,
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  barrierColor:
+                      Colors.black.withOpacity(0.5), // Set background opacity
+                  builder: (BuildContext context) {
+                    return ComplaintDialog(
+                      clientId: request.clientId,
+                      techId: request.techId,
+                    );
+                  },
+                );
+              },
             ),
           ],
           icon: const Icon(
