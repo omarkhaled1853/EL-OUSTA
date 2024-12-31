@@ -2,8 +2,8 @@ package com.ELOUSTA.ELOUSTA.backend.utils;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +41,7 @@ public final class TechnicianMapper {
 
     public static Technician technicianEntityToTechnician(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
-        List<PortfolioDto> portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
+        List<PortfolioDTO> portfolioDTOList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
         byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);
         return Technician.builder()
                 .id(technicianEntity.getId())
@@ -54,7 +53,7 @@ public final class TechnicianMapper {
                 .phoneNumber(technicianEntity.getPhoneNumber())
                 .email(technicianEntity.getEmailAddress())
                 .rate(technicianEntity.getRate())
-                .portfolioDto(portfolioDtoList)
+                .portfolioDto(portfolioDTOList)
                 .city(technicianEntity.getCity())
                 .startDate(technicianEntity.getJobStartDate())
                 .domainDTO(domainDTO)
@@ -62,11 +61,11 @@ public final class TechnicianMapper {
     }
 
 
-    public static TechnicianProfileProfileDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
+    public static TechnicianProfileDTO technicianEntityToTechnicianDto(TechnicianEntity technicianEntity) throws IOException {
         DomainDTO domainDTO = domainEntityToDomainDto(technicianEntity.getDomainEntity());
-        List<PortfolioDto> portfolioDtoList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
+        List<PortfolioDTO> portfolioDTOList = portfolioEntityListToPortfolioDtoList(technicianEntity.getPortfolioEntities());
         byte[] profilePhoto = getProfilePhoto(technicianEntity.getProfilePicture(), profilePath);
-        return TechnicianProfileProfileDTO.builder()
+        return TechnicianProfileDTO.builder()
                 .id(technicianEntity.getId())
                 .firstName(technicianEntity.getFirstName())
                 .lastName(technicianEntity.getLastName())
@@ -79,7 +78,7 @@ public final class TechnicianMapper {
                 .rate(technicianEntity.getRate())
                 .description(technicianEntity.getDescription())
                 .domainDTO(domainDTO)
-                .portfolioDto(portfolioDtoList)
+                .portfolioDto(portfolioDTOList)
                 .build();
     }
 
@@ -92,7 +91,7 @@ public final class TechnicianMapper {
                 .build();
     }
 
-    public static List<PortfolioDto> portfolioEntityListToPortfolioDtoList(List<PortfolioEntity> portfolioEntityList) {
+    public static List<PortfolioDTO> portfolioEntityListToPortfolioDtoList(List<PortfolioEntity> portfolioEntityList) {
         return portfolioEntityList.stream()
                 .map(portfolioEntity -> {
                     byte[] photoBytes = null;
@@ -101,7 +100,7 @@ public final class TechnicianMapper {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    return PortfolioDto.builder()
+                    return PortfolioDTO.builder()
                             .id(portfolioEntity.getId())
                             .photo(photoBytes)
                             .build();

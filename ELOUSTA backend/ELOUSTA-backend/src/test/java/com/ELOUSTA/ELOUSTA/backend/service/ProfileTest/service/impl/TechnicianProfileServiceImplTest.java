@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest.service.impl;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.impl.TechnicianProfileServiceImpl;
@@ -38,12 +38,12 @@ public class TechnicianProfileServiceImplTest {
 
     @Test
     public void testThatFindByIdReturnsTechnicianWhenExists() throws IOException {
-        final TechnicianProfileProfileDTO technicianProfileDTO = testTechnicianProfileDto();
+        final TechnicianProfileDTO technicianProfileDTO = testTechnicianProfileDto();
         final TechnicianEntity technicianEntity = testTechnicianEntity();
 
         when(technicianRepository.findTechnicianWithDomainAndPortfolio(eq(technicianProfileDTO.getId()))).thenReturn(Optional.of(technicianEntity));
 
-        final Optional<TechnicianProfileProfileDTO> result = technicianProfileService.getTechnician(technicianProfileDTO.getId());
+        final Optional<TechnicianProfileDTO> result = technicianProfileService.getTechnician(technicianProfileDTO.getId());
 
         assertEquals(Optional.of(technicianProfileDTO), result);
     }
@@ -54,7 +54,7 @@ public class TechnicianProfileServiceImplTest {
 
         when(technicianRepository.findTechnicianWithDomainAndPortfolio(eq(id))).thenReturn(Optional.empty());
 
-        final Optional<TechnicianProfileProfileDTO> result = technicianProfileService.getTechnician(id);
+        final Optional<TechnicianProfileDTO> result = technicianProfileService.getTechnician(id);
 
         assertEquals(Optional.empty(), result);
     }
