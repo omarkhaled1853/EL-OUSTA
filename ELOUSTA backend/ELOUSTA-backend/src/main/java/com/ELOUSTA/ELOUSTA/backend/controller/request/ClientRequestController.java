@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.request;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.OrderRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
@@ -77,7 +78,7 @@ public class ClientRequestController {
     }
 
     @GetMapping("/filter")
-    private ResponseEntity<?>filterRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?>filterRequests(@RequestParam RequestPayload payload) {
 
         List<ViewRequestDTO> clientFilterRequests = requestFilterService.filterRequests(payload);
 
@@ -85,11 +86,8 @@ public class ClientRequestController {
                 .body(clientFilterRequests);
     }
 
-
-
     @GetMapping("/search")
-
-    private ResponseEntity<?>searchRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?>searchRequests(@RequestParam RequestPayload payload) {
 
         List<ViewRequestDTO> clientSearchRequests =
                 requestSearchService.searchRequests(payload);
@@ -100,7 +98,7 @@ public class ClientRequestController {
 
 
     @GetMapping("/sort")
-    private ResponseEntity<?>sortRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?>sortRequests(@RequestParam RequestPayload payload) {
 
         List<ViewRequestDTO> clientSortRequests =
                 requestSortService.sortRequests(payload);
@@ -110,14 +108,21 @@ public class ClientRequestController {
     }
 
     @PostMapping("/done")
-    private void doneRequest(@RequestBody RequestStatusPayload donePayload ) {
+    public void doneRequest(@RequestBody RequestStatusPayload donePayload ) {
 
         clientRequestsService.doneRequest(donePayload);
     }
 
     @PostMapping("/refuse")
-    private void cancelRequest(@RequestBody RequestStatusPayload cancelPayload) {
+    public void cancelRequest(@RequestBody RequestStatusPayload cancelPayload) {
 
         clientRequestsService.cancelRequest(cancelPayload);
     }
+
+    @PostMapping("/complain")
+    public void addComplaint(@RequestBody ComplaintDTO complaintDTO) {
+
+        clientRequestsService.addComplaint(complaintDTO);
+    }
+
 }
