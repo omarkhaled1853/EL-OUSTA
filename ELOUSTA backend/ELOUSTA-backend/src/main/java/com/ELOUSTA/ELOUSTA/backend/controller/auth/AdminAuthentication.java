@@ -47,9 +47,9 @@ public class AdminAuthentication {
         }
         return credentials;
     }
-    @PostMapping("/register")
-    public boolean addAdmin(@RequestBody AdminAdditionDTO adminAdditionDTO, @RequestParam int adminId){
-        return adminAuthenticationService.addAdmin(adminAdditionDTO, adminId).equals(ValidationStatus.VALID.getMessage());
+    @PostMapping("/addAdmin/{id}")
+    public boolean addAdmin(@RequestBody AdminAdditionDTO adminAdditionDTO, @PathVariable int id){
+        return adminAuthenticationService.addAdmin(adminAdditionDTO, id).equals(ValidationStatus.VALID.getMessage());
     }
 
 }

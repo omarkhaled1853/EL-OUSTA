@@ -3,8 +3,10 @@ package com.ELOUSTA.ELOUSTA.backend.service.auth;
 import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AdminAdditionDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.AdminEntity;
+import com.ELOUSTA.ELOUSTA.backend.model.MailStructure;
 import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.admin.AdminService;
+import com.ELOUSTA.ELOUSTA.backend.service.otp.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,6 +25,8 @@ public class AdminAuthenticationService implements UserDetailsService {
     private PasswordEncoder encoder;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,11 +57,18 @@ public class AdminAuthenticationService implements UserDetailsService {
             return ValidationStatus.FAIL.getMessage();
         }
 
-        dto.setPassword(encoder.encode(dto.getPassword()));
+        sendAdminMail(dto);
 
+        dto.setPassword(encoder.encode(dto.getPassword()));
         adminRepository.save(createAdmin(dto));
 
         return ValidationStatus.VALID.getMessage();
+    }
+    private void sendAdminMail(AdminAdditionDTO dto){
+        MailStructure structure=new MailStructure();
+        structure.setSubject("new admin");
+        structure.setMessage("Congratulations");
+        mailService.sendAdminMail(dto.getEmail(),structure,dto.getUsername(),dto.getPassword());
     }
     private boolean validUsername(String username){
         if(username == null || username.length() > 20){
