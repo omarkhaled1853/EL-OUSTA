@@ -11,7 +11,10 @@ import java.util.Optional;
 
 public interface ComplaintRepository extends JpaRepository<ComplaintEntity, String> {
     List<ComplaintEntity> findByState(String state);
-    List<ComplaintEntity> findByUserId(Integer userId);
-    List<ComplaintEntity> findByTechId(Integer techId);
+    // Find complaints by client ID
+    List<ComplaintEntity> findByClientEntityId(Integer clientId);
+
+    // Find complaints by technician ID
+    List<ComplaintEntity> findByTechnicianEntityId(Integer technicianId);
 
 }

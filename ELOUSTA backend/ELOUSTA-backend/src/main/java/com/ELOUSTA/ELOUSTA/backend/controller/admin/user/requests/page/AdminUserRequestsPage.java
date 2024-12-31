@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.admin.user.requests.page;
+package com.ELOUSTA.ELOUSTA.backend.controller.Admin.user.requests.page;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ClientRequestCountDTO;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientCountRequest;

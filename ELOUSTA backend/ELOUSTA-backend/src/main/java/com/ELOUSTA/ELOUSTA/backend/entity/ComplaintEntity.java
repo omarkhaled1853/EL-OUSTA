@@ -11,21 +11,21 @@ import lombok.Data;
 public class ComplaintEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     // Foreign key to ClientEntity
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference // To prevents the recursive serialization on the notification side
-    private ClientEntity user;
+    private ClientEntity clientEntity;
 
     // Foreign key to TechnicianEntity
 
     @JoinColumn(name = "tech_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference // To prevents the recursive serialization on the notification side
-    private TechnicianEntity tech;
+    private TechnicianEntity technicianEntity;
 
     @Column(nullable = false)
     private String complaintBody;

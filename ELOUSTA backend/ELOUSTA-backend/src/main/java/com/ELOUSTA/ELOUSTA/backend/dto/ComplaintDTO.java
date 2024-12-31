@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ComplaintDTO {
-    private String id;
+    private int id;
     private String complaintBody;
     private String state;
     private int direction;
