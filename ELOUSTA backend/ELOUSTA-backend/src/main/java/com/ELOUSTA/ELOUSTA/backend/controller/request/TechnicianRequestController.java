@@ -2,9 +2,6 @@ package com.ELOUSTA.ELOUSTA.backend.controller.request;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
-import com.ELOUSTA.ELOUSTA.backend.service.request.RequestFilterService;
-import com.ELOUSTA.ELOUSTA.backend.service.request.RequestSearchService;
-import com.ELOUSTA.ELOUSTA.backend.service.request.RequestSortService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech.TechnicianRequestFilterService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech.TechnicianRequestSearchService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech.TechnicianRequestService;
