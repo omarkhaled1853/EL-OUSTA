@@ -1,8 +1,11 @@
 package com.ELOUSTA.ELOUSTA.backend.service.request.client;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestService;
@@ -19,8 +22,7 @@ import java.util.Optional;
 import static com.ELOUSTA.ELOUSTA.backend.service.request.client.RequestsTestData.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ClientRequestActionServiceTest {
 
@@ -32,6 +34,9 @@ public class ClientRequestActionServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
+
+    @Mock
+    private ComplaintRepository complaintRepository;
 
     @InjectMocks
     private ClientRequestService clientRequestService;
@@ -212,4 +217,54 @@ public class ClientRequestActionServiceTest {
         assertEquals("Request cannot be cancelled in its current state: COMPLETED", exception.getMessage());
     }
 
+
+    @Test
+    void testAddComplaintSuccess() {
+        ComplaintDTO complaintDTO = ComplaintDTO.builder()
+                .clientId(1)
+                .techId(2)
+                .complaintBody("Issue with technician")
+                .build();
+
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setId(1);
+        clientEntity.setUsername("JohnDoe");
+
+        // Mock repository and service responses
+        when(clientRepository.findById(complaintDTO.getClientId()))
+                .thenReturn(Optional.of(clientEntity));
+
+        // Act
+        clientRequestService.addComplaint(complaintDTO);
+
+        // Verify interactions
+        verify(complaintRepository, times(1)).save(any(ComplaintEntity.class));
+        verify(notificationService, times(1))
+                .sendNotificationToClient("JohnDoe Complains you ", complaintDTO.getTechId());
+    }
+
+    @Test
+    void testAddComplaintClientNotFound() {
+        ComplaintDTO complaintDTO = ComplaintDTO.builder()
+                .clientId(1)
+                .techId(2)
+                .complaintBody("Issue with technician")
+                .build();
+
+
+        // Mock repository response for client not found
+        when(clientRepository.findById(complaintDTO.getClientId()))
+                .thenReturn(Optional.empty());
+
+        // Act & Assert
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> clientRequestService.addComplaint(complaintDTO));
+
+
+        assertEquals("NO such Data", exception.getMessage());
+
+        // Verify no interaction with other dependencies
+        verify(complaintRepository, never()).save(any(ComplaintEntity.class));
+        verify(notificationService, never()).sendNotificationToClient(anyString(), anyInt());
+    }
 }

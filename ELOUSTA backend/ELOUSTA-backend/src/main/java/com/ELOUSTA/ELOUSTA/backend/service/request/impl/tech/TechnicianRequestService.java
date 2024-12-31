@@ -106,10 +106,10 @@ public class TechnicianRequestService implements RequestService {
 
         ComplaintEntity complaintEntity = complaintDTOToTechnicinaComplaintEntity(complaintDTO);
 
-        complaintRepository.save(complaintEntity);
-
         TechnicianEntity technician = technicianRepository.findById(complaintDTO.getTechId())
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+
+        complaintRepository.save(complaintEntity);
 
         String message = technician.getUsername() + " Complains you ";
 

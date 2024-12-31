@@ -138,10 +138,11 @@ public class ClientRequestService implements RequestService {
 
         ComplaintEntity complaintEntity = complaintDTOToClientComplaintEntity(complaintDTO);
 
-        complaintRepository.save(complaintEntity);
-
         ClientEntity client = clientRepository.findById(complaintDTO.getClientId())
                 .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+
+        complaintRepository.save(complaintEntity);
+
 
         String message = client.getUsername() + " Complains you ";
 
