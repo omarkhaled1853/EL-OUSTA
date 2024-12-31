@@ -1,11 +1,11 @@
 package com.ELOUSTA.ELOUSTA.backend.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class ComplaintDTO {
     private int clientId;
