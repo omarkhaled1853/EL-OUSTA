@@ -28,11 +28,13 @@ public interface RequestRepository extends JpaRepository<RequestEntity,Integer> 
 
 //    @Query(value = "SELECT * FROM REQUEST WHERE ID= :id AND TECHID= :techId AND USERID = :clientId")
 
+
     @Query(value = "SELECT r.* FROM REQUEST r LEFT JOIN TECHNICIAN t ON r.TECHID= t.id WHERE STATE = :state" +
             " AND t.username LIKE CONCAT('%', :technicianUserName, '%')", nativeQuery = true)
     List<RequestEntity> searchByTechnicianUserName(@Param("technicianUserName") String technicianUserName, @Param("state") String state);
 
     @Query(value = "SELECT * FROM REQUEST WHERE STATE = :state", nativeQuery = true)
     List<RequestEntity> getAllByState(@Param("state")String state);
+
 
 }
