@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
+package com.ELOUSTA.ELOUSTA.backend.controller.admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DialogDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
@@ -7,12 +7,10 @@ import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.requestservice.RequestService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController

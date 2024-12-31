@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
+package com.ELOUSTA.ELOUSTA.backend.controller.admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.AdminDashBoardDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.AdminHomeDto;
