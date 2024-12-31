@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 public final class RequestMapper {
-    public static RequestEntity RequestEntityToOrderRequestDTO(
+    public static RequestEntity orderRequestDTOToRequestEntity(
             OrderRequestDTO orderRequestDTO) {
         return RequestEntity.builder()
                 .userId(orderRequestDTO.getClientId())
@@ -22,7 +22,7 @@ public final class RequestMapper {
                 .build();
     }
 
-    public static List<ViewRequestDTO> RequestEntityListToViewRequestDTOList (
+    public static List<ViewRequestDTO> requestEntityListToViewRequestDTOList(
             List<RequestEntity> requestEntityList) {
         return requestEntityList.stream().map( requestEntity ->
                         ViewRequestDTO.builder()

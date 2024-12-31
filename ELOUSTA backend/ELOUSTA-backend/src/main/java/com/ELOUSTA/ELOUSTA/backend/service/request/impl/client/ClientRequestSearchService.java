@@ -5,13 +5,12 @@ import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestSearchService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import com.ELOUSTA.ELOUSTA.backend.service.request.search.ClientRequestSearch;
-import com.ELOUSTA.ELOUSTA.backend.service.request.search.IRequestSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
 public class ClientRequestSearchService implements RequestSearchService {
@@ -30,6 +29,6 @@ public class ClientRequestSearchService implements RequestSearchService {
                 requestPayload.getQuery()
         );
 
-        return RequestEntityListToViewRequestDTOList(requestEntityList);
+        return requestEntityListToViewRequestDTOList(requestEntityList);
     }
 }

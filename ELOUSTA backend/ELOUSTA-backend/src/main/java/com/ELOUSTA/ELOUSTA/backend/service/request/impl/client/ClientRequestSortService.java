@@ -7,13 +7,12 @@ import com.ELOUSTA.ELOUSTA.backend.service.request.RequestSortService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import com.ELOUSTA.ELOUSTA.backend.service.request.sort.ClientRequestSortByEndDate;
 import com.ELOUSTA.ELOUSTA.backend.service.request.sort.ClientRequestSortByStartDate;
-import com.ELOUSTA.ELOUSTA.backend.service.request.sort.IRequestSort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
 public class ClientRequestSortService implements RequestSortService {
@@ -40,7 +39,7 @@ public class ClientRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToViewRequestDTOList(requestEntityList);
+            return requestEntityListToViewRequestDTOList(requestEntityList);
 
         } else if ("enddate".equals(type)) {
 
@@ -49,7 +48,7 @@ public class ClientRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToViewRequestDTOList(requestEntityList);
+            return requestEntityListToViewRequestDTOList(requestEntityList);
         }
 
         return null;

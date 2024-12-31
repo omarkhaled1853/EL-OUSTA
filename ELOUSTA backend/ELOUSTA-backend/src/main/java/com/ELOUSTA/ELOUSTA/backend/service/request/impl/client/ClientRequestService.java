@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityToOrderRequestDTO;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.orderRequestDTOToRequestEntity;
 
 @Service
 public class ClientRequestService implements RequestService {
@@ -37,7 +37,7 @@ public class ClientRequestService implements RequestService {
 
     public void addRequest (OrderRequestDTO orderRequestDTO) {
 
-        RequestEntity requestEntity = RequestEntityToOrderRequestDTO(orderRequestDTO);
+        RequestEntity requestEntity = orderRequestDTOToRequestEntity(orderRequestDTO);
         requestRepository.save(requestEntity);
 
         String message = orderRequestDTO.getDescription()
@@ -55,7 +55,7 @@ public class ClientRequestService implements RequestService {
         List<RequestEntity> clientRequestEntityList =
                 requestRepository.getClientRequestsByState(id, "PENDING");
 
-        return RequestEntityListToViewRequestDTOList(clientRequestEntityList);
+        return requestEntityListToViewRequestDTOList(clientRequestEntityList);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ClientRequestService implements RequestService {
         List<RequestEntity> clientRequestEntityList =
                 requestRepository.getClientRequestsByState(id, "IN-PROGRESS");
 
-        return RequestEntityListToViewRequestDTOList(clientRequestEntityList);
+        return requestEntityListToViewRequestDTOList(clientRequestEntityList);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ClientRequestService implements RequestService {
         List<RequestEntity> clientRequestEntityList =
                 requestRepository.getClientRequestsByState(id, "COMPLETED");
 
-        return RequestEntityListToViewRequestDTOList(clientRequestEntityList);
+        return requestEntityListToViewRequestDTOList(clientRequestEntityList);
     }
 
     @Transactional

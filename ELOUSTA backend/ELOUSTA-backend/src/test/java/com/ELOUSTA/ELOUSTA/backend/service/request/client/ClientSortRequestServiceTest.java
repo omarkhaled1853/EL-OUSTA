@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
@@ -54,7 +54,7 @@ public class ClientSortRequestServiceTest {
 
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ViewRequestDTO> expectedDTOList =
-                RequestEntityListToViewRequestDTOList(mockRequestEntityList);
+                requestEntityListToViewRequestDTOList(mockRequestEntityList);
 
         when(clientRequestSortByStartDate.sort(requestPayload.getId(), requestPayload.getState()))
                 .thenReturn(mockRequestEntityList);
@@ -88,7 +88,7 @@ public class ClientSortRequestServiceTest {
 
         List<RequestEntity> mockRequestEntityList = Arrays.asList(request1, request2);
         List<ViewRequestDTO> expectedDTOList =
-                RequestEntityListToViewRequestDTOList(mockRequestEntityList);
+                requestEntityListToViewRequestDTOList(mockRequestEntityList);
 
         when(clientRequestSortByEndDate.sort(payload.getId(), payload.getState()))
                 .thenReturn(mockRequestEntityList);

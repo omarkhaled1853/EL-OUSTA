@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +51,7 @@ public class ClientRequestFilterServiceTest {
         List<RequestEntity> requestEntityList = Arrays.asList(request1, request2);
 
         // Expected DTO list
-        List<ViewRequestDTO> expectedDTOList = RequestEntityListToViewRequestDTOList(requestEntityList);
+        List<ViewRequestDTO> expectedDTOList = requestEntityListToViewRequestDTOList(requestEntityList);
 
         // Mock behavior of LocationFilter
         when(clientRequestFilter

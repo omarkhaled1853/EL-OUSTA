@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
 public class TechnicianRequestSortService implements RequestSortService {
@@ -38,7 +38,7 @@ public class TechnicianRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToViewRequestDTOList(requestEntityList);
+            return requestEntityListToViewRequestDTOList(requestEntityList);
 
         } else if ("enddate".equals(type)) {
 
@@ -47,7 +47,7 @@ public class TechnicianRequestSortService implements RequestSortService {
                     requestPayload.getState()
             );
 
-            return RequestEntityListToViewRequestDTOList(requestEntityList);
+            return requestEntityListToViewRequestDTOList(requestEntityList);
         }
 
         return null;

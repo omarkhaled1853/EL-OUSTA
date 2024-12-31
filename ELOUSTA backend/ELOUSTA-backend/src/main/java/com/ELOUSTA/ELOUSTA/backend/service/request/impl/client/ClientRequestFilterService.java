@@ -4,14 +4,13 @@ import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestFilterService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.filter.ClientRequestFilter;
-import com.ELOUSTA.ELOUSTA.backend.service.request.filter.IRequestFilter;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
 public class ClientRequestFilterService implements RequestFilterService {
@@ -31,6 +30,6 @@ public class ClientRequestFilterService implements RequestFilterService {
                 requestPayload.getQuery()
         );
 
-        return RequestEntityListToViewRequestDTOList(requestEntityList);
+        return requestEntityListToViewRequestDTOList(requestEntityList);
     }
 }

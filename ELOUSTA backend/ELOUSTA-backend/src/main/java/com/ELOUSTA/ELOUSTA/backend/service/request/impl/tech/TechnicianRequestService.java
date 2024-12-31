@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityListToViewRequestDTOList;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
 public class TechnicianRequestService implements RequestService {
@@ -35,7 +35,7 @@ public class TechnicianRequestService implements RequestService {
         List<RequestEntity> technicianRequestEntityList =
                 requestRepository.getTechnicianRequestsByState(id, "PENDING");
 
-        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
+        return requestEntityListToViewRequestDTOList(technicianRequestEntityList);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TechnicianRequestService implements RequestService {
         List<RequestEntity> technicianRequestEntityList =
                 requestRepository.getTechnicianRequestsByState(id, "IN-PROGRESS");
 
-        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
+        return requestEntityListToViewRequestDTOList(technicianRequestEntityList);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class TechnicianRequestService implements RequestService {
         List<RequestEntity> technicianRequestEntityList =
                 requestRepository.getTechnicianRequestsByState(id, "COMPLETED");
 
-        return RequestEntityListToViewRequestDTOList(technicianRequestEntityList);
+        return requestEntityListToViewRequestDTOList(technicianRequestEntityList);
     }
 
     @Transactional

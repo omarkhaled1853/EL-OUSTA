@@ -2,15 +2,11 @@ package com.ELOUSTA.ELOUSTA.backend.service.request.client;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.OrderRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
-import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
-import com.ELOUSTA.ELOUSTA.backend.entity.notification.Notification;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestService;
-import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestStatusPayload;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,11 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.ELOUSTA.ELOUSTA.backend.service.request.client.RequestsTestData.*;
 import static com.ELOUSTA.ELOUSTA.backend.service.request.client.RequestsTestData.testPendingRequestEntityList;
-import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.RequestEntityToOrderRequestDTO;
+import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.orderRequestDTOToRequestEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -56,7 +51,7 @@ public class ClientRequestServiceTest {
         sampleRequest.setLocation("Test Location");
         sampleRequest.setState("PENDING");
 
-        RequestEntity expectedRequestEntity  = RequestEntityToOrderRequestDTO(sampleRequest);
+        RequestEntity expectedRequestEntity  = orderRequestDTOToRequestEntity(sampleRequest);
 
         // Call the service method
         clientRequestService.addRequest(sampleRequest);

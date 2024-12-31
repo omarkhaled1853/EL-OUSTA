@@ -11,5 +11,4 @@ public class ComplaintDTO {
     private int clientId;
     private int techId;
     private String complaintBody;
-    private String state;
 }
