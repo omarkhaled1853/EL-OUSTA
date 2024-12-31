@@ -6,6 +6,7 @@ import 'dart:ffi';
 
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/screens/Domains.dart';
 import 'package:el_ousta/screens/profesions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -74,6 +75,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
           dob: DateTime.parse(_dobController.text),
           phoneNumber: _phoneNumberController.text,
           city: _cityController.text,
+          signUpDate: DateTime.now(),
           roles: 'ROLE_USER',
           clientNotifications: [],
       );
@@ -110,9 +112,10 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: data['token']);
             await secureStorage.write(key: 'id', value: id);
+            await secureStorage.write(key: 'type', value: 'USER');
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                    builder: (ctx) => ProfessionsScreen(professionType: "Electrical", token: data['token'],),
+                    builder: (ctx) => const DomainPage(),
                 )
             );
           }

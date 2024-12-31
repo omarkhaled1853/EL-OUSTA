@@ -11,6 +11,8 @@ class User {
   final String roles;
   final String city;
 
+  final DateTime signUpDate;
+
   User(
     {
       required this.username,
@@ -21,6 +23,7 @@ class User {
       required this.dob,
       required this.phoneNumber,
       required this.city,
+      required this.signUpDate,
       required this.roles,
       required List clientNotifications,
     }
@@ -41,7 +44,6 @@ class User {
   }
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print(json);
     return switch (json) {
       {
       'id': int id,
@@ -54,7 +56,8 @@ class User {
       'phoneNumber': String phoneNumber,
       'city': String city,
       'roles': String roles,
-      'clientNotifications': []
+      'signUpDate': String signUpDate,
+      // 'clientNotifications': List<Map<String, dynamic>> clientNotifications
       } =>
           User(
               username: username,
@@ -66,6 +69,7 @@ class User {
               phoneNumber: phoneNumber,
               city: city,
               roles: roles,
+              signUpDate: DateTime.parse(json['signUpDate'] as String),
               clientNotifications: [],
           ),
       _ => throw const FormatException('Failed to load User.'),

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:el_ousta/old%20files/techinican_home.dart';
+import 'package:el_ousta/screens/profesions.dart';
+import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -100,9 +102,10 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
         // Storing the token
         if(response.body != 'fail') {
           await secureStorage.write(key: 'auth_token', value: response.body);
+          await secureStorage.write(key: 'type', value: (widget.type == Type.USER) ? 'USER' : 'TECH');
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? const ClientPage() : const TechnicianHome()
+                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: response.body) : RequestHomePage()
               )
           );
         }

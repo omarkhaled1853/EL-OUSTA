@@ -4,6 +4,7 @@ import 'dart:ffi';
 
 // import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/screens/Domains.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/enterCodeScreen.dart';
 import 'package:el_ousta/screens/enterUsernameScreen.dart';
@@ -77,9 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
           // Storing the token
           await secureStorage.write(key: 'auth_token', value: data['token']);
           await secureStorage.write(key: 'id', value: data['id']);
+          await secureStorage.write(key: 'type', value: (widget.type == Type.USER) ? 'USER' : 'TECH');
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: "Electrical", token: data['token'],) : RequestHomePage()
+                  builder: (ctx) => (widget.type == Type.USER) ? const DomainPage() : RequestHomePage()
               )
           );
         }
@@ -181,9 +183,11 @@ class _LoginScreenState extends State<LoginScreen> {
         if(data['status'] != 'fail') {
           await secureStorage.write(key: 'auth_token', value: data['token']);
           await secureStorage.write(key: 'id', value: data['id']);
+          await secureStorage.write(key: 'type', value: (widget.type == Type.USER) ? 'USER' : 'TECH');
+
           result = Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: data['token'],) : RequestHomePage()
+                  builder: (ctx) => (widget.type == Type.USER) ? const DomainPage() : RequestHomePage()
               )
           );
         }

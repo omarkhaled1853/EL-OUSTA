@@ -107,7 +107,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
           // Subscribe to the notifications topic for the specific user
           stompClient.subscribe(
-            destination: '/subscribe/client/$userId',
+            destination: (widget.type == Type.USER) ? '/subscribe/client/$userId' : '/subscribe/tech/$userId',
             callback: (frame) {
               if (frame.body != null) {
                 setState(() {
@@ -142,7 +142,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('El Ousta'),
-      backgroundColor: Colors.purple,
+      backgroundColor: Colors.deepPurple,
       actions: [
         IconButton(
           icon: const Icon(
@@ -161,7 +161,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         PopupMenuButton<String>(
           icon: Stack(
             children: [
-              Icon(Icons.notifications),
+              Icon(Icons.notifications_none, color: Colors.black,),
               if (notificationCount > 0)
                 Positioned(
                   right: 0,

@@ -62,7 +62,7 @@ class _EnterusernameScreenState extends State<EnterusernameScreen> {
     if(isFormValid) {
       var url, user;
       if(widget.type == Type.USER) {
-        url = Uri.parse(ServerAPI.baseURL + "/user/fetchUser");
+        url = Uri.parse(ServerAPI.baseURL + "/client/fetchUser");
       }
       else {
         url = Uri.parse(ServerAPI.baseURL + "/tech/fetchTch");
@@ -80,7 +80,22 @@ class _EnterusernameScreenState extends State<EnterusernameScreen> {
       if (response.statusCode == 200) {
         // If the server did return a 200 OK response,
         // then parse the JSON.
-        user = User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+        print(response.body);
+        // user = User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+        final data = jsonDecode(response.body);
+        User user = new User(
+          username: data['username'],
+          password: data['password'],
+          emailAddress: data['emailAddress'],
+          firstName: data['firstName'],
+          lastName: data['lastName'],
+          dob: DateTime.parse(data['dob'] as String),
+          phoneNumber: data['phoneNumber'],
+          city: data['city'],
+          signUpDate: DateTime.parse(data['signUpDate']),
+          roles: data['roles'],
+          clientNotifications: []
+        );
         log(user.phoneNumber);
         log(user.emailAddress);
         Navigator.of(context).push(

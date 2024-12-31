@@ -111,7 +111,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             'technicianNotifications': [],
             'jobStartDate': '1923-07-23',
             'profilePicture': null,
-            'rate': 50.0
+            'rate': 0.0
           })
       );
       // check the status code for the result
@@ -138,6 +138,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             // Storing the token
             await secureStorage.write(key: 'auth_token', value: data['token']);
             await secureStorage.write(key: 'id', value: id);
+            await secureStorage.write(key: 'type', value: 'TECH');
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (ctx) => RequestHomePage()));
           } else {
@@ -277,6 +278,10 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
         _isDropdownVisible = _cityFocusNode.hasFocus;
       });
     });
+  }
+
+  void fetchDomains() async {
+
   }
 
   @override

@@ -5,7 +5,7 @@ import 'package:el_ousta/models/TechCard.dart';
 import 'package:http/http.dart' as http;
 
 class Gettechcards {
-  Future<List<TechCard>?> getcardsinstarting(String token) async {
+  Future<List<TechCard>?> getcardsinstarting(String token, String profession) async {
     print(token);
     List<TechCard> testData = [];
     var client = http.Client();
@@ -13,7 +13,7 @@ class Gettechcards {
 
     try {
       // The body must contain the "field" and "query" parameters for filtering
-      var requestBody = jsonEncode({"field": "Domain", "query": "Electrical"});
+      var requestBody = jsonEncode({"field": "Domain", "query": profession});
 
       var response = await client.post(
         uri,

@@ -82,6 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
           print(data['id']);
           await secureStorage.write(key: 'auth_token', value: data['token']);
           await secureStorage.write(key: 'id', value: data['id']);
+          await secureStorage.write(key: 'type', value: (widget.type == Type.USER) ? 'USER' : 'TECH');
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                   builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: data['token'],) : RequestHomePage()

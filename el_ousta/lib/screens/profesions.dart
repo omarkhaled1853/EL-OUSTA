@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/Service/gettechcards.dart';
 import 'package:el_ousta/Service/search_service.dart';
+import 'package:el_ousta/data/professions.dart';
 import 'package:flutter/material.dart';
 import 'package:el_ousta/widgets/CustomSearchBar.dart';
 import 'package:el_ousta/widgets/ProfessionCard.dart';
@@ -14,7 +15,7 @@ import 'package:el_ousta/common/userTech.dart';
 import '../widgets/appBarWithNotification.dart';
 
 List<TechCard>? techcards;
-String newprofession = "Electrical";
+String newprofession = "";
 
 class ProfessionsScreen extends StatefulWidget {
   final String professionType;
@@ -38,7 +39,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
 
   void _performSearch(String query) async {
     try {
-      List<TechCard>? results = await service_search(query, newprofession, widget.token);
+      List<TechCard>? results = await service_search(query, widget.professionType, widget.token);
       setState(() {
         techcards = results;
       });
@@ -50,6 +51,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   @override
   void initState() {
     super.initState();
+    newprofession = widget.professionType;
     fetchTechniciansdefault();
   }
 
@@ -65,7 +67,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   /// get cards in initialization
   Future<void> fetchTechniciansdefault() async {
     try {
-      featched = await Gettechcards().getcardsinstarting(widget.token);
+      featched = await Gettechcards().getcardsinstarting(widget.token, widget.professionType);
       setState(() {
         techcards = featched;
         isLoaded = true; // Mark as loaded after data is fetched
@@ -83,7 +85,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
   Future<void> searchTechnicians(String searchQuery) async {
     try {
       List<TechCard>? searchResults =
-          await service_search(searchQuery, newprofession, widget.token);
+          await service_search(searchQuery, widget.professionType, widget.token);
 
       if (searchResults != null) {
         setState(() {
