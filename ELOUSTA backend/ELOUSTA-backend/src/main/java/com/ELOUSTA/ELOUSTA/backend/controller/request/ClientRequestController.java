@@ -74,34 +74,58 @@ public class ClientRequestController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<?>filterRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?> filterRequests(
+            @RequestParam int id,
+            @RequestParam String state,
+            @RequestParam String query) {
+
+        RequestPayload payload = RequestPayload.builder()
+                .id(id)
+                .state(state)
+                .query(query)
+                .build();
 
         List<ViewRequestDTO> clientFilterRequests = requestFilterService.filterRequests(payload);
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(clientFilterRequests);
+        return ResponseEntity.status(HttpStatus.OK).body(clientFilterRequests);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?>searchRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?> searchRequests(
+            @RequestParam int id,
+            @RequestParam String state,
+            @RequestParam String query) {
 
-        List<ViewRequestDTO> clientSearchRequests =
-                requestSearchService.searchRequests(payload);
+        System.out.println(query);
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(clientSearchRequests);
+        RequestPayload payload = RequestPayload.builder()
+                .id(id)
+                .state(state)
+                .query(query)
+                .build();
+
+        List<ViewRequestDTO> clientSearchRequests = requestSearchService.searchRequests(payload);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientSearchRequests);
     }
-
 
     @GetMapping("/sort")
-    public ResponseEntity<?>sortRequests(@RequestParam RequestPayload payload) {
+    public ResponseEntity<?> sortRequests(
+            @RequestParam int id,
+            @RequestParam String state,
+            @RequestParam String query) {
 
-        List<ViewRequestDTO> clientSortRequests =
-                requestSortService.sortRequests(payload);
+        RequestPayload payload = RequestPayload.builder()
+                .id(id)
+                .state(state)
+                .query(query)
+                .build();
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(clientSortRequests);
+        List<ViewRequestDTO> clientSortRequests = requestSortService.sortRequests(payload);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientSortRequests);
     }
+
 
     @PostMapping("/done")
     public void doneRequest(@RequestBody RequestStatusPayload donePayload ) {
