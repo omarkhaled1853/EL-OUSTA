@@ -1,11 +1,14 @@
 package com.ELOUSTA.ELOUSTA.backend.service.request.impl.tech;
 
 
+import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
@@ -18,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.ELOUSTA.ELOUSTA.backend.utils.ComplaintMapper.complaintDTOToClientComplaintEntity;
+import static com.ELOUSTA.ELOUSTA.backend.utils.ComplaintMapper.complaintDTOToTechnicinaComplaintEntity;
 import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 
 @Service
@@ -27,6 +32,7 @@ public class TechnicianRequestService implements RequestService {
     private RequestRepository requestRepository;
     private TechnicianRepository technicianRepository;
     private ClientRepository clientRepository;
+    private ComplaintRepository complaintRepository;
     private NotificationService notificationService;
 
     @Override
@@ -93,6 +99,21 @@ public class TechnicianRequestService implements RequestService {
         int clientID=client.getId();
 
         notificationService.sendNotificationToClient(message, clientID);
+    }
+
+    @Transactional
+    public void addComplaint(ComplaintDTO complaintDTO) {
+
+        ComplaintEntity complaintEntity = complaintDTOToTechnicinaComplaintEntity(complaintDTO);
+
+        complaintRepository.save(complaintEntity);
+
+        TechnicianEntity technician = technicianRepository.findById(complaintDTO.getTechId())
+                .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+
+        String message = technician.getUsername() + " Complains you ";
+
+        notificationService.sendNotificationToClient(message, complaintDTO.getClientId());
     }
 
 }
