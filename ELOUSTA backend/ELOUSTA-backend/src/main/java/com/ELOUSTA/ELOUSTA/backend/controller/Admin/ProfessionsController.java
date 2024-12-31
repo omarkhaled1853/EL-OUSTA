@@ -4,12 +4,14 @@ import com.ELOUSTA.ELOUSTA.backend.dto.DialogDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.requestservice.RequestService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -17,11 +19,15 @@ import java.util.List;
 public class ProfessionsController {
     @Autowired
     RequestService requestService;
-    @PostMapping("/addprofession")
-    public String addprofession(@RequestBody DomainEntity domainEntity)
+    @Autowired
+    AdminRepository adminRepository;
+    @PostMapping("/addprofession/{adminId}")
+    public String addprofession(@RequestBody DomainEntity domainEntity , @PathVariable int adminId)
     {
+        if(requestService.canDomanipulatprofession(adminId)){
         requestService.saveProfession(domainEntity);
-        return "Adding profession is successfully";
+        return "Adding profession is successfully";}
+        else  return null;
     }
     @GetMapping("/get_techs")
     public List<ProfessionCardDTO> getTechnicians() {
@@ -60,10 +66,13 @@ public class ProfessionsController {
         }
         return result;
     }
-    @DeleteMapping("/deletetech/{id}")
-    public void removetech(@PathVariable int id)
-    {
-        requestService.deletetech(id);
-        System.out.println("successfully deleted");
+    @DeleteMapping("/deletetech/{id}/{adminid}")
+    public boolean removetech(@PathVariable int id,@PathVariable int adminid) {
+        if (requestService.canDodelete(adminid)) {
+            System.out.println(adminid + "deleeeeeeeeeeeeeete");
+            requestService.deletetech(id);
+            return true;
+        }
+        return false;
     }
 }
