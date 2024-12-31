@@ -36,4 +36,8 @@ public class TechnicianEntity extends UserEntity {
     @OneToMany(mappedBy = "technicianEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<TechnicianNotification>technicianNotifications;
+
+//    Each technician has many complaints
+    @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL)
+    private List<ComplaintEntity> complaints;
 }
