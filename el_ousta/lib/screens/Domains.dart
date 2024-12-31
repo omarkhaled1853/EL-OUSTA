@@ -1,6 +1,7 @@
 import 'package:el_ousta/screens/profesions.dart';
 import 'package:el_ousta/API/serverAPI.dart';
 import 'package:flutter/material.dart';
+import '../client_requests/requests_page.dart';
 import '../widgets/appBarWithNotification.dart';
 import 'user_profile.dart';
 import 'package:el_ousta/screens/userTechScreen.dart';
@@ -72,7 +73,13 @@ class _DomainPageState extends State<DomainPage> {
         context,
         MaterialPageRoute(builder: (context) => const ProfilePage()),
       );
-    } else {
+    } else if(index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RequestsPage()),
+      );
+    }
+    else {
       setState(() {
         _currentIndex = index; // Update the current index
       });

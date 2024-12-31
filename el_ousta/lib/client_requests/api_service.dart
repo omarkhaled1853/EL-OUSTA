@@ -1,29 +1,33 @@
 import 'dart:convert';
-import 'package:elousta/client_requests/requests_status_payload.dart';
+import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/client_requests/requests_status_payload.dart';
+import 'package:el_ousta/main.dart';
 import 'package:http/http.dart' as http;
 import 'request_class.dart';
 
+void getTokenAndId() async {
+  ApiService.token = (await secureStorage.read(key: 'auth_token'))!;
+}
+
 class ApiService {
   //TODO: will be taken from localStorage
-  String token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM1Njc3NTM4LCJleHAiOjE3MzU3NjM5Mzh9.hapE80CYQbBw7oUiWbb3qBwDgLtBwzv0nUyriUWKgnI";
-
-  final String baseUrl =
-      "http://10.0.2.2:8080"; // Replace with your backend URL
-
+  static String token = "";
+  ApiService() {
+    getTokenAndId();
+  }
   // Fetch Pending Requests
   Future<List<Request>> fetchPendingRequests(int id) async {
-    return _fetchRequests('$baseUrl/client/request/pending/$id');
+    return _fetchRequests(ServerAPI.baseURL + '/client/request/pending/$id');
   }
 
   // Fetch In Progress Requests
   Future<List<Request>> fetchInProgressRequests(int id) async {
-    return _fetchRequests('$baseUrl/client/request/inProgress/$id');
+    return _fetchRequests(ServerAPI.baseURL + '/client/request/inProgress/$id');
   }
 
   // Fetch Completed Requests
   Future<List<Request>> fetchCompletedRequests(int id) async {
-    return _fetchRequests('$baseUrl/client/request/completed/$id');
+    return _fetchRequests(ServerAPI.baseURL + '/client/request/completed/$id');
   }
 
   Future<void> doneRequest(Request request) async {
@@ -33,7 +37,7 @@ class ApiService {
       techId: request.techId,
     );
 
-    final url = Uri.parse('$baseUrl/client/request/done');
+    final url = Uri.parse(ServerAPI.baseURL + '/client/request/done');
     final response = await http.post(
       url,
       headers: {
@@ -58,7 +62,7 @@ class ApiService {
       techId: request.techId,
     );
 
-    final url = Uri.parse('$baseUrl/client/request/refuse');
+    final url = Uri.parse(ServerAPI.baseURL + '/client/request/refuse');
     final response = await http.post(
       url,
       headers: {
@@ -92,3 +96,4 @@ class ApiService {
     }
   }
 }
+

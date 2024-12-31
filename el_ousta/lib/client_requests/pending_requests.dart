@@ -1,7 +1,7 @@
-import 'package:elousta/client_requests/api_service.dart';
-import 'package:elousta/client_requests/request_button.dart';
-import 'package:elousta/client_requests/request_card.dart';
-import 'package:elousta/client_requests/request_class.dart';
+import 'package:el_ousta/client_requests/api_service.dart';
+import 'package:el_ousta/client_requests/request_button.dart';
+import 'package:el_ousta/client_requests/request_card.dart';
+import 'package:el_ousta/client_requests/request_class.dart';
 import 'package:flutter/material.dart';
 
 class Pendingrequests extends StatefulWidget {

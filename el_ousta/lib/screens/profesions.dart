@@ -214,29 +214,29 @@ class FilterSectionState extends State<FilterSection> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 25),
-          _buildFilterButton(
-            context: context,
-            text: selectedProfession,
-            options: [
-              'Building',
-              'Plumbing',
-              'Electrical'
-            ], // editing when create admin so admin can add new
-            onSelected: (value) async {
-              setState(() {
-                selectedProfession = value; // Update the selected value
-                newprofession = value;
-              });
-
-              List<TechCard>? filteredCards = [];
-              // Fetch filtered cards asynchronously
-              filteredCards = await _getFilteredCards(value);
-              if (filteredCards != null) {
-                widget.onFilterApplied(filteredCards); // Apply the filter
-              } else
-                print("not founded");
-            },
-          ),
+          // _buildFilterButton(
+          //   context: context,
+          //   text: selectedProfession,
+          //   options: [
+          //     'Building',
+          //     'Plumbing',
+          //     'Electrical'
+          //   ], // editing when create admin so admin can add new
+          //   onSelected: (value) async {
+          //     setState(() {
+          //       selectedProfession = value; // Update the selected value
+          //       newprofession = value;
+          //     });
+          //
+          //     List<TechCard>? filteredCards = [];
+          //     // Fetch filtered cards asynchronously
+          //     filteredCards = await _getFilteredCards(value);
+          //     if (filteredCards != null) {
+          //       widget.onFilterApplied(filteredCards); // Apply the filter
+          //     } else
+          //       print("not founded");
+          //   },
+          // ),
         ],
       ),
     );

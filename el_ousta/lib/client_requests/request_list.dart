@@ -1,6 +1,6 @@
-import 'package:elousta/client_requests/requests_filter.dart';
-import 'package:elousta/client_requests/requests_search_bar.dart';
-import 'package:elousta/client_requests/requests_sort.dart';
+import 'package:el_ousta/client_requests/requests_filter.dart';
+import 'package:el_ousta/client_requests/requests_search_bar.dart';
+import 'package:el_ousta/client_requests/requests_sort.dart';
 import 'package:flutter/material.dart';
 
 class RequestList extends StatefulWidget {

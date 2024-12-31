@@ -1,16 +1,18 @@
-import 'package:elousta/client_requests/api_service.dart';
-import 'package:elousta/client_requests/completed_requests.dart';
-import 'package:elousta/client_requests/in_progress_requests.dart';
-import 'package:elousta/client_requests/pending_requests.dart';
-import 'package:elousta/client_requests/request_class.dart';
-import 'package:elousta/client_requests/request_list.dart';
-import 'package:elousta/client_requests/requests_controller.dart';
-import 'package:elousta/client_requests/requests_tabbar.dart';
+import 'package:el_ousta/client_requests/api_service.dart';
+import 'package:el_ousta/client_requests/completed_requests.dart';
+import 'package:el_ousta/client_requests/in_progress_requests.dart';
+import 'package:el_ousta/client_requests/pending_requests.dart';
+import 'package:el_ousta/client_requests/request_class.dart';
+import 'package:el_ousta/client_requests/request_list.dart';
+import 'package:el_ousta/client_requests/requests_controller.dart';
+import 'package:el_ousta/client_requests/requests_tabbar.dart';
+import 'package:el_ousta/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:el_ousta/common/userTech.dart';
+import '../widgets/appBarWithNotification.dart';
 
 //TODO: will be taken from localStorage
-const id = 1;
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -20,10 +22,17 @@ class RequestsPage extends StatefulWidget {
 class _RequestsPageState extends State<RequestsPage>
     with SingleTickerProviderStateMixin {
   late RequestsController requestsController;
+  static int id = 1;
 
+  void initId() async {
+    String idString = (await secureStorage.read(key: 'id'))! as String;
+    id = int.parse(idString);
+  }
   @override
   void initState() {
     super.initState();
+    initId();
+    print(id);
     requestsController = RequestsController(
       apiService: ApiService(),
       userId: id,
@@ -44,27 +53,30 @@ class _RequestsPageState extends State<RequestsPage>
       child: Consumer<RequestsController>(
         builder: (context, controller, _) {
           return Scaffold(
-            appBar: RequestsTabBar(controller: controller.tabController),
-            body: TabBarView(
-              controller: controller.tabController,
-              children: [
-                _buildRequestTab(
-                  controller.currentRequests,
-                  (requests) => RequestList(
-                      requests: Pendingrequests(pendingRequests: requests)),
-                ),
-                _buildRequestTab(
-                  controller.currentRequests,
-                  (requests) => RequestList(
-                      requests:
-                          InProgressRequests(inProgressRequests: requests)),
-                ),
-                _buildRequestTab(
-                  controller.currentRequests,
-                  (requests) => RequestList(
-                      requests: CompletedRequests(completedRequests: requests)),
-                )
-              ],
+            appBar: const NotificationScreen(type: Type.USER,),
+            body: Scaffold(
+              appBar: RequestsTabBar(controller: controller.tabController),
+              body: TabBarView(
+                controller: controller.tabController,
+                children: [
+                  _buildRequestTab(
+                    controller.currentRequests,
+                    (requests) => RequestList(
+                        requests: Pendingrequests(pendingRequests: requests)),
+                  ),
+                  _buildRequestTab(
+                    controller.currentRequests,
+                    (requests) => RequestList(
+                        requests:
+                            InProgressRequests(inProgressRequests: requests)),
+                  ),
+                  _buildRequestTab(
+                    controller.currentRequests,
+                    (requests) => RequestList(
+                        requests: CompletedRequests(completedRequests: requests)),
+                  )
+                ],
+              ),
             ),
           );
         },

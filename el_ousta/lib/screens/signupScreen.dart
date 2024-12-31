@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:ffi';
 import 'package:country_state_city/country_state_city.dart' as statecity;
 import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/screens/Domains.dart';
 import 'package:el_ousta/screens/UserSignupContinueScreen.dart';
 import 'package:el_ousta/screens/loginScreen.dart';
 import 'package:el_ousta/old%20files/techinican_home.dart';
@@ -85,7 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
           await secureStorage.write(key: 'type', value: (widget.type == Type.USER) ? 'USER' : 'TECH');
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                  builder: (ctx) => (widget.type == Type.USER) ? ProfessionsScreen(professionType: 'Electrical', token: data['token'],) : RequestHomePage()
+                  builder: (ctx) => (widget.type == Type.USER) ? const DomainPage() : RequestHomePage()
               )
           );
         }
