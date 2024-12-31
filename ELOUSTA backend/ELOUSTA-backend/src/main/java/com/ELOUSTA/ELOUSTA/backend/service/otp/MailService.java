@@ -26,6 +26,7 @@ public class MailService {
         this.mailSender = createCustomMailSender();
     }
 
+
     public void sendAdminMail(String mail, MailStructure mailStructure,String username , String password)
     {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -35,6 +36,7 @@ public class MailService {
         simpleMailMessage.setText("Your are now admin in el Osta with username :"+username +" and password : "+password);
         mailSender.send(simpleMailMessage);
     }
+
 
     public void sendMail(String mail, MailStructure mailStructure) {
         String otp = generateOtp();
