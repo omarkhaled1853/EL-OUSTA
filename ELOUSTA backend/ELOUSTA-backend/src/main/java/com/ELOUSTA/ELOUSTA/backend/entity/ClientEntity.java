@@ -22,6 +22,6 @@ public class ClientEntity extends UserEntity {
     private List<ClientNotification>clientNotifications;
 
 //    Each technician has many complaints
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clientEntity", cascade = CascadeType.ALL)
     private List<ComplaintEntity> complaints;
 }

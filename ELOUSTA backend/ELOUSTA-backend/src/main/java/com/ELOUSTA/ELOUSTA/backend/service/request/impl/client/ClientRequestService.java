@@ -6,9 +6,11 @@ import com.ELOUSTA.ELOUSTA.backend.dto.requestDto.ViewRequestDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.RequestService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestStatusPayload;
@@ -28,16 +30,19 @@ public class ClientRequestService implements RequestService {
     @Autowired
     private final RequestRepository requestRepository;
     private final ClientRepository clientRepository;
+    private final TechnicianRepository technicianRepository;
     private final NotificationService notificationService;
     private final ComplaintRepository complaintRepository;
 
     public ClientRequestService(RequestRepository requestRepository,
                                 ClientRepository clientRepository,
+                                TechnicianRepository technicianRepository,
                                 NotificationService notificationService,
                                 ComplaintRepository complaintRepository) {
 
         this.requestRepository = requestRepository;
         this.clientRepository = clientRepository;
+        this.technicianRepository = technicianRepository;
         this.notificationService = notificationService;
         this.complaintRepository = complaintRepository;
     }
@@ -135,11 +140,15 @@ public class ClientRequestService implements RequestService {
 
     @Transactional
     public void addComplaint(ComplaintDTO complaintDTO) {
-
-        ComplaintEntity complaintEntity = complaintDTOToClientComplaintEntity(complaintDTO);
-
         ClientEntity client = clientRepository.findById(complaintDTO.getClientId())
-                .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+
+        TechnicianEntity technician = technicianRepository.findById(complaintDTO.getTechId())
+                .orElseThrow(() -> new EntityNotFoundException("Technician not found"));
+
+        ComplaintEntity complaintEntity =
+                complaintDTOToClientComplaintEntity(complaintDTO, client, technician);
+
 
         complaintRepository.save(complaintEntity);
 

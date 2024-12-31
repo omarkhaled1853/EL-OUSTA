@@ -20,12 +20,12 @@ public class ComplaintEntity {
 //    Many complaints related to one client
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private int clientId;
+    private ClientEntity clientEntity;
 
 //    Many complaints related to one technician
     @ManyToOne
     @JoinColumn(name = "tech_id", nullable = false)
-    private int techId;
+    private TechnicianEntity technicianEntity;
 
     @Column(nullable = false)
     private String complaintBody;

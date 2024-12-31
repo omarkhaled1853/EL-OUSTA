@@ -4,9 +4,11 @@ import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.RequestEntity;
+import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.notification.NotificationService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.impl.client.ClientRequestService;
 import com.ELOUSTA.ELOUSTA.backend.service.request.payload.RequestStatusPayload;
@@ -25,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class ClientRequestActionServiceTest {
-
     @Mock
     private RequestRepository requestRepository;
 
@@ -34,6 +35,9 @@ public class ClientRequestActionServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
+
+    @Mock
+    private TechnicianRepository technicianRepository;
 
     @Mock
     private ComplaintRepository complaintRepository;
@@ -58,7 +62,7 @@ public class ClientRequestActionServiceTest {
         ClientEntity client = new ClientEntity();
         client.setUsername("JohnDoe");
 
-        RequestEntity request = testPendingRequestEntityList().getFirst();
+        RequestEntity request = testInProgressRequestEntityList().getFirst();
 
         when(requestRepository.findById(1)).thenReturn(Optional.of(request));
         when(clientRepository.findById(1)).thenReturn(Optional.of(client));
@@ -230,9 +234,16 @@ public class ClientRequestActionServiceTest {
         clientEntity.setId(1);
         clientEntity.setUsername("JohnDoe");
 
+        TechnicianEntity technicianEntity = new TechnicianEntity();
+        technicianEntity.setId(2);
+        technicianEntity.setUsername("omar");
+
         // Mock repository and service responses
         when(clientRepository.findById(complaintDTO.getClientId()))
                 .thenReturn(Optional.of(clientEntity));
+
+        when(technicianRepository.findById(complaintDTO.getTechId()))
+                .thenReturn(Optional.of(technicianEntity));
 
         // Act
         clientRequestService.addComplaint(complaintDTO);
@@ -261,7 +272,7 @@ public class ClientRequestActionServiceTest {
                 () -> clientRequestService.addComplaint(complaintDTO));
 
 
-        assertEquals("NO such Data", exception.getMessage());
+        assertEquals("Client not found", exception.getMessage());
 
         // Verify no interaction with other dependencies
         verify(complaintRepository, never()).save(any(ComplaintEntity.class));

@@ -1,8 +1,10 @@
 package com.ELOUSTA.ELOUSTA.backend.service.request.tech;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
+import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
+import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.RequestRepository;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -36,6 +38,9 @@ public class TechnicianRequestActionServiceTest {
     private TechnicianRepository technicianRepository;
 
     @Mock
+    private ClientRepository clientRepository;
+
+    @Mock
     private ComplaintRepository complaintRepository;
 
     @InjectMocks
@@ -58,9 +63,16 @@ public class TechnicianRequestActionServiceTest {
         technicianEntity.setId(2);
         technicianEntity.setUsername("JohnDoe");
 
+        ClientEntity clientEntity = new ClientEntity();
+        clientEntity.setId(1);
+        clientEntity.setUsername("omar");
+
         // Mock repository and service responses
         when(technicianRepository.findById(complaintDTO.getTechId()))
                 .thenReturn(Optional.of(technicianEntity));
+
+        when(clientRepository.findById(complaintDTO.getClientId()))
+                .thenReturn(Optional.of(clientEntity));
 
         // Act
         technicianRequestService.addComplaint(complaintDTO);
@@ -89,7 +101,7 @@ public class TechnicianRequestActionServiceTest {
                 () -> technicianRequestService.addComplaint(complaintDTO));
 
 
-        assertEquals("NO such Data", exception.getMessage());
+        assertEquals("Technician not found", exception.getMessage());
 
         // Verify no interaction with other dependencies
         verify(complaintRepository, never()).save(any(ComplaintEntity.class));

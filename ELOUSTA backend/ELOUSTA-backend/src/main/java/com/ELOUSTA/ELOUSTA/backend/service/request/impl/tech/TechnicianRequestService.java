@@ -103,11 +103,15 @@ public class TechnicianRequestService implements RequestService {
 
     @Transactional
     public void addComplaint(ComplaintDTO complaintDTO) {
-
-        ComplaintEntity complaintEntity = complaintDTOToTechnicinaComplaintEntity(complaintDTO);
-
         TechnicianEntity technician = technicianRepository.findById(complaintDTO.getTechId())
-                .orElseThrow(() -> new EntityNotFoundException("NO such Data"));
+                .orElseThrow(() -> new EntityNotFoundException("Technician not found"));
+
+        ClientEntity client = clientRepository.findById(complaintDTO.getClientId())
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+
+
+        ComplaintEntity complaintEntity =
+                complaintDTOToTechnicinaComplaintEntity(complaintDTO, client, technician);
 
         complaintRepository.save(complaintEntity);
 

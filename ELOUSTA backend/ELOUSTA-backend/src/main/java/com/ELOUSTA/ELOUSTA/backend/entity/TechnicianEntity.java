@@ -38,6 +38,6 @@ public class TechnicianEntity extends UserEntity {
     private List<TechnicianNotification>technicianNotifications;
 
 //    Each technician has many complaints
-    @OneToMany(mappedBy = "technician", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "technicianEntity", cascade = CascadeType.ALL)
     private List<ComplaintEntity> complaints;
 }
