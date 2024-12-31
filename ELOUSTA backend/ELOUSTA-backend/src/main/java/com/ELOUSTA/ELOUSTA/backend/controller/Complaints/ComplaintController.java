@@ -85,9 +85,9 @@ public class ComplaintController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComplaint(@PathVariable int id, @RequestParam String adminId) {
+    public ResponseEntity<Void> deleteComplaint(@PathVariable int id, @RequestParam int adminId) {
         // Check if admin has permission to access complaints
-        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+        AdminEntity admin = adminRepository.findById(adminId).orElse(null);
         if (admin == null || !admin.isCanAccessComplaints()) {
             return ResponseEntity.status(403).build();
         }
@@ -102,8 +102,8 @@ public class ComplaintController {
 
 
     @DeleteMapping("/remove-user/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer userId, @RequestParam String adminId) {
-        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userId, @RequestParam int adminId) {
+        AdminEntity admin = adminRepository.findById(adminId).orElse(null);
         if (admin == null || !admin.isCanAccessComplaints()) {
             return ResponseEntity.status(403).build();
         }
@@ -121,8 +121,8 @@ public class ComplaintController {
     }
 
     @DeleteMapping("/remove-tech/{techId}")
-    public ResponseEntity<String> deleteTechnician(@PathVariable Integer techId, @RequestParam String adminId) {
-        AdminEntity admin = adminRepository.findById(Integer.parseInt(adminId)).orElse(null);
+    public ResponseEntity<String> deleteTechnician(@PathVariable Integer techId, @RequestParam int adminId) {
+        AdminEntity admin = adminRepository.findById(adminId).orElse(null);
         if (admin == null || !admin.isCanAccessComplaints()) {
             return ResponseEntity.status(403).build();
         }

@@ -7,8 +7,6 @@
     <list default="true" id="7804d293-e0b9-4692-8702-be3de904bdd2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/java/com/ELOUSTA/ELOUSTA/backend/controller/Complaints/ComplaintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/java/com/ELOUSTA/ELOUSTA/backend/controller/Complaints/ComplaintController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/java/com/ELOUSTA/ELOUSTA/backend/repository/ComplaintRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/java/com/ELOUSTA/ELOUSTA/backend/repository/ComplaintRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/test/java/com/ELOUSTA/ELOUSTA/backend/controller/ComplaintControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ELOUSTA backend/ELOUSTA-backend/src/test/java/com/ELOUSTA/ELOUSTA/backend/controller/ComplaintControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +63,7 @@
       <recent name="com.ELOUSTA.ELOUSTA.backend.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.EloustaBackendApplication">
+  <component name="RunManager" selected="JUnit.ComplaintControllerTest">
     <configuration name="EloustaBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ELOUSTA.ELOUSTA.backend.EloustaBackendApplication" />
       <module name="ELOUSTA-backend" />
@@ -144,8 +142,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.EloustaBackendApplication" />
         <item itemvalue="JUnit.ComplaintControllerTest" />
+        <item itemvalue="Application.EloustaBackendApplication" />
         <item itemvalue="JUnit.All in ELOUSTA-backend" />
       </list>
     </recent_temporary>
