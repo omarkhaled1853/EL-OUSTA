@@ -60,7 +60,7 @@ class ComplaintControllerTest {
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
         when(complaintRepository.existsById(1)).thenReturn(true);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, 1);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         verify(complaintRepository, times(1)).deleteById(1);
@@ -73,7 +73,7 @@ class ComplaintControllerTest {
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
         when(complaintRepository.existsById(1)).thenReturn(true);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, 1);
 
         assertEquals(403, response.getStatusCodeValue()); // Forbidden
         verify(complaintRepository, never()).deleteById(1);
@@ -86,7 +86,7 @@ class ComplaintControllerTest {
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
         when(complaintRepository.existsById(1)).thenReturn(false);
 
-        ResponseEntity<Void> response = complaintController.deleteComplaint(1, "1");
+        ResponseEntity<Void> response = complaintController.deleteComplaint(1, 1);
 
         assertEquals(404, response.getStatusCodeValue()); // Not Found
         verify(complaintRepository, never()).deleteById(1);
@@ -101,7 +101,7 @@ class ComplaintControllerTest {
         when(clientRepository.existsById(1)).thenReturn(true);
         when(complaintRepository.findByClientEntityId(1)).thenReturn(Collections.emptyList());
 
-        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
+        ResponseEntity<String> response = complaintController.deleteUser(1, 1);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertEquals("User and associated complaints deleted successfully.", response.getBody());
@@ -114,7 +114,7 @@ class ComplaintControllerTest {
         AdminEntity admin = mockAdminEntity(false);
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
 
-        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
+        ResponseEntity<String> response = complaintController.deleteUser(1, 1);
 
         assertEquals(403, response.getStatusCodeValue()); // Forbidden
         assertEquals(null, response.getBody());
@@ -129,7 +129,7 @@ class ComplaintControllerTest {
 
         when(clientRepository.existsById(1)).thenReturn(false);
 
-        ResponseEntity<String> response = complaintController.deleteUser(1, "1");
+        ResponseEntity<String> response = complaintController.deleteUser(1, 1);
 
         assertEquals(404, response.getStatusCodeValue()); // Not Found
         assertEquals("User not found.", response.getBody());
@@ -145,7 +145,7 @@ class ComplaintControllerTest {
         when(technicianRepository.existsById(1)).thenReturn(true);
         when(complaintRepository.findByTechnicianEntityId(1)).thenReturn(Collections.emptyList());
 
-        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, 1);
 
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertEquals("Technician and associated complaints deleted successfully.", response.getBody());
@@ -158,7 +158,7 @@ class ComplaintControllerTest {
         AdminEntity admin = mockAdminEntity(false);
         when(adminRepository.findById(1)).thenReturn(Optional.of(admin));
 
-        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, 1);
 
         assertEquals(403, response.getStatusCodeValue()); // Forbidden
         assertEquals(null, response.getBody());
@@ -173,7 +173,7 @@ class ComplaintControllerTest {
 
         when(technicianRepository.existsById(1)).thenReturn(false);
 
-        ResponseEntity<String> response = complaintController.deleteTechnician(1, "1");
+        ResponseEntity<String> response = complaintController.deleteTechnician(1, 1);
 
         assertEquals(404, response.getStatusCodeValue()); // Not Found
         assertEquals("Technician not found.", response.getBody());
