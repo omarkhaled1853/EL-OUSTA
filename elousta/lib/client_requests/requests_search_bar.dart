@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 
 class RequestsSearchBar extends StatefulWidget {
-  final Function(String) onSearch;
-  const RequestsSearchBar({super.key, required this.onSearch});
+  const RequestsSearchBar({super.key});
 
   @override
   State<RequestsSearchBar> createState() => _RequestsSearchBarState();
 }
 
 class _RequestsSearchBarState extends State<RequestsSearchBar> {
-  String searchQuery = "";
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +20,10 @@ class _RequestsSearchBarState extends State<RequestsSearchBar> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        onChanged: widget.onSearch,
+        onChanged: (value) {
+          // searchQuery = value;
+          // applySearch();
+        },
       ),
     );
   }

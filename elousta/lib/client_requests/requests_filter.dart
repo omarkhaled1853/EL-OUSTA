@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RequestsFilter extends StatefulWidget {
-  String filterQuery;
-  final Function() applyFilter;
-  RequestsFilter(
-      {super.key, required this.filterQuery, required this.applyFilter});
+  const RequestsFilter({super.key});
 
   @override
   State<RequestsFilter> createState() => _RequestsFilterState();
@@ -20,14 +17,14 @@ class _RequestsFilterState extends State<RequestsFilter> {
           showDialog(
             context: context,
             builder: (context) {
-              String tempFilterQuery = widget.filterQuery;
+              // String tempFilterQuery = filterQuery;
               return AlertDialog(
                 title: const Text("Filter by Location"),
                 content: TextField(
                   decoration:
                       const InputDecoration(labelText: "Enter Location"),
                   onChanged: (value) {
-                    tempFilterQuery = value;
+                    // tempFilterQuery = value;
                   },
                 ),
                 actions: [
@@ -38,9 +35,9 @@ class _RequestsFilterState extends State<RequestsFilter> {
                   TextButton(
                     onPressed: () {
                       setState(() {
-                        widget.filterQuery = tempFilterQuery;
+                        // filterQuery = tempFilterQuery;
                       });
-                      widget.applyFilter();
+                      // applyFilter();
                       Navigator.pop(context);
                     },
                     child: const Text("Apply"),
