@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class Pendingrequests extends StatefulWidget {
   final List<Request> pendingRequests;
-  
+
   const Pendingrequests({
     super.key,
     required this.pendingRequests,
@@ -17,7 +17,30 @@ class Pendingrequests extends StatefulWidget {
 }
 
 class _PendingrequestsState extends State<Pendingrequests> {
-  final ApiService apiService = ApiService();
+  // Function to handle cancel request and update the UI
+  Future<void> cancelRequest(Request request) async {
+    try {
+      final ApiService apiService = ApiService();
+      // Call API to cancel the request
+      await apiService.cancelRequest(request);
+
+      // On successful cancellation, remove the request from the list and update UI
+      setState(() {
+        widget.pendingRequests.remove(request);
+      });
+
+      // Optionally, show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Request canceled successfully!'), backgroundColor: Colors.red),
+      );
+    } catch (e) {
+      // Handle cancellation error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -31,7 +54,7 @@ class _PendingrequestsState extends State<Pendingrequests> {
               text: "Cancel",
               color: Colors.red,
               icon: Icons.cancel,
-              onPressed: () => apiService.cancelRequest(request),
+              onPressed: () => cancelRequest(request),
             ),
           ],
           icon: const Icon(

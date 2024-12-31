@@ -1,3 +1,4 @@
+import 'package:elousta/client_requests/complaint_dialog.dart';
 import 'package:elousta/client_requests/request_button.dart';
 import 'package:elousta/client_requests/request_card.dart';
 import 'package:elousta/client_requests/request_class.dart';
@@ -31,7 +32,20 @@ class _CompletedRequestsState extends State<CompletedRequests> {
               text: "Complaint",
               color: Colors.redAccent,
               icon: Icons.report,
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  barrierColor:
+                      Colors.black.withOpacity(0.5), // Set background opacity
+                  builder: (BuildContext context) {
+                    return ComplaintDialog(
+                      clientId: request.clientId,
+                      techId: request.techId,
+                    );
+                  },
+                );
+              },
             ),
           ],
           icon: const Icon(

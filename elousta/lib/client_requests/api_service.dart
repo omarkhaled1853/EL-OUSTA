@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:elousta/client_requests/complain_dto.dart';
 import 'package:elousta/client_requests/requests_status_payload.dart';
 import 'package:http/http.dart' as http;
 import 'request_class.dart';
@@ -6,7 +7,7 @@ import 'request_class.dart';
 class ApiService {
   //TODO: will be taken from localStorage
   String token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM1Njc3NTM4LCJleHAiOjE3MzU3NjM5Mzh9.hapE80CYQbBw7oUiWbb3qBwDgLtBwzv0nUyriUWKgnI";
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM1Njg3MTMxLCJleHAiOjE3MzU3NzM1MzF9.jQC70CRaPqXbfCGACJ4P1ROi9ou272WPp54ZjaJw22M";
 
   final String baseUrl =
       "http://10.0.2.2:8080"; // Replace with your backend URL
@@ -29,7 +30,7 @@ class ApiService {
   Future<void> doneRequest(Request request) async {
     final payload = RequestStatusPayload(
       id: request.id,
-      clientId: 1,
+      clientId: request.clientId,
       techId: request.techId,
     );
 
@@ -54,7 +55,7 @@ class ApiService {
   Future<void> cancelRequest(Request request) async {
     final payload = RequestStatusPayload(
       id: request.id,
-      clientId: 1,
+      clientId: request.clientId,
       techId: request.techId,
     );
 
@@ -73,6 +74,25 @@ class ApiService {
     } else {
       throw Exception(
           "Failed to cancel request. Status: ${response.statusCode}");
+    }
+  }
+
+  Future<void> addComplaint(ComplaintDTO complaintDTO) async {
+    final url = Uri.parse('$baseUrl/client/request/complain');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonEncode(complaintDTO.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print("Complain request successful.");
+    } else {
+      throw Exception(
+          "Failed to Complain request. Status: ${response.statusCode}");
     }
   }
 
