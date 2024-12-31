@@ -2,6 +2,7 @@ package com.ELOUSTA.ELOUSTA.backend.repository;
 
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,8 @@ public interface TechnicianRepository extends JpaRepository<TechnicianEntity, In
     Optional<TechnicianEntity> findByUsername(String username);
     Optional<TechnicianEntity> findByEmailAddress(String emailAddress);
 
+    Optional<TechnicianEntity> findById(int id);
+
     @Query(value = "SELECT * from TECHNICIAN WHERE domain_id = :domainID",nativeQuery = true)
     List<TechnicianEntity>findTechniciansByDomain(@Param("domainID")int domainID);
     @Query("SELECT t " +
@@ -22,4 +25,8 @@ public interface TechnicianRepository extends JpaRepository<TechnicianEntity, In
             "LEFT JOIN FETCH t.portfolioEntities p " +
             "WHERE t.id = :technicianId")
     Optional<TechnicianEntity> findTechnicianWithDomainAndPortfolio(@Param("technicianId") Integer technicianId);
+
+    @Modifying
+    @Query("UPDATE TechnicianEntity t SET t.rate = :rate WHERE t.id = :technicianId")
+    int updateTechnicianRateById(@Param("technicianId") Integer technicianId, @Param("rate") Double rate);
 }
