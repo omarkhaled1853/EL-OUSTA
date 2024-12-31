@@ -7,27 +7,17 @@ import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 
 public final class ComplaintMapper {
 
-    public static ComplaintEntity complaintDTOToClientComplaintEntity(ComplaintDTO complaintDTO,
-                                                                      ClientEntity clientEntity,
-                                                                      TechnicianEntity technicianEntity) {
+    public static ComplaintEntity complaintDTOToComplaintEntity(ComplaintDTO complaintDTO,
+                                                                ClientEntity clientEntity,
+                                                                TechnicianEntity technicianEntity,
+                                                                boolean isClientToTechnician) {
         return ComplaintEntity.builder()
                 .clientEntity(clientEntity)
                 .technicianEntity(technicianEntity)
                 .complaintBody(complaintDTO.getComplaintBody())
                 .state("PENDING")
-                .direction(false)
+                .direction(isClientToTechnician ? 0 : 1)  // 0 if client to technician, 1 if technician to client
                 .build();
     }
 
-    public static ComplaintEntity complaintDTOToTechnicinaComplaintEntity(ComplaintDTO complaintDTO,
-                                                                          ClientEntity clientEntity,
-                                                                          TechnicianEntity technicianEntity) {
-        return ComplaintEntity.builder()
-                .clientEntity(clientEntity)
-                .technicianEntity(technicianEntity)
-                .complaintBody(complaintDTO.getComplaintBody())
-                .state("PENDING")
-                .direction(true)
-                .build();
-    }
 }

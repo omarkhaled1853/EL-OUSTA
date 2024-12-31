@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.ELOUSTA.ELOUSTA.backend.utils.ComplaintMapper.complaintDTOToClientComplaintEntity;
+import static com.ELOUSTA.ELOUSTA.backend.utils.ComplaintMapper.complaintDTOToComplaintEntity;
 import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.requestEntityListToViewRequestDTOList;
 import static com.ELOUSTA.ELOUSTA.backend.utils.RequestMapper.orderRequestDTOToRequestEntity;
 
@@ -147,7 +147,7 @@ public class ClientRequestService implements RequestService {
                 .orElseThrow(() -> new EntityNotFoundException("Technician not found"));
 
         ComplaintEntity complaintEntity =
-                complaintDTOToClientComplaintEntity(complaintDTO, client, technician);
+                complaintDTOToComplaintEntity(complaintDTO, client, technician, true);
 
 
         complaintRepository.save(complaintEntity);

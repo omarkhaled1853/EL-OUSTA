@@ -36,5 +36,5 @@ public class ComplaintEntity {
 //   0 -> client to tech
 //   1 -> tech to client
     @Column(nullable = false)
-    private boolean direction;
+    private int direction;
 }
