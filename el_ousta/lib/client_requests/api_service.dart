@@ -80,6 +80,25 @@ class ApiService {
     }
   }
 
+  Future<void> addComplaint(ComplaintDTO complaintDTO) async {
+    final url = Uri.parse(ServerAPI.baseURL + '/client/request/complain');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonEncode(complaintDTO.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      print("Complain request successful.");
+    } else {
+      throw Exception(
+          "Failed to Complain request. Status: ${response.statusCode}");
+    }
+  }
+
   // Generic function to fetch data
   Future<List<Request>> _fetchRequests(String url) async {
     try {
@@ -96,4 +115,3 @@ class ApiService {
     }
   }
 }
-
