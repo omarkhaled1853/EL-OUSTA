@@ -1,10 +1,10 @@
 package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
-import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDto;
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.PortfolioEntity;
@@ -26,9 +26,9 @@ public final class ProfileTestData {
 
 
 
-    public static ClientProfileProfileDTO testClientProfileDTO() throws IOException {
+    public static ClientProfileDTO testClientProfileDTO() throws IOException {
         byte[] profilePhoto = getProfilePhoto("johndoe.png", profilePath);
-        return ClientProfileProfileDTO.builder()
+        return ClientProfileDTO.builder()
                 .id(1)
                 .firstName("John")
                 .lastName("Doe")
@@ -114,9 +114,9 @@ public final class ProfileTestData {
     }
 
 
-    public static TechnicianProfileProfileDTO testTechnicianProfileDto() throws IOException {
+    public static TechnicianProfileDTO testTechnicianProfileDto() throws IOException {
         byte[] profilePhoto = getProfilePhoto("john.png", profilePath);
-        return TechnicianProfileProfileDTO.builder()
+        return TechnicianProfileDTO.builder()
                 .id(1)
                 .firstName("John")
                 .lastName("Doe")
@@ -142,23 +142,23 @@ public final class ProfileTestData {
                 .build();
     }
 
-    public static PortfolioDto testPortfolioDto() throws IOException {
+    public static PortfolioDTO testPortfolioDto() throws IOException {
         byte[] photo = getProfilePhoto("portfolio1.png", portfolioPath);
-        return PortfolioDto.builder()
+        return PortfolioDTO.builder()
                 .id(3)
                 .photo(photo)
                 .build();
     }
 
-    public static List<PortfolioDto> testPortfolioDtoList() throws IOException {
+    public static List<PortfolioDTO> testPortfolioDtoList() throws IOException {
         byte[] photo1 = getProfilePhoto("portfolio1.png", portfolioPath);
         byte[] photo2 = getProfilePhoto("portfolio2.png", portfolioPath);
         return List.of(
-                PortfolioDto.builder()
+                PortfolioDTO.builder()
                         .id(3)
                         .photo(photo1)
                         .build(),
-                PortfolioDto.builder()
+                PortfolioDTO.builder()
                         .id(4)
                         .photo(photo2)
                         .build()

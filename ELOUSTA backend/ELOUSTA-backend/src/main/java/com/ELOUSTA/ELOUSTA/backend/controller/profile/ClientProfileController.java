@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.profile;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.ClientProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class ClientProfileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientProfileProfileDTO> getClient(@PathVariable Integer id) {
-        Optional<ClientProfileProfileDTO> clientDTO = clientProfileService.getClient(id);
-        return clientDTO.map(client -> new ResponseEntity<ClientProfileProfileDTO>(client, HttpStatus.OK))
-                .orElse(new ResponseEntity<ClientProfileProfileDTO>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<ClientProfileDTO> getClient(@PathVariable Integer id) {
+        Optional<ClientProfileDTO> clientDTO = clientProfileService.getClient(id);
+        return clientDTO.map(client -> new ResponseEntity<ClientProfileDTO>(client, HttpStatus.OK))
+                .orElse(new ResponseEntity<ClientProfileDTO>(HttpStatus.NOT_FOUND));
     }
 }

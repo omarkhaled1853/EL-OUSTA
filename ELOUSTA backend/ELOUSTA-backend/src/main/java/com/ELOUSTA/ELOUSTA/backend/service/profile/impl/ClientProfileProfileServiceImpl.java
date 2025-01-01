@@ -1,6 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.profile.impl;
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileProfileDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.ClientRepository;
 import com.ELOUSTA.ELOUSTA.backend.service.profile.ClientProfileService;
@@ -18,7 +18,7 @@ public class ClientProfileProfileServiceImpl implements ClientProfileService {
     private ClientRepository clientRepository;
 
 
-    public Optional<ClientProfileProfileDTO> getClient(Integer id) {
+    public Optional<ClientProfileDTO> getClient(Integer id) {
         Optional<ClientEntity> clientEntity = clientRepository.findById(id);
         return clientEntity.map(entity -> {
             try {
