@@ -65,6 +65,7 @@ class _RequestsPageState extends State<RequestsPage>
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
+                        controller: requestsController,
                         requests: Pendingrequests(
                             pendingRequests: controller.isSearching
                                 ? controller.searchResults
@@ -73,6 +74,7 @@ class _RequestsPageState extends State<RequestsPage>
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
+                        controller: requestsController,
                         requests: InProgressRequests(
                             inProgressRequests: controller.isSearching
                                 ? controller.searchResults
@@ -81,6 +83,7 @@ class _RequestsPageState extends State<RequestsPage>
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
+                        controller: requestsController,
                         requests: CompletedRequests(
                             completedRequests: controller.isSearching
                                 ? controller.searchResults
