@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //TODO: will be taken from localStorage
-const id = 1;
+const int id = 1;
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -50,19 +50,19 @@ class _RequestsPageState extends State<RequestsPage>
               children: [
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) => RequestList(
-                      requests: Pendingrequests(pendingRequests: requests)),
+                  (requests) => RequestList(controller: requestsController,
+                      requests: Pendingrequests(pendingRequests: controller.isSearching ? controller.searchResults : requests)),
                 ),
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) => RequestList(
+                  (requests) => RequestList(controller: requestsController,
                       requests:
-                          InProgressRequests(inProgressRequests: requests)),
+                          InProgressRequests(inProgressRequests: controller.isSearching ? controller.searchResults : requests)),
                 ),
                 _buildRequestTab(
                   controller.currentRequests,
-                  (requests) => RequestList(
-                      requests: CompletedRequests(completedRequests: requests)),
+                  (requests) => RequestList(controller: requestsController,
+                      requests: CompletedRequests(completedRequests: controller.isSearching ? controller.searchResults : requests)),
                 )
               ],
             ),
@@ -82,7 +82,7 @@ class _RequestsPageState extends State<RequestsPage>
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final requests = snapshot.data!;
+          final requests = requestsController.isSearching ? requestsController.searchResults : snapshot.data!;
           return customWidget(requests);
         } else {
           return const Center(child: Text("No requests available"));

@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:elousta/client_requests/complain_dto.dart';
 import 'package:elousta/client_requests/requests_status_payload.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'request_class.dart';
 
 class ApiService {
   //TODO: will be taken from localStorage
   String token =
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM1Njg3MTMxLCJleHAiOjE3MzU3NzM1MzF9.jQC70CRaPqXbfCGACJ4P1ROi9ou272WPp54ZjaJw22M";
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lIiwiaWF0IjoxNzM1Njk0NzQ0LCJleHAiOjE3MzU3ODExNDR9.Sa5GH6GyKuFe34nTIhIaTQUhvtj2pgHpcT_YwmM_qE0";
 
   final String baseUrl =
       "http://10.0.2.2:8080"; // Replace with your backend URL
@@ -93,6 +94,29 @@ class ApiService {
     } else {
       throw Exception(
           "Failed to Complain request. Status: ${response.statusCode}");
+    }
+  }
+
+  Future<List<Request>> searchRequests(
+      int userId, String state, String query) async {
+    final uri = Uri.parse('$baseUrl/client/request/search').replace(
+      queryParameters: {
+        'id': userId.toString(),
+        'state': state,
+        'query': query,
+      },
+    );
+    final response = await http.get(uri, headers: {'Authorization': 'Bearer $token'});
+
+    if (kDebugMode) {
+      print('Requesting URI: $uri');
+    }
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Request.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load search results ${response.statusCode}');
     }
   }
 
