@@ -28,6 +28,7 @@ class _RequestsPageState extends State<RequestsPage>
     String idString = (await secureStorage.read(key: 'id'))! as String;
     id = int.parse(idString);
   }
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +54,9 @@ class _RequestsPageState extends State<RequestsPage>
       child: Consumer<RequestsController>(
         builder: (context, controller, _) {
           return Scaffold(
-            appBar: const NotificationScreen(type: Type.USER,),
+            appBar: const NotificationScreen(
+              type: Type.USER,
+            ),
             body: Scaffold(
               appBar: RequestsTabBar(controller: controller.tabController),
               body: TabBarView(
@@ -62,18 +65,26 @@ class _RequestsPageState extends State<RequestsPage>
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
-                        requests: Pendingrequests(pendingRequests: requests)),
+                        requests: Pendingrequests(
+                            pendingRequests: controller.isSearching
+                                ? controller.searchResults
+                                : requests)),
                   ),
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
-                        requests:
-                            InProgressRequests(inProgressRequests: requests)),
+                        requests: InProgressRequests(
+                            inProgressRequests: controller.isSearching
+                                ? controller.searchResults
+                                : requests)),
                   ),
                   _buildRequestTab(
                     controller.currentRequests,
                     (requests) => RequestList(
-                        requests: CompletedRequests(completedRequests: requests)),
+                        requests: CompletedRequests(
+                            completedRequests: controller.isSearching
+                                ? controller.searchResults
+                                : requests)),
                   )
                 ],
               ),
@@ -94,7 +105,9 @@ class _RequestsPageState extends State<RequestsPage>
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          final requests = snapshot.data!;
+          final requests = requestsController.isSearching
+              ? requestsController.searchResults
+              : snapshot.data!;
           return customWidget(requests);
         } else {
           return const Center(child: Text("No requests available"));

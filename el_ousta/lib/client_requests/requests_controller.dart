@@ -10,6 +10,9 @@ class RequestsController extends ChangeNotifier {
 
   Future<List<Request>>? currentRequests;
 
+  List<Request> searchResults = []; // For search results
+  bool isSearching = false; // Track if search is applied
+
   RequestsController({required this.apiService, required this.userId});
 
   void initializeController(TickerProvider vsync) {
@@ -37,6 +40,34 @@ class RequestsController extends ChangeNotifier {
         currentRequests = apiService.fetchCompletedRequests(userId);
         break;
     }
+    notifyListeners();
+  }
+
+  void searchRequests(String query) {
+    String state = "";
+    switch (tabController.index) {
+      case 0:
+        state = "PENDING";
+        break;
+      case 1:
+        state = "IN-PROGRESS";
+        break;
+      case 2:
+        state = "COMPLETED";
+        break;
+    }
+    isSearching = true;
+    apiService.searchRequests(userId, state, query).then((requests) {
+      searchResults = requests; // Update search results
+      notifyListeners();
+    });
+  }
+
+  // Reset search results when tab is changed
+  void resetSearch() {
+    isSearching = false;
+    searchResults = [];
+    _fetchRequests(tabController.index);
     notifyListeners();
   }
 

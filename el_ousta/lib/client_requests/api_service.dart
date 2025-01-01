@@ -100,6 +100,26 @@ class ApiService {
     }
   }
 
+  Future<List<Request>> searchRequests(
+      int userId, String state, String query) async {
+    final uri = Uri.parse(ServerAPI.baseURL + '/client/request/search').replace(
+      queryParameters: {
+        'id': userId.toString(),
+        'state': state,
+        'query': query,
+      },
+    );
+    final response =
+        await http.get(uri, headers: {'Authorization': 'Bearer $token'});
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Request.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load search results ${response.statusCode}');
+    }
+  }
+
   // Generic function to fetch data
   Future<List<Request>> _fetchRequests(String url) async {
     try {
