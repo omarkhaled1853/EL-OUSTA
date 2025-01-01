@@ -8,6 +8,8 @@ import 'package:el_ousta/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'complaint_dialog.dart';
+
 class CompletedRequests extends StatefulWidget {
   final List<Request> completedRequests;
   const CompletedRequests({super.key, required this.completedRequests});

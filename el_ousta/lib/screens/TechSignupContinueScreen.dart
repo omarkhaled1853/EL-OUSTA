@@ -59,6 +59,9 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
   String? cityErrorText = null;
   String? domainErrorText = null;
   String? selectedProfession;
+  int? selectedProfessionId;
+
+  late List<dynamic> domainList;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dobController = TextEditingController();
   bool _isDobValid = true;
@@ -105,7 +108,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             'city': _cityController.text,
             'roles': 'ROLE_USER',
             'domainEntity': {
-              'id': 1
+              'id': selectedProfessionId
             },
             'signUpDate': (new DateTime.now()).toIso8601String(), // Convert DateTime to ISO format
             'technicianNotifications': [],
@@ -278,10 +281,28 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
         _isDropdownVisible = _cityFocusNode.hasFocus;
       });
     });
+    fetchAllDomains();
   }
 
-  void fetchDomains() async {
-
+  Future<void> fetchAllDomains() async {
+    try {
+      final response = await http.get(
+          Uri.parse(ServerAPI.baseURL + '/client/home/'),
+          // headers: {'Authorization': 'Bearer $token'}
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = json.decode(response.body);
+        setState(() {
+          domainList = responseData.cast<Map<String, dynamic>>();
+          print(domainList);
+        });
+      } else {
+        throw Exception('Failed to fetch domain list');
+      }
+    } catch (error) {
+      print('Error fetching domains: $error');
+    }
   }
 
   @override
@@ -493,8 +514,8 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
                         _cityController.text.isNotEmpty)
                       const Text('No matching cities found.'),
                     const SizedBox(height: 16.0),
-                    DropdownButtonFormField<String>(
-                      value: selectedProfession,
+                    DropdownButtonFormField<int>(
+                      value: selectedProfessionId,
                       decoration: InputDecoration(
                           labelText: 'Choose a Profession',
                           border: OutlineInputBorder(
@@ -504,15 +525,16 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
                               horizontal: 16.0, vertical: 18.0),
                           errorText: domainErrorText),
                       icon: const Icon(Icons.arrow_drop_down),
-                      items: professions.map((String profession) {
-                        return DropdownMenuItem<String>(
-                          value: profession,
-                          child: Text(profession),
+                      items: domainList.map((domain) {
+                        return DropdownMenuItem<int>(
+                          value: domain['id'], // Assign the ID as the value
+                          child: Text(domain['name']), // Show the name in the dropdown
                         );
                       }).toList(),
-                      onChanged: (newValue) {
+                      onChanged: (int? newValue) {
                         setState(() {
-                          selectedProfession = newValue.toString();
+                          selectedProfessionId = newValue!; // Assign the selected ID
+                          print(selectedProfessionId);
                         });
                       },
                       validator: (value) => domainErrorText,

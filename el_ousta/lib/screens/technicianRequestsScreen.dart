@@ -217,7 +217,7 @@ class _RequestListState extends State<RequestList> {
     final body = json.encode({
       "id": request.id,
       "techId": request.techId,
-      "clientId": request.userId,
+      "clientId": request.clientId,
     });
 
     final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
@@ -353,7 +353,7 @@ class _RequestListState extends State<RequestList> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CheckoutButton(token: token, id: request.id, userId: request.userId, techId: request.techId),
+                            CheckoutButton(token: token, id: request.id, userId: request.clientId, techId: request.techId),
                             ElevatedButton(
                               onPressed: () => refuseTask(request),
                               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -383,7 +383,7 @@ class _RequestListState extends State<RequestList> {
 
 class Request {
   final int techId;
-  final int userId;
+  final int clientId;
   final int id;
   final String location;
   final String description;
@@ -393,7 +393,7 @@ class Request {
 
   Request({
     required this.techId,
-    required this.userId,
+    required this.clientId,
     required this.location,
     required this.id,
     required this.description,
@@ -409,7 +409,7 @@ class Request {
       startDate: json['startDate'],
       endDate: json['endDate'],
       techId: json['techId'],
-      userId: json['userId'],
+      clientId: json['clientId'],
       state: json['state'],
       location: json['location'],
     );

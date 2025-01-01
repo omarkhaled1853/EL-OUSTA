@@ -67,13 +67,13 @@ class _DomainPageState extends State<DomainPage> {
   int _currentIndex = 0;
 
   void onTabTapped(int index) {
-    if (index == 3) {
+    if (index == 2) {
       // Navigate to ProfilePage if "Profile" tab is selected
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const ProfilePage()),
       );
-    } else if(index == 2) {
+    } else if(index == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => RequestsPage()),
@@ -166,7 +166,7 @@ class _DomainPageState extends State<DomainPage> {
         unselectedItemColor: Colors.grey,
         onTap: onTabTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          // BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Professions'),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Requests'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),

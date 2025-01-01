@@ -1,5 +1,5 @@
-import 'package:elousta/client_requests/api_service.dart';
-import 'package:elousta/client_requests/complain_dto.dart';
+import 'package:el_ousta/client_requests/api_service.dart';
+import 'package:el_ousta/client_requests/complain_dto.dart';
 import 'package:flutter/material.dart';
 
 class ComplaintDialog extends StatefulWidget {

@@ -3,6 +3,8 @@ import 'package:el_ousta/client_requests/request_card.dart';
 import 'package:el_ousta/client_requests/request_class.dart';
 import 'package:flutter/material.dart';
 
+import 'api_service.dart';
+
 class InProgressRequests extends StatefulWidget {
   final List<Request> inProgressRequests;
   const InProgressRequests({super.key, required this.inProgressRequests});

@@ -205,15 +205,11 @@ class FilterSectionState extends State<FilterSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          const Text(
-            'Filter by',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(width: 25),
+          SizedBox(width: 25),
           // _buildFilterButton(
           //   context: context,
           //   text: selectedProfession,

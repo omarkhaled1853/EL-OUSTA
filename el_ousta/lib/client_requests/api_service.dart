@@ -3,6 +3,7 @@ import 'package:el_ousta/API/serverAPI.dart';
 import 'package:el_ousta/client_requests/requests_status_payload.dart';
 import 'package:el_ousta/main.dart';
 import 'package:http/http.dart' as http;
+import 'complain_dto.dart';
 import 'request_class.dart';
 
 void getTokenAndId() async {

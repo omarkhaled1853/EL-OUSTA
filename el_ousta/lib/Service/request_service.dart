@@ -24,13 +24,13 @@ class RequestService {
 
     // Construct the DTO
     final requestDto = {
-      'userid': userId,
-      'techid': techId,
+      'clientId': userId,
+      'techId': techId,
       'description': description,
       'location': location,
       'state': 'Pending', // You can set the state dynamically if needed
-      'startdate': formattedStartDate,
-      'enddate': formattedEndDate,
+      'startDate': formattedStartDate,
+      'endDate': formattedEndDate,
     };
     print(token);
     final response = await http.post(
