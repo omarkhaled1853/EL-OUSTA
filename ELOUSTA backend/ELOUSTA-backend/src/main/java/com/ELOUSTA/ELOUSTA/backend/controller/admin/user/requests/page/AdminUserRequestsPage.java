@@ -46,6 +46,7 @@ public class AdminUserRequestsPage {
                     .cnt(cnt)
                     .build());
         }
+        System.out.println(dtos.toString());
         return dtos;
     }
     @DeleteMapping("/client/delete")

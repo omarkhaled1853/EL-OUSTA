@@ -13,5 +13,7 @@ public interface ComplaintRepository extends JpaRepository<ComplaintEntity, Inte
 
     // Find complaints by technician ID
     List<ComplaintEntity> findByTechnicianEntityId(Integer technicianId);
+    List<ComplaintEntity> findByTechnicianEntity_Id(int techId);
+
 
 }

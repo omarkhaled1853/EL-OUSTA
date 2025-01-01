@@ -60,10 +60,12 @@ public class SecurityConfig {
                                 "/client/signUp", "/client/signIn",
                                 "/tech/signUp", "/tech/signIn",
                                 "/admin/signIn",
+                                "/admin/signUp",
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch",
                                 "/client/request/addRequest",
+                                "/admin/profession/addprofession/**",
                                 "/elousta-websocket/**","/admin/**").permitAll()
                         .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")

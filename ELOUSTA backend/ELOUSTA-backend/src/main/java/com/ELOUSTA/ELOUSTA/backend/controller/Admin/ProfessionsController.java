@@ -1,11 +1,11 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.DialogDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.DomainAdditionDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
-import com.ELOUSTA.ELOUSTA.backend.repository.AdminRepository;
-import com.ELOUSTA.ELOUSTA.backend.repository.ComplaintRepository;
+import com.ELOUSTA.ELOUSTA.backend.repository.*;
 import com.ELOUSTA.ELOUSTA.backend.service.requestservice.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +23,18 @@ public class ProfessionsController {
     @Autowired
     ComplaintRepository complaintRepository;
     @PostMapping("/addprofession/{adminId}")
-    public String addprofession(@RequestBody DomainEntity domainEntity , @PathVariable int adminId)
+    public String addprofession(@RequestBody DomainAdditionDTO domainAdditionDTO, @PathVariable int adminId)
     {
+
         if(requestService.canDomanipulatprofession(adminId)){
-        requestService.saveProfession(domainEntity);
-        return "Adding profession is successfully";}
-        else  return null;
+            System.out.println("adddding");
+            DomainEntity domainEntity = new DomainEntity();
+            domainEntity.setName(domainAdditionDTO.getName());
+            domainEntity.setPhoto(domainAdditionDTO.getPhoto());
+            requestService.saveProfession(domainEntity);
+            return "Adding profession is successfully";
+        }
+        return null;
     }
     @GetMapping("/get_techs")
     public List<ProfessionCardDTO> getTechnicians() {
@@ -40,7 +46,7 @@ public class ProfessionsController {
             cardDTO.setTechName(p.getFirstName());
             cardDTO.setEmail(p.getEmailAddress());
             cardDTO.setRate(p.getRate());
-//            cardDTO.setComplainNumber(complaintRepository.findById(p.getId()).size);  // Placeholder for actual complain count
+            cardDTO.setComplainNumber(complaintRepository.findByTechnicianEntity_Id(p.getId()).size());  // Placeholder for actual complain count
             cardDTO.setProfessionName(p.getDomainEntity().getName());
             result.add(cardDTO);
         }
@@ -72,6 +78,7 @@ public class ProfessionsController {
         if (requestService.canDodelete(adminId)) {
             System.out.println(adminId + "deleeeeeeeeeeeeeete");
             requestService.deletetech(id);
+
             return true;
         }
         return false;

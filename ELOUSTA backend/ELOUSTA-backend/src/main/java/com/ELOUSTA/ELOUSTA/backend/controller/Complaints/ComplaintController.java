@@ -31,7 +31,7 @@ public class ComplaintController {
     @Autowired
     private AdminRepository adminRepository;
 
-    @GetMapping
+    @GetMapping("/get_complains")
     public List<ComplaintDTO> getAllComplaints() {
         return complaintRepository.findAll().stream()
                 .map(complaint -> {

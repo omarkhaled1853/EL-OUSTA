@@ -10,7 +10,7 @@ public interface ClientCountRequest extends JpaRepository<ClientEntity, Integer>
     @Query(value = "SELECT client.id, client.emailAddress, client.username," +
             " client.firstName, client.lastName, client.phoneNumber, temp.cnt " +
             "FROM Client client " +
-            "LEFT JOIN (SELECT r.userId, COUNT(*) AS cnt " +
+            "JOIN (SELECT r.userId, COUNT(*) AS cnt " +
             "           FROM Request r " +
             "           GROUP BY r.userId) AS temp " +
             "ON client.id = temp.userId", nativeQuery = true)
