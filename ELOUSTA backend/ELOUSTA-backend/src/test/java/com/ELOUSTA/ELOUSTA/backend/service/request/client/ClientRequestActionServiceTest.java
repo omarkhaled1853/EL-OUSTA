@@ -74,7 +74,7 @@ public class ClientRequestActionServiceTest {
         assertEquals("COMPLETED", request.getState());
         verify(requestRepository).save(request);
         verify(notificationService).
-                sendNotificationToClient("JohnDoe Done the request ", 101);
+                sendNotificationToTechnician("JohnDoe Done the request ", 101);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class ClientRequestActionServiceTest {
         assertEquals("CANCELLED", request.getState());
         verify(requestRepository).save(request);
         verify(notificationService).
-                sendNotificationToClient("JohnDoe Cancel the request ", 101);
+                sendNotificationToTechnician("JohnDoe Cancel the request ", 101);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class ClientRequestActionServiceTest {
         assertEquals("CANCELLED", request.getState());
         verify(requestRepository).save(request);
         verify(notificationService).
-                sendNotificationToClient("JohnDoe Cancel the request ", 101);
+                sendNotificationToTechnician("JohnDoe Cancel the request ", 101);
     }
 
     @Test
@@ -251,7 +251,7 @@ public class ClientRequestActionServiceTest {
         // Verify interactions
         verify(complaintRepository, times(1)).save(any(ComplaintEntity.class));
         verify(notificationService, times(1))
-                .sendNotificationToClient("JohnDoe Complains you ", complaintDTO.getTechId());
+                .sendNotificationToTechnician("JohnDoe Complains you ", complaintDTO.getTechId());
     }
 
     @Test

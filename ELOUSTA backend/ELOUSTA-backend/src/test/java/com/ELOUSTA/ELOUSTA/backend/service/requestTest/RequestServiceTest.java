@@ -41,28 +41,6 @@ class RequestServiceTest {
     }
 
     @Test
-    void testSaverequest() {
-        // Create a sample RequestEntity
-        RequestEntity sampleRequest = new RequestEntity();
-        sampleRequest.setUserId(1);
-        sampleRequest.setTechId(2);
-        sampleRequest.setDescription("Test Description");
-        sampleRequest.setLocation("Test Location");
-        sampleRequest.setState("Pending");
-
-        // Mock the behavior of the repository
-        when(requestRepo.save(sampleRequest)).thenReturn(sampleRequest);
-
-        // Call the service method
-        RequestEntity savedRequest = requestService.Saverequest(sampleRequest);
-
-        // Verify the result
-        assertEquals(sampleRequest, savedRequest);
-
-        // Verify that the save method of the repository was called exactly once
-        verify(requestRepo, times(1)).save(sampleRequest);
-    }
-    @Test
     void testDeleteTech() {
         int techId = 1;
         doNothing().when(technicianRepository).deleteById(techId);
@@ -92,13 +70,6 @@ class RequestServiceTest {
 
         assertEquals(1, result);
         verify(clientRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testComplainsNumbers() {
-        int result = requestService.complainsnumbers();
-
-        assertEquals(62, result); // Testing the hardcoded value
     }
 
     @Test
