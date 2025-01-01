@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:el_ousta/API/serverAPI.dart';
+import 'package:el_ousta/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -22,21 +25,48 @@ class _ProfilePageState extends State<ProfilePage> {
     'accepted': 10,
     'refused': 5,
   };
-
+  String? token;
+  int? id;
   bool isLoading = true;
   File? _selectedImage;
   int _currentIndex = 3;
 
+  Future<void> initToken() async {
+    log("Inside initToken");
+    try {
+      final tokenValue = await secureStorage.read(key: 'auth_token');
+      final idString = await secureStorage.read(key: 'id');
+      log("Token value: $tokenValue");
+      log("ID value: $idString");
+
+      if (tokenValue != null && idString != null) {
+        setState(() {
+          token = tokenValue;
+          id = int.parse(idString);
+        });
+        log("Token and ID successfully set in state");
+      } else {
+        throw Exception("Token or ID is null");
+      }
+    } catch (e) {
+      log("Error in initToken: $e");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    fetchClientData(); // Fetch data when page loads
+    log("inside initstate");
+    initializeData();
   }
 
   Future<void> fetchClientData() async {
+    log("inside fetch client data");
     try {
-      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/profile/{id}')); // todo
+      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/profile/${id}'),
+          headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'}); // todo
       if (response.statusCode == 200) {
+        log(response.body);
         setState(() {
           userData = json.decode(response.body); // Parse the fetched data
           isLoading = false; // Loading completed
@@ -50,6 +80,13 @@ class _ProfilePageState extends State<ProfilePage> {
       });
       _showSnackBar('Failed to load data. Please try again later.', Colors.red);
     }
+  }
+
+  void initializeData() async {
+    await initToken(); // Wait for initToken to complete
+    log("finished initToken");
+    await fetchClientData(); // Fetch data after token and id are set
+    log("finished fetching client data");
   }
 
   Future<void> _pickImage() async {
@@ -107,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.deepPurple,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -129,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           userData!['profilePicture'] != null
                           ? MemoryImage(base64Decode(
                           userData!['profilePicture']))
-                          : const AssetImage('assets/hossam.jpg')
+                          : const AssetImage('images/avatar.png')
                       as ImageProvider,
                       child: _selectedImage == null
                           ? const Align(
@@ -185,18 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.purple,
-        unselectedItemColor: Colors.grey,
-        onTap: onTabTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Professions'),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Requests'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+
     );
   }
 

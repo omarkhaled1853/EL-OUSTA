@@ -1,3 +1,4 @@
+import 'package:el_ousta/client_requests/requests_controller.dart';
 import 'package:flutter/material.dart';
 
 class RequestsSearchBar extends StatefulWidget {

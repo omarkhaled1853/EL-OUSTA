@@ -82,6 +82,7 @@ flutter:
      - assets/
      - images/user.png
      - images/technician.png
+     - images/avatar.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

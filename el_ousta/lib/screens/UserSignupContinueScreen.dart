@@ -314,6 +314,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
                               ),
                               errorText: fnErrorText,
                             ),
+                            maxLength: 25,
                             onChanged: _validateFirstName,
                             validator: (value) => fnErrorText
                           ),
@@ -330,6 +331,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
                               ),
                               errorText: lnErrorText,
                             ),
+                            maxLength: 25,
                             onChanged: _validateLastName,
                             validator: (value) => lnErrorText
                           ),
@@ -347,6 +349,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
                         ),
                         errorText: usernameErrorText,
                       ),
+                      maxLength: 25,
                       onChanged: _validateUsername,
                       validator: (value) => usernameErrorText
                     ),
