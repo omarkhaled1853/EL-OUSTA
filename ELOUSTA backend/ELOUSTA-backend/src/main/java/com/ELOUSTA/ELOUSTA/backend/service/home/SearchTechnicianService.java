@@ -1,5 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.service.home;
 
+import com.ELOUSTA.ELOUSTA.backend.dto.ProfessionCardDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.homeDto.HomeTechnicianDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.repository.TechnicianRepository;
@@ -40,6 +41,38 @@ public class SearchTechnicianService {
         return DTOs;
 
     }
+    public List<ProfessionCardDTO> AdminsearchTechnician(String searchQuery) throws IOException {
+        // Fetch all technicians from the database
+        List<TechnicianEntity> dataBaseTechnicians = this.repository.findAll();
+        ArrayList<Technician> technicians = new ArrayList<>();
+
+        // Map TechnicianEntity to Technician object
+        for (TechnicianEntity entity : dataBaseTechnicians) {
+            technicians.add(TechnicianMapper.technicianEntityToTechnician(entity));
+        }
+
+        // Perform the search
+        List<Technician> searchedList = techSearch.JaroSearch(searchQuery, technicians);
+
+        // Create a list of ProfessionCardDTO from searched technicians
+        List<ProfessionCardDTO> result = new ArrayList<>();
+        for (Technician tech : searchedList) {
+            ProfessionCardDTO cardDTO = new ProfessionCardDTO();
+
+            // Map Technician data to ProfessionCardDTO
+            cardDTO.setTechId(tech.getId());
+            cardDTO.setTechName(tech.getFirstName() + " " + tech.getLastName());
+            cardDTO.setEmail(tech.getEmail());
+            cardDTO.setProfessionName(tech.getDomainDTO().getName());
+            cardDTO.setRate(tech.getRate());
+//            cardDTO.setComplainNumber(tech.getComplainCount()); // Assuming you have a method to get the complain count
+
+            result.add(cardDTO);
+        }
+
+        return result;
+    }
+
 
     public List<HomeTechnicianDTO> searchTechniciansOfSpecificProfession(String searchQuery,int domainId) throws IOException {
         List<TechnicianEntity>dataBaseTechnicians=this.repository.findTechniciansByDomain(domainId);

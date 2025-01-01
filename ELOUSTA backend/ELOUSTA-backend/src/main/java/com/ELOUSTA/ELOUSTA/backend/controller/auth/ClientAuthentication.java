@@ -8,6 +8,9 @@ import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.ClientAuthenticationService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/client")
 public class ClientAuthentication {
     @Autowired
+
+    @Qualifier("clientDetailsService")
+
     private ClientAuthenticationService userService;
 
     @Autowired

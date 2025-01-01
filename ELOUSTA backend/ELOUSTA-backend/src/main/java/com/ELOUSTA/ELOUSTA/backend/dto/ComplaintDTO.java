@@ -1,5 +1,4 @@
 package com.ELOUSTA.ELOUSTA.backend.dto;
-
 import lombok.*;
 
 @Data
