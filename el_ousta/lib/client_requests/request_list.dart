@@ -4,11 +4,13 @@ import 'package:el_ousta/client_requests/requests_sort.dart';
 import 'package:flutter/material.dart';
 
 class RequestList extends StatefulWidget {
+  final RequestsController controller;
   final Widget requests;
 
   const RequestList({
     super.key,
     required this.requests,
+    required this.controller,
   });
 
   @override
@@ -20,7 +22,7 @@ class _RequestListState extends State<RequestList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const RequestsSearchBar(),
+        RequestsSearchBar(controller: widget.controller),
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [RequestsFilter(), RequestsSort()],
