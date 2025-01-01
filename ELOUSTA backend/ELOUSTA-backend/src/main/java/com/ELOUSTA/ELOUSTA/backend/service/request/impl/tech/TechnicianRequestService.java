@@ -34,6 +34,15 @@ public class TechnicianRequestService implements RequestService {
     private ComplaintRepository complaintRepository;
     private NotificationService notificationService;
 
+
+    public TechnicianRequestService(RequestRepository requestRepository, TechnicianRepository technicianRepository, ClientRepository clientRepository, ComplaintRepository complaintRepository, NotificationService notificationService) {
+        this.requestRepository = requestRepository;
+        this.technicianRepository = technicianRepository;
+        this.clientRepository = clientRepository;
+        this.complaintRepository = complaintRepository;
+        this.notificationService = notificationService;
+    }
+
     @Override
     public List<ViewRequestDTO> getPendingRequests(int id) {
 

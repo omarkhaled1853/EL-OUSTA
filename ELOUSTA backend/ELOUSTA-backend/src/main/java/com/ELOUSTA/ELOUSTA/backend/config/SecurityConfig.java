@@ -50,7 +50,8 @@ public class SecurityConfig {
                                 "/client/signIn/google", "/tech/signIn/google",
                                 "/client/resetPassword", "/tech/resetPassword",
                                 "/client/fetchUser", "/tech/fetchTch",
-                                "/elousta-websocket/**", "/mail/**", "/twilio-otp/**").permitAll()
+                                "/elousta-websocket/**", "/mail/**", "/twilio-otp/**",
+                                "/client/home/").permitAll()
                         .requestMatchers("/auth/client/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
