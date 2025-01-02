@@ -70,17 +70,17 @@ class ProfessionCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          const Icon(Icons.work, color: Colors.green),
-                          const SizedBox(width: 8.0),
-                          Text(
-                            "Experience: ${techCard.experienceYears} years",
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(height: 8.0),
+                      // Row(
+                      //   children: [
+                      //     const Icon(Icons.work, color: Colors.green),
+                      //     const SizedBox(width: 8.0),
+                      //     Text(
+                      //       "Experience: ${techCard.experienceYears} years",
+                      //       style: const TextStyle(fontSize: 16),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 8.0),
                       Row(
                         children: [
@@ -92,25 +92,25 @@ class ProfessionCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16.0),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: const Text(
-                            "Close",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      // const SizedBox(height: 16.0),
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+                      //       Navigator.of(context).pop();
+                      //     },
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Colors.blue,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(8.0),
+                      //       ),
+                      //     ),
+                      //     child: const Text(
+                      //       "Close",
+                      //       style: TextStyle(color: Colors.white),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

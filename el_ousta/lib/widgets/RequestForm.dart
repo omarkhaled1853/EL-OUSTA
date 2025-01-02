@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:el_ousta/Service/request_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 FlutterSecureStorage requestFormSecureStorage = const FlutterSecureStorage();
+
 class RequestForm extends StatefulWidget {
   final Function(DateTime, DateTime, String, String) onSubmit;
 
@@ -80,20 +82,30 @@ class _RequestFormState extends State<RequestForm> {
             onTap: () => _selectDate(context, false),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              if (_startDate != null && _endDate != null) {
-                // Call the onSubmit callback when form is ready
-                widget.onSubmit(
-                  _startDate!,
-                  _endDate!,
-                  _detailsController.text,
-                  _locationController.text,
-                );
-              }
-            },
-            child: const Text("Submit Request"),
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (_startDate != null && _endDate != null) {
+                    // Call the onSubmit callback when form is ready
+                    widget.onSubmit(
+                      _startDate!,
+                      _endDate!,
+                      _detailsController.text,
+                      _locationController.text,
+                    );
+                  }
+                },
+                child: const Text("Submit Request"),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel")),
+            ],
+          )
         ],
       ),
     );
@@ -189,7 +201,8 @@ class RequestPopupDialog extends StatelessWidget {
                 onSubmit: (startDate, endDate, details, location) async {
                   // Handle the form submission
                   // -----------------------------------------------------
-                  final String? userStringId = await requestFormSecureStorage.read(key: 'id'); // Replace with actual user ID
+                  final String? userStringId = await requestFormSecureStorage
+                      .read(key: 'id'); // Replace with actual user ID
                   final int userId = int.parse(userStringId!);
                   print(userId);
                   final int techId =
@@ -198,41 +211,26 @@ class RequestPopupDialog extends StatelessWidget {
                   // Call your service to send the request
                   print(techId);
                   RequestService(baseUrl: ServerAPI.baseURL)
-                      .sendRequest(
-                    userId,
-                    techId,
-                    details,
-                    location,
-                    startDate,
-                    endDate,
-                    context,
-                    this.token
-                  )
+                      .sendRequest(userId, techId, details, location, startDate,
+                          endDate, context, this.token)
                       .then((success) {
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Request successfully sent!')),
+                        SnackBar(
+                          content: Text('Request successfully sent!'),
+                          backgroundColor: Colors.green,
+                        ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Failed to send the request.')),
+                        SnackBar(
+                          content: Text('Failed to send the request.'),
+                          backgroundColor: Colors.red,
+                        ),
                       );
                     }
                   });
                 },
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildActionButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icons.close,
-                    color: const Color.fromARGB(255, 2, 61, 89),
-                  ),
-                ],
               ),
             ],
           ),
