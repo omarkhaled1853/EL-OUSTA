@@ -17,6 +17,6 @@ import lombok.experimental.SuperBuilder;
 public class ClientNotification extends Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    @JsonBackReference  // To prevents the recursive serialization on the notification side
+    @JsonBackReference("client-notifications")
     private ClientEntity clientEntity;
 }

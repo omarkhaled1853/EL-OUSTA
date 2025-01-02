@@ -21,7 +21,7 @@ public class ComplaintEntity {
 
     @JoinColumn(name = "client_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference // To prevents the recursive serialization on the notification side
+    @JsonBackReference("client-complaints")// To prevents the recursive serialization on the notification side
     private ClientEntity clientEntity;
 
     // Foreign key to TechnicianEntity
