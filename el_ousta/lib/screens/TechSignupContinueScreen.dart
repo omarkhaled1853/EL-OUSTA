@@ -61,7 +61,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
   String? selectedProfession;
   int? selectedProfessionId;
 
-  late List<dynamic> domainList;
+  late List<dynamic> domainList = [];
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dobController = TextEditingController();
   bool _isDobValid = true;
@@ -287,7 +287,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
   Future<void> fetchAllDomains() async {
     try {
       final response = await http.get(
-          Uri.parse(ServerAPI.baseURL + '/client/home/'),
+          Uri.parse(ServerAPI.baseURL + '/tech/signUp/domains'),
           // headers: {'Authorization': 'Bearer $token'}
       );
       print(response.statusCode);
