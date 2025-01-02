@@ -95,6 +95,7 @@ class _RequestFormState extends State<RequestForm> {
                       _detailsController.text,
                       _locationController.text,
                     );
+                    Navigator.of(context).pop();
                   }
                 },
                 child: const Text("Submit Request"),
@@ -215,15 +216,19 @@ class RequestPopupDialog extends StatelessWidget {
                           endDate, context, this.token)
                       .then((success) {
                     if (success) {
+                      ScaffoldMessenger.of(context)
+                          .clearSnackBars(); // Clear any existing SnackBars
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Request successfully sent!'),
                           backgroundColor: Colors.green,
                         ),
                       );
                     } else {
+                      ScaffoldMessenger.of(context)
+                          .clearSnackBars(); // Clear any existing SnackBars
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Failed to send the request.'),
                           backgroundColor: Colors.red,
                         ),

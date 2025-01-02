@@ -6,7 +6,8 @@ import 'package:el_ousta/widgets/FilterSection.dart';
 class ProfessionCard extends StatelessWidget {
   final TechCard techCard;
   final String token;
-  const ProfessionCard({super.key, required this.techCard, required this.token});
+  const ProfessionCard(
+      {super.key, required this.techCard, required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -222,90 +223,131 @@ class ProfessionCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             const Spacer(),
-            // Buttons Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Request Button
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            // Retrieve the instance of FilterSection's state.
-                            final filterSectionState = context
-                                .findAncestorStateOfType<FilterSectionState>();
 
-                            // Use the selected profession from the state.
-                            final selectedProfession =
-                                filterSectionState?.getselectedprofession() ??
-                                    'Profession';
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    // Retrieve the instance of FilterSection's state.
+                    final filterSectionState =
+                        context.findAncestorStateOfType<FilterSectionState>();
 
-                            return RequestPopupDialog(
-                              professionName:
-                                  selectedProfession, // Pass the selected profession
-                              techName:
-                                  techCard.techName, // Pass variables directly
-                              rating: double.parse(techCard.rating),
-                              techid: this
-                                  .techCard
-                                  .techId, // Pass variables directly
-                              token: this.token,
-                            );
-                          },
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: const Text(
-                        "Request",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  // Profile Button
-                  Flexible(
-                    child: ElevatedButton(
-                      onPressed: () {
-                      //omar word
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => const ProfilePage(techCard: this
-                      //             .techCard
-                      //             .techId)),
-                      //   );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: const Text(
-                        "Profile",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                    // Use the selected profession from the state.
+                    final selectedProfession =
+                        filterSectionState?.getselectedprofession() ??
+                            'Profession';
+
+                    return RequestPopupDialog(
+                      professionName:
+                          selectedProfession, // Pass the selected profession
+                      techName: techCard.techName, // Pass variables directly
+                      rating: double.parse(techCard.rating),
+                      techid: this.techCard.techId, // Pass variables directly
+                      token: this.token,
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              child: const Text(
+                "Request",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
               ),
             ),
+            // Buttons Section
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       // Request Button
+            //       Flexible(
+            //         child: ElevatedButton(
+            //           onPressed: () {
+            //             showDialog(
+            //               context: context,
+            //               builder: (context) {
+            //                 // Retrieve the instance of FilterSection's state.
+            //                 final filterSectionState = context
+            //                     .findAncestorStateOfType<FilterSectionState>();
+
+            //                 // Use the selected profession from the state.
+            //                 final selectedProfession =
+            //                     filterSectionState?.getselectedprofession() ??
+            //                         'Profession';
+
+            //                 return RequestPopupDialog(
+            //                   professionName:
+            //                       selectedProfession, // Pass the selected profession
+            //                   techName:
+            //                       techCard.techName, // Pass variables directly
+            //                   rating: double.parse(techCard.rating),
+            //                   techid: this
+            //                       .techCard
+            //                       .techId, // Pass variables directly
+            //                   token: this.token,
+            //                 );
+            //               },
+            //             );
+            //           },
+            //           style: ElevatedButton.styleFrom(
+            //             backgroundColor: Colors.deepPurple,
+            //             padding: const EdgeInsets.symmetric(horizontal: 8),
+            //             shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(6),
+            //             ),
+            //           ),
+            //           child: const Text(
+            //             "Request",
+            //             style: TextStyle(
+            //               fontSize: 10,
+            //               color: Colors.white,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            // const SizedBox(width: 4),
+            // Profile Button
+            // Flexible(
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //     //omar word
+            //     // Navigator.push(
+            //     //     context,
+            //     //     MaterialPageRoute(builder: (context) => const ProfilePage(techCard: this
+            //     //             .techCard
+            //     //             .techId)),
+            //     //   );
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.deepPurple,
+            //       padding: const EdgeInsets.symmetric(horizontal: 8),
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(6),
+            //       ),
+            //     ),
+            //     child: const Text(
+            //       "Profile",
+            //       style: TextStyle(
+            //         fontSize: 10,
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // ],
+            // ),
+            // ),
           ],
         ),
       ),
