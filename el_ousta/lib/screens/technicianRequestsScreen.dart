@@ -53,10 +53,7 @@ class _RequestHomePageState extends State<RequestHomePage> {
       child: Scaffold(
         appBar: NotificationScreen(type: Type.TECHNICIAN),
         body: Scaffold(
-          appBar: AppBar(
-            // title: const Text('Requests'),
-            automaticallyImplyLeading: false,
-            bottom: TabBar(
+          appBar: TabBar(
               indicatorColor: Colors.white,
               tabs: const [
                 Tab(icon: Icon(Icons.pending), text: "Pending"),
@@ -72,7 +69,6 @@ class _RequestHomePageState extends State<RequestHomePage> {
                 }
               },
             ),
-          ),
           body: TabBarView(
             children: [
               RequestList(
