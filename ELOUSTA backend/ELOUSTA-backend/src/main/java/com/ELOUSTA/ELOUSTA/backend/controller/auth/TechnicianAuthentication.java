@@ -1,12 +1,14 @@
 package com.ELOUSTA.ELOUSTA.backend.controller.auth;
 
 import com.ELOUSTA.ELOUSTA.backend.Enums.ValidationStatus;
+import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.AuthRequest;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.Credentials;
 import com.ELOUSTA.ELOUSTA.backend.dto.authDto.GoogleAuthRequest;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.JwtService;
 import com.ELOUSTA.ELOUSTA.backend.service.auth.TechnicianAuthenticationService;
+import com.ELOUSTA.ELOUSTA.backend.service.home.DomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,12 +16,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/tech")
 public class TechnicianAuthentication {
     @Autowired
     private TechnicianAuthenticationService technicianAuthenticationService;
+
+    @Autowired
+    private DomainService domainService;
 
     @Autowired
     private JwtService jwtService;
@@ -35,6 +43,13 @@ public class TechnicianAuthentication {
         }
         return validationStatus;
     }
+
+    @GetMapping("/signUp/domains")
+    public List<DomainDTO> getDomains() throws IOException {
+
+        return domainService.getDomains();
+    }
+
 
     @PostMapping("/signIn")
     public Credentials authenticateAndGetTokenTechnician(@RequestBody AuthRequest authRequest) {

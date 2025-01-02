@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
 
                                 "/client/signUp", "/client/signIn",
-                                "/tech/signUp", "/tech/signIn",
+                                "/tech/signUp", "tech/signUp/domains", "/tech/signIn",
                                 "/admin/signIn",
                                 "/admin/signUp",
                                 "/client/signIn/google", "/tech/signIn/google",
