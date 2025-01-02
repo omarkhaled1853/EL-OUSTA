@@ -1,7 +1,6 @@
 package com.ELOUSTA.ELOUSTA.backend.controller;
 
-import com.ELOUSTA.ELOUSTA.backend.controller.Complaints.ComplaintController;
-import com.ELOUSTA.ELOUSTA.backend.dto.ComplaintDTO;
+import com.ELOUSTA.ELOUSTA.backend.controller.Admin.ComplaintController;
 import com.ELOUSTA.ELOUSTA.backend.entity.ComplaintEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.TechnicianEntity;

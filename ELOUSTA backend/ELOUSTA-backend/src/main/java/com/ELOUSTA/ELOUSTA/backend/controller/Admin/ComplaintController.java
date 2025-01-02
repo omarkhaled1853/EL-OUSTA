@@ -1,4 +1,4 @@
-package com.ELOUSTA.ELOUSTA.backend.controller.Complaints;
+package com.ELOUSTA.ELOUSTA.backend.controller.Admin;
 
 import com.ELOUSTA.ELOUSTA.backend.dto.AdminComplaintDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.AdminEntity;
