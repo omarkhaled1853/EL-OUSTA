@@ -120,7 +120,7 @@ class _CompletedRequestsState extends State<CompletedRequests> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return widget.completedRequests.isEmpty ? const Center(child: Text("There isn't exist completed requests")) : ListView.builder(
       itemCount: widget.completedRequests.length,
       itemBuilder: (context, index) {
         final request = widget.completedRequests[index];

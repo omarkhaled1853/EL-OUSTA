@@ -45,26 +45,28 @@ class _PendingrequestsState extends State<Pendingrequests> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.pendingRequests.length,
-      itemBuilder: (context, index) {
-        final request = widget.pendingRequests[index];
-        return RequestCard(
-          request: request,
-          requestButtons: [
-            RequestButton(
-              text: "Cancel",
-              color: Colors.red,
-              icon: Icons.cancel,
-              onPressed: () => cancelRequest(request),
-            ),
-          ],
-          icon: const Icon(
-            Icons.pending,
-            color: Colors.orange,
-          ),
-        );
-      },
-    );
+    return widget.pendingRequests.isEmpty
+        ? const Center(child: Text("There isn't exist pending requests"))
+        : ListView.builder(
+            itemCount: widget.pendingRequests.length,
+            itemBuilder: (context, index) {
+              final request = widget.pendingRequests[index];
+              return RequestCard(
+                request: request,
+                requestButtons: [
+                  RequestButton(
+                    text: "Cancel",
+                    color: Colors.red,
+                    icon: Icons.cancel,
+                    onPressed: () => cancelRequest(request),
+                  ),
+                ],
+                icon: const Icon(
+                  Icons.pending,
+                  color: Colors.orange,
+                ),
+              );
+            },
+          );
   }
 }
