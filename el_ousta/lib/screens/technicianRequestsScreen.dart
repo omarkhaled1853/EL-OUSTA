@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:el_ousta/common/userTech.dart';
 import '../widgets/appBarWithNotification.dart';
+
 const techSecureStorage = FlutterSecureStorage();
 late int id;
 late String token;
@@ -25,50 +26,53 @@ late String token;
 // }
 
 class RequestHomePage extends StatefulWidget {
-
   @override
   _RequestHomePageState createState() => _RequestHomePageState();
 }
 
 class _RequestHomePageState extends State<RequestHomePage> {
-
-
   @override
   void initState() {
     super.initState();
     initId();
   }
+
   Future<void> initId() async {
     String? idString = await techSecureStorage.read(key: 'id');
     id = int.parse(idString!);
-    String? stringToken = (await techSecureStorage.read(key: 'auth_token')) as String;
+    String? stringToken =
+        (await techSecureStorage.read(key: 'auth_token')) as String;
     token = stringToken;
     print(token);
   }
+
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: NotificationScreen(type: Type.TECHNICIAN),
+        appBar: NotificationScreen(
+          type: Type.TECHNICIAN,
+          addBackButton: false,
+        ),
         body: Scaffold(
           appBar: TabBar(
-              indicatorColor: Colors.white,
-              tabs: const [
-                Tab(icon: Icon(Icons.pending), text: "Pending"),
-                Tab(icon: Icon(Icons.work), text: "In Progress"),
-                Tab(icon: Icon(Icons.done), text: "Completed"),
-              ],
-              onTap: (index) {
-                // Call fetchRequests() when a tab is tapped
-                final requestList = context.findAncestorStateOfType<_RequestListState>();
-                print(requestList);
-                if (requestList != null) {
-                  requestList.fetchRequests();
-                }
-              },
-            ),
+            indicatorColor: Colors.white,
+            tabs: const [
+              Tab(icon: Icon(Icons.pending), text: "Pending"),
+              Tab(icon: Icon(Icons.work), text: "In Progress"),
+              Tab(icon: Icon(Icons.done), text: "Completed"),
+            ],
+            onTap: (index) {
+              // Call fetchRequests() when a tab is tapped
+              final requestList =
+                  context.findAncestorStateOfType<_RequestListState>();
+              print(requestList);
+              if (requestList != null) {
+                requestList.fetchRequests();
+              }
+            },
+          ),
           body: TabBarView(
             children: [
               RequestList(
@@ -135,12 +139,14 @@ class _RequestListState extends State<RequestList> {
     initId();
     // print("HELLO FROM HERE");
     final url = Uri.parse(ServerAPI.baseURL + '${widget.endpoint}/$id');
-    final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer $token'});
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       setState(() {
-        displayedRequests = jsonResponse.map((data) => Request.fromJson(data)).toList();
+        displayedRequests =
+            jsonResponse.map((data) => Request.fromJson(data)).toList();
         isLoading = false;
       });
     } else {
@@ -153,14 +159,19 @@ class _RequestListState extends State<RequestList> {
 
   Future<void> applyFilter() async {
     final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/filter');
-    final body = json.encode({"id": id, "state": widget.state, "query": filterQuery});
+    final body =
+        json.encode({"id": id, "state": widget.state, "query": filterQuery});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
+    final response = await http.post(url, body: body, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       setState(() {
-        displayedRequests = jsonResponse.map((data) => Request.fromJson(data)).toList();
+        displayedRequests =
+            jsonResponse.map((data) => Request.fromJson(data)).toList();
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -172,14 +183,19 @@ class _RequestListState extends State<RequestList> {
 
   Future<void> applySearch() async {
     final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/search');
-    final body = json.encode({"id": id, "state": widget.state, "query": searchQuery});
+    final body =
+        json.encode({"id": id, "state": widget.state, "query": searchQuery});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
+    final response = await http.post(url, body: body, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       setState(() {
-        displayedRequests = jsonResponse.map((data) => Request.fromJson(data)).toList();
+        displayedRequests =
+            jsonResponse.map((data) => Request.fromJson(data)).toList();
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -191,14 +207,19 @@ class _RequestListState extends State<RequestList> {
 
   Future<void> applySort() async {
     final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/sort');
-    final body = json.encode({"id": id, "type": sortType, "state": widget.state});
+    final body =
+        json.encode({"id": id, "type": sortType, "state": widget.state});
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
+    final response = await http.post(url, body: body, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       setState(() {
-        displayedRequests = jsonResponse.map((data) => Request.fromJson(data)).toList();
+        displayedRequests =
+            jsonResponse.map((data) => Request.fromJson(data)).toList();
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -216,7 +237,10 @@ class _RequestListState extends State<RequestList> {
       "clientId": request.clientId,
     });
 
-    final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'});
+    final response = await http.post(url, body: body, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    });
 
     if (response.statusCode == 200) {
       setState(() {
@@ -239,139 +263,156 @@ class _RequestListState extends State<RequestList> {
     return isLoading
         ? const Center(child: CircularProgressIndicator())
         : displayedRequests.isEmpty
-        ? const Center(child: Text("No Data", style: TextStyle(fontSize: 18)))
-        : Column(
-      children: [
-        // Search Bar
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Search requests...",
-              prefixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onChanged: (value) {
-              searchQuery = value;
-              applySearch();
-            },
-          ),
-        ),
+            ? const Center(
+                child: Text("No Data", style: TextStyle(fontSize: 18)))
+            : Column(
+                children: [
+                  // Search Bar
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search requests...",
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        searchQuery = value;
+                        applySearch();
+                      },
+                    ),
+                  ),
 
-        // Filter and Sort Buttons
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      String tempFilterQuery = filterQuery;
-                      return AlertDialog(
-                        title: const Text("Filter by Location"),
-                        content: TextField(
-                          decoration: const InputDecoration(labelText: "Enter Location"),
+                  // Filter and Sort Buttons
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                String tempFilterQuery = filterQuery;
+                                return AlertDialog(
+                                  title: const Text("Filter by Location"),
+                                  content: TextField(
+                                    decoration: const InputDecoration(
+                                        labelText: "Enter Location"),
+                                    onChanged: (value) {
+                                      tempFilterQuery = value;
+                                    },
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          filterQuery = tempFilterQuery;
+                                        });
+                                        applyFilter();
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("Apply"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text("Filter by Location"),
+                        ),
+                        DropdownButton<String>(
+                          value: sortType,
+                          items: const [
+                            DropdownMenuItem(
+                                value: "none", child: Text("No Sort")),
+                            DropdownMenuItem(
+                                value: "startDate",
+                                child: Text("Sort by Start Date")),
+                            DropdownMenuItem(
+                                value: "endDate",
+                                child: Text("Sort by End Date")),
+                          ],
                           onChanged: (value) {
-                            tempFilterQuery = value;
+                            if (value != null) {
+                              setState(() {
+                                sortType = value;
+                              });
+                              applySort();
+                            }
                           },
                         ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text("Cancel"),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                filterQuery = tempFilterQuery;
-                              });
-                              applyFilter();
-                              Navigator.pop(context);
-                            },
-                            child: const Text("Apply"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: const Text("Filter by Location"),
-              ),
-              DropdownButton<String>(
-                value: sortType,
-                items: const [
-                  DropdownMenuItem(value: "none", child: Text("No Sort")),
-                  DropdownMenuItem(value: "startDate", child: Text("Sort by Start Date")),
-                  DropdownMenuItem(value: "endDate", child: Text("Sort by End Date")),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      sortType = value;
-                    });
-                    applySort();
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-
-        // Request List
-        Expanded(
-          child: ListView.builder(
-            itemCount: displayedRequests.length,
-            itemBuilder: (context, index) {
-              final request = displayedRequests[index];
-              return Card(
-                color: widget.boxColor,
-                elevation: 4,
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        request.description,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      const SizedBox(height: 8),
-                      Text('Start: ${request.startDate}'),
-                      Text('End: ${request.endDate}'),
-                      Text('Location: ${request.location}'),
-                      if (widget.isPending)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CheckoutButton(token: token, id: request.id, userId: request.clientId, techId: request.techId),
-                            ElevatedButton(
-                              onPressed: () => refuseTask(request),
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                              child: const Text("Refuse Task"),
-                            ),
-                          ],
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+
+                  // Request List
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: displayedRequests.length,
+                      itemBuilder: (context, index) {
+                        final request = displayedRequests[index];
+                        return Card(
+                          color: widget.boxColor,
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 16),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  request.description,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                Text('Start: ${request.startDate}'),
+                                Text('End: ${request.endDate}'),
+                                Text('Location: ${request.location}'),
+                                if (widget.isPending)
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CheckoutButton(
+                                          token: token,
+                                          id: request.id,
+                                          userId: request.clientId,
+                                          techId: request.techId),
+                                      ElevatedButton(
+                                        onPressed: () => refuseTask(request),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red),
+                                        child: const Text("Refuse Task"),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
-            },
-          ),
-        ),
-      ],
-    );
   }
 
   Future<void> initId() async {
     String? idString = await techSecureStorage.read(key: 'id');
     id = int.parse(idString!);
-    String? stringToken = (await techSecureStorage.read(key: 'auth_token')) as String;
+    String? stringToken =
+        (await techSecureStorage.read(key: 'auth_token')) as String;
     token = stringToken;
     print(token);
   }

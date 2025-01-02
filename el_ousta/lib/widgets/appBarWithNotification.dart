@@ -31,11 +31,13 @@ class NotificationScreen extends StatefulWidget implements PreferredSizeWidget {
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
   final dynamic type;
+  final bool addBackButton;
 
-  const NotificationScreen({super.key, required this.type});
+  const NotificationScreen({super.key, required this.type, this.addBackButton = true});
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight); // Standard AppBar height
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight); // Standard AppBar height
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
@@ -55,7 +57,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   Future<void> initializeData() async {
-    token = await secureStorage.read(key: 'auth_token'); // Await the asynchronous call
+    token = await secureStorage.read(
+        key: 'auth_token'); // Await the asynchronous call
     print(token);
     String? stringID = await secureStorage.read(key: 'id');
     userId = int.parse(stringID!);
@@ -72,7 +75,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   // Fetch notifications from backend
   Future<void> fetchNotifications() async {
     final String url;
-    if(widget.type == Type.USER)
+    if (widget.type == Type.USER)
       url = ServerAPI.baseURL + '/client/notifications/$userId';
     else
       url = ServerAPI.baseURL + '/tech/notifications/$userId';
@@ -80,14 +83,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
     final response = await http.get(
       Uri.parse(url),
       headers: {
-        'Authorization': 'Bearer $token', // Add Bearer token to Authorization header
+        'Authorization':
+            'Bearer $token', // Add Bearer token to Authorization header
       },
     );
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       setState(() {
-        notifications = data.map((item) => NotificationObject.fromJson(item)).toList();
+        notifications =
+            data.map((item) => NotificationObject.fromJson(item)).toList();
       });
     } else {
       throw Exception('Failed to load notifications');
@@ -107,12 +112,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
           // Subscribe to the notifications topic for the specific user
           stompClient.subscribe(
-            destination: (widget.type == Type.USER) ? '/subscribe/client/$userId' : '/subscribe/tech/$userId',
+            destination: (widget.type == Type.USER)
+                ? '/subscribe/client/$userId'
+                : '/subscribe/tech/$userId',
             callback: (frame) {
               if (frame.body != null) {
                 setState(() {
                   // Parse the incoming notification and add to the list
-                  notifications.add(NotificationObject.fromJson(json.decode(frame.body!)));
+                  notifications.add(
+                      NotificationObject.fromJson(json.decode(frame.body!)));
                   notificationCount++;
                 });
               }
@@ -142,6 +150,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('El Ousta'),
+      automaticallyImplyLeading: widget.addBackButton,
       backgroundColor: Colors.deepPurple,
       actions: [
         IconButton(
@@ -152,16 +161,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
           onPressed: () async {
             await storage.delete(key: 'auth_token');
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (ctx) => UserTechScreen()
-                )
-            );
+                MaterialPageRoute(builder: (ctx) => UserTechScreen()));
           },
         ),
         PopupMenuButton<String>(
           icon: Stack(
             children: [
-              Icon(Icons.notifications_none, color: Colors.black,),
+              Icon(
+                Icons.notifications_none,
+                color: Colors.black,
+              ),
               if (notificationCount > 0)
                 Positioned(
                   right: 0,
@@ -207,36 +216,36 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                   child: notifications.isNotEmpty
                       ? ListView.builder(
-                    itemCount: notifications.length,
-                    itemBuilder: (context, index) {
-                      final notification = notifications[index];
-                      return Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.lightBlue[50],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          title: Text(
-                            notification.message,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '${notification.date}',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          tileColor: Colors.white,
-                        ),
-                      );
-                    },
-                  )
+                          itemCount: notifications.length,
+                          itemBuilder: (context, index) {
+                            final notification = notifications[index];
+                            return Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.lightBlue[50],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15,
+                                  vertical: 10,
+                                ),
+                                title: Text(
+                                  notification.message,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${notification.date}',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                tileColor: Colors.white,
+                              ),
+                            );
+                          },
+                        )
                       : Center(child: Text('No notifications available.')),
                 ),
               ),
