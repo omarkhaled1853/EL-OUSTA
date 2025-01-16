@@ -26,4 +26,17 @@ public class ClientProfileController {
         return clientDTO.map(client -> new ResponseEntity<ClientProfileDTO>(client, HttpStatus.OK))
                 .orElse(new ResponseEntity<ClientProfileDTO>(HttpStatus.NOT_FOUND));
     }
+
+    @DeleteMapping("/delete/profile_picture/{id}")
+    public ResponseEntity<?> removeClientProfilePicture(@PathVariable Integer id) {
+        clientProfileService.removeClientProfilePicture(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PatchMapping("/patch/password/{id}")
+    public ResponseEntity<?> resetClientPassword(@PathVariable Integer id,
+                                                 @RequestBody String newPassword) {
+        clientProfileService.resetClientPassword(id, newPassword);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

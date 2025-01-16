@@ -1,9 +1,9 @@
-package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest;
+package com.ELOUSTA.ELOUSTA.backend.service.profileTest;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
