@@ -18,17 +18,17 @@ class ApiService {
   }
   // Fetch Pending Requests
   Future<List<Request>> fetchPendingRequests(int id) async {
-    return _fetchRequests(ServerAPI.baseURL + '/client/request/pending/$id');
+    return _fetchRequests('${ServerAPI.baseURL}/client/request/pending/$id');
   }
 
   // Fetch In Progress Requests
   Future<List<Request>> fetchInProgressRequests(int id) async {
-    return _fetchRequests(ServerAPI.baseURL + '/client/request/inProgress/$id');
+    return _fetchRequests('${ServerAPI.baseURL}/client/request/inProgress/$id');
   }
 
   // Fetch Completed Requests
   Future<List<Request>> fetchCompletedRequests(int id) async {
-    return _fetchRequests(ServerAPI.baseURL + '/client/request/completed/$id');
+    return _fetchRequests('${ServerAPI.baseURL}/client/request/completed/$id');
   }
 
   Future<void> doneRequest(Request request) async {
@@ -38,7 +38,7 @@ class ApiService {
       techId: request.techId,
     );
 
-    final url = Uri.parse(ServerAPI.baseURL + '/client/request/done');
+    final url = Uri.parse('${ServerAPI.baseURL}/client/request/done');
     final response = await http.post(
       url,
       headers: {
@@ -63,7 +63,7 @@ class ApiService {
       techId: request.techId,
     );
 
-    final url = Uri.parse(ServerAPI.baseURL + '/client/request/refuse');
+    final url = Uri.parse('${ServerAPI.baseURL}/client/request/refuse');
     final response = await http.post(
       url,
       headers: {
@@ -82,7 +82,7 @@ class ApiService {
   }
 
   Future<void> addComplaint(ComplaintDTO complaintDTO) async {
-    final url = Uri.parse(ServerAPI.baseURL + '/client/request/complain');
+    final url = Uri.parse('${ServerAPI.baseURL}/client/request/complain');
     final response = await http.post(
       url,
       headers: {
@@ -102,7 +102,7 @@ class ApiService {
 
   Future<List<Request>> searchRequests(
       int userId, String state, String query) async {
-    final uri = Uri.parse(ServerAPI.baseURL + '/client/request/search').replace(
+    final uri = Uri.parse('${ServerAPI.baseURL}/client/request/search').replace(
       queryParameters: {
         'id': userId.toString(),
         'state': state,

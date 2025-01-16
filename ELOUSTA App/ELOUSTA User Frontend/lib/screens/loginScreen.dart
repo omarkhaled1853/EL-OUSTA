@@ -38,8 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final secureStorage = const FlutterSecureStorage();
   late bool _passwordVisible = true;
-  String? _passwordErrorText = null;
-  String? usernameErrorText = null;
+  String? _passwordErrorText;
+  String? usernameErrorText;
   bool _isUsernameValid = false;
   bool _isPasswordValid = false;
   bool isFormValid = false;
@@ -53,11 +53,12 @@ class _LoginScreenState extends State<LoginScreen> {
       log(user.displayName ?? 'No display name');
       log(user.id);
       log(user.serverAuthCode ?? 'No server auth code');
-      var url;
-      if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/client/signIn/google');
-      else
-        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
+      Uri url;
+      if(widget.type == Type.USER) {
+        url = Uri.parse('${ServerAPI.baseURL}/client/signIn/google');
+      } else {
+        url = Uri.parse('${ServerAPI.baseURL}/tech/signIn/google');
+      }
       // make http get request
       var response = await http.post(
         url,
@@ -159,11 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _submitForm() async {
     dynamic result = true;
     if(isFormValid) {
-      var url;
-      if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
-      else
-        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn');
+      Uri url;
+      if(widget.type == Type.USER) {
+        url = Uri.parse('${ServerAPI.baseURL}/client/signIn');
+      } else {
+        url = Uri.parse('${ServerAPI.baseURL}/tech/signIn');
+      }
       // make http get request
       var response = await http.post(
         url,

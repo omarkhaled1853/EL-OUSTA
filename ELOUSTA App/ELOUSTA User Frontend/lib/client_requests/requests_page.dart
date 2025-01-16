@@ -15,6 +15,8 @@ import '../widgets/appBarWithNotification.dart';
 //TODO: will be taken from localStorage
 
 class RequestsPage extends StatefulWidget {
+  const RequestsPage({super.key});
+
   @override
   _RequestsPageState createState() => _RequestsPageState();
 }
@@ -25,7 +27,7 @@ class _RequestsPageState extends State<RequestsPage>
   static int id = 1;
 
   void initId() async {
-    String idString = (await secureStorage.read(key: 'id'))! as String;
+    String idString = (await secureStorage.read(key: 'id'))!;
     id = int.parse(idString);
   }
 

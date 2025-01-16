@@ -9,7 +9,7 @@ import '../widgets/appBarWithNotification.dart';
 import 'package:el_ousta/common/userTech.dart';
 const storage = FlutterSecureStorage();
 class ClientPage extends StatefulWidget {
-  const ClientPage({Key? key}) : super(key: key);
+  const ClientPage({super.key});
 
   @override
   State<ClientPage> createState() => _ClientPageState();
@@ -35,7 +35,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.get(
-        Uri.parse(ServerAPI.baseURL + 'client/home/'), // Replace with your API endpoint
+        Uri.parse('${ServerAPI.baseURL}client/home/'), // Replace with your API endpoint
       );
 
       if (response.statusCode == 200) {
@@ -63,7 +63,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + 'client/home/search'),
+        Uri.parse('${ServerAPI.baseURL}client/home/search'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode( query),
       );
@@ -93,7 +93,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + 'client/home/filter'),
+        Uri.parse('${ServerAPI.baseURL}client/home/filter'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'field': attribute,
@@ -127,7 +127,7 @@ class _ClientPageState extends State<ClientPage> {
 
     try {
       final response = await http.post(
-        Uri.parse(ServerAPI.baseURL + 'client/home/sort'),
+        Uri.parse('${ServerAPI.baseURL}client/home/sort'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(field),
       );
@@ -178,7 +178,7 @@ class _ClientPageState extends State<ClientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NotificationScreen(type: Type.USER),
+      appBar: const NotificationScreen(type: Type.USER),
       body: Column(
         children: [
           // Search Bar and Actions

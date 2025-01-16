@@ -15,13 +15,17 @@ import static com.ELOUSTA.ELOUSTA.backend.utils.ImageHandler.getProfilePhoto;
 public final class ClientMapper {
     private static final String path = "C:\\images\\profile\\";
 
-    public static ClientProfileDTO clientEntityToClientDTO(ClientEntity clientEntity) throws IOException {
+    public static ClientProfileDTO clientEntityToClientDTO(
+            ClientEntity clientEntity, int pendingRequests, int inProgressRequests, int completedRequests) throws IOException {
         byte[] profilePhoto = getProfilePhoto(clientEntity.getProfilePicture(), path);
         return ClientProfileDTO.builder()
                 .id(clientEntity.getId())
                 .firstName(clientEntity.getFirstName())
                 .lastName(clientEntity.getLastName())
                 .profilePicture(profilePhoto)
+                .pending(pendingRequests)
+                .inProgress(inProgressRequests)
+                .completed(completedRequests)
                 .dob(clientEntity.getDob())
                 .userName(clientEntity.getUsername())
                 .phoneNumber(clientEntity.getPhoneNumber())

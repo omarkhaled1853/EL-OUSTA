@@ -18,9 +18,9 @@ public class UserProfileDTO {
     private String firstName;
     private String lastName;
     private byte[] profilePicture;
-    private int requests;
-    private int cancelled;
-    private int accepted;
+    private int pending;
+    private int inProgress;
+    private int completed;
     private Date dob;
     private String userName;
     private String phoneNumber;

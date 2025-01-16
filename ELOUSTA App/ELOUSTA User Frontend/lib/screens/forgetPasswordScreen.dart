@@ -48,7 +48,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 });
 
                 var url = Uri.parse(
-                    ServerAPI.baseURL + '/mail/send/${widget.user.emailAddress}');
+                    '${ServerAPI.baseURL}/mail/send/${widget.user.emailAddress}');
                 try {
                   var response = await http.post(
                     url,
@@ -103,7 +103,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      Icon(Icons.email, color: Colors.deepPurple, size: 40),
+                      const Icon(Icons.email, color: Colors.deepPurple, size: 40),
                       const SizedBox(width: 16),
                       isLoading
                           ? const CircularProgressIndicator() // Show spinner if loading
@@ -125,7 +125,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 });
 
                 var url = Uri.parse(
-                    ServerAPI.baseURL + '/twilio-otp/twilio-sms');
+                    '${ServerAPI.baseURL}/twilio-otp/twilio-sms');
                 try {
                   var response = await http.post(
                     url,

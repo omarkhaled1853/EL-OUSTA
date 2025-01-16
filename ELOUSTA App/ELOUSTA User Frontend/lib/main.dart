@@ -1,10 +1,7 @@
 
-import 'package:el_ousta/old%20files/homeclient.dart';
 import 'package:el_ousta/screens/Domains.dart';
-import 'package:el_ousta/screens/profesions.dart';
 import 'package:el_ousta/screens/technicianRequestsScreen.dart';
 import 'package:el_ousta/screens/userTechScreen.dart';
-import 'package:el_ousta/widgets/CheckoutButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';

@@ -50,12 +50,12 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
   bool _isCityValid = false;
   bool isFormValid = false;
 
-  String? lnErrorText = null;
-  String? fnErrorText = null;
-  String? usernameErrorText = null;
-  String? phoneErrorText = null;
-  String? dobErrorText = null;
-  String? cityErrorText = null;
+  String? lnErrorText;
+  String? fnErrorText;
+  String? usernameErrorText;
+  String? phoneErrorText;
+  String? dobErrorText;
+  String? cityErrorText;
 
 
   final _formKey = GlobalKey<FormState>();
@@ -79,7 +79,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
           roles: 'ROLE_USER',
           clientNotifications: [],
       );
-      var url = Uri.parse(ServerAPI.baseURL + '/client/signUp');
+      var url = Uri.parse('${ServerAPI.baseURL}/client/signUp');
       // make http get request
       var response = await http.post(
           url,
@@ -93,7 +93,7 @@ class _UserSignupContinueScreenState extends State<UserSignupContinueScreen> {
 
         if(response.body != 'Invalid username' && response.body != 'Invalid email address') {
           String id = response.body;
-          url = Uri.parse(ServerAPI.baseURL + '/client/signIn');
+          url = Uri.parse('${ServerAPI.baseURL}/client/signIn');
           // make http get request
           response = await http.post(
             url,

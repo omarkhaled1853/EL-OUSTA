@@ -1,9 +1,9 @@
-package com.ELOUSTA.ELOUSTA.backend.service.ProfileTest;
+package com.ELOUSTA.ELOUSTA.backend.service.profileTest;
 
 
-import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.DomainDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.PortfolioDTO;
+import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.ClientProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.dto.profileDto.TechnicianProfileDTO;
 import com.ELOUSTA.ELOUSTA.backend.entity.ClientEntity;
 import com.ELOUSTA.ELOUSTA.backend.entity.DomainEntity;
@@ -33,9 +33,9 @@ public final class ProfileTestData {
                 .firstName("John")
                 .lastName("Doe")
                 .profilePicture(profilePhoto)
-                .requests(0)
-                .cancelled(0)
-                .accepted(0)
+                .pending(0)
+                .inProgress(0)
+                .completed(0)
                 .dob(Date.valueOf("1990-01-15"))
                 .userName("johndoe")
                 .phoneNumber("1234567890")

@@ -68,32 +68,34 @@ class _InProgressRequestsState extends State<InProgressRequests> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.inProgressRequests.length,
-      itemBuilder: (context, index) {
-        final request = widget.inProgressRequests[index];
-        return RequestCard(
-          request: request,
-          requestButtons: [
-            RequestButton(
-              text: "Cancel",
-              color: Colors.red,
-              icon: Icons.cancel,
-              onPressed: () => cancelRequest(request),
-            ),
-            RequestButton(
-              text: "Done",
-              color: Colors.green,
-              icon: Icons.check,
-              onPressed: () => doneRequest(request),
-            ),
-          ],
-          icon: const Icon(
-            Icons.work,
-            color: Colors.blue,
-          ),
-        );
-      },
-    );
+    return widget.inProgressRequests.isEmpty
+        ? const Center(child: Text("There isn't exist inProgress requests"))
+        : ListView.builder(
+            itemCount: widget.inProgressRequests.length,
+            itemBuilder: (context, index) {
+              final request = widget.inProgressRequests[index];
+              return RequestCard(
+                request: request,
+                requestButtons: [
+                  RequestButton(
+                    text: "Cancel",
+                    color: Colors.red,
+                    icon: Icons.cancel,
+                    onPressed: () => cancelRequest(request),
+                  ),
+                  RequestButton(
+                    text: "Done",
+                    color: Colors.green,
+                    icon: Icons.check,
+                    onPressed: () => doneRequest(request),
+                  ),
+                ],
+                icon: const Icon(
+                  Icons.work,
+                  color: Colors.blue,
+                ),
+              );
+            },
+          );
   }
 }

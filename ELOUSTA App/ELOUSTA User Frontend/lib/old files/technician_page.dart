@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class TechnicianPage extends StatefulWidget {
-  const TechnicianPage({Key? key}) : super(key: key);
+  const TechnicianPage({super.key});
 
   @override
   State<TechnicianPage> createState() => _TechnicianPageState();
@@ -39,7 +39,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
 
   Future<void> fetchClientData() async {
     try {
-      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/tech/profile/{id}')); // todo
+      final response = await http.get(Uri.parse('${ServerAPI.baseURL}/tech/profile/{id}')); // todo
       if (response.statusCode == 200) {
 
         setState(() {
@@ -224,8 +224,8 @@ class _TechnicianPageState extends State<TechnicianPage> {
                             ),
                           );
                         },
-                        child: const Text('Remove Photo'),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                        child: const Text('Remove Photo'),
                       ),
                     ),
                   ],
@@ -359,7 +359,7 @@ class _TechnicianPageState extends State<TechnicianPage> {
                 ? const Center(child: Text('No photos published yet.'))
                 : GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 10,

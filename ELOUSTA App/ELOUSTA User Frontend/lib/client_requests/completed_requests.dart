@@ -33,7 +33,7 @@ class _CompletedRequestsState extends State<CompletedRequests> {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Rate the request from 1 to 5'),
+                  const Text('Rate the request from 1 to 5'),
                   Slider(
                     value: rating,
                     min: 1,
@@ -84,7 +84,7 @@ class _CompletedRequestsState extends State<CompletedRequests> {
 
   Future<void> _submitRating(
       int requestId, int techId, int rating, String comments) async {
-    final url = Uri.parse(ServerAPI.baseURL + '/client/feedback');
+    final url = Uri.parse('${ServerAPI.baseURL}/client/feedback');
     String token = (await secureStorage.read(key: 'auth_token')) as String;
     String idString = (await secureStorage.read(key: 'id')) as String;
     int id = int.parse(idString);
@@ -120,7 +120,7 @@ class _CompletedRequestsState extends State<CompletedRequests> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return widget.completedRequests.isEmpty ? const Center(child: Text("There isn't exist completed requests")) : ListView.builder(
       itemCount: widget.completedRequests.length,
       itemBuilder: (context, index) {
         final request = widget.completedRequests[index];

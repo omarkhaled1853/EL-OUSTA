@@ -27,8 +27,8 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
   final TextEditingController _confirmPasswordController = TextEditingController();
   final secureStorage = const FlutterSecureStorage();
   late bool _passwordVisible = true;
-  String? _passwordErrorText = null;
-  String? _confirmPasswordErrorText = null;
+  String? _passwordErrorText;
+  String? _confirmPasswordErrorText;
   bool _isPasswordValid = false;
   bool _isConfirmPasswordValid = false;
   bool isFormValid = false;
@@ -80,11 +80,11 @@ class _ResetpasswordscreenState extends State<Resetpasswordscreen> {
   void _submitForm() async {
 
     if(isFormValid) {
-      var url;
+      Uri url;
       if(widget.type == Type.USER) {
-        url = Uri.parse(ServerAPI.baseURL + '/client/resetPassword');
+        url = Uri.parse('${ServerAPI.baseURL}/client/resetPassword');
       } else {
-        url = Uri.parse(ServerAPI.baseURL + '/tech/resetPassword');
+        url = Uri.parse('${ServerAPI.baseURL}/tech/resetPassword');
       }
       // make http get request
       var response = await http.post(
