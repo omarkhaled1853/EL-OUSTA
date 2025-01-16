@@ -22,21 +22,21 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
             " WHERE c.id = :clientId")
     void deleteProfilePictureById(@Param("clientId") Integer id);
 
-    @Query("SELECT COUNT(*) " +
-            "FROM request r " +
-            "WHERE r.USERID = :clientId AND r.STATE = 'PENDING'"
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM Request r " +
+            "WHERE r.USERID = :clientId AND r.STATE = 'PENDING'", nativeQuery = true
     )
-    int getNumberOfPendingRequests(@Param("clintId") Integer id);
+    int getNumberOfPendingRequests(@Param("clientId") Integer id);
 
-    @Query("SELECT COUNT(*) " +
-            "FROM request r " +
-            "WHERE r.USERID = :clientId AND r.STATE = 'COMPLETED'"
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM Request r " +
+            "WHERE r.USERID = :clientId AND r.STATE = 'COMPLETED'", nativeQuery = true
     )
-    int getNumberOfCompletedRequests(@Param("clintId") Integer id);
+    int getNumberOfCompletedRequests(@Param("clientId") Integer id);
 
-    @Query("SELECT COUNT(*) " +
-            "FROM request r " +
-            "WHERE r.USERID = :clientId AND r.STATE = 'IN-PROGRESS'"
-    )
-    int getNumberOfInProgressRequests(@Param("clintId") Integer id);
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM REQUEST r " +
+            "WHERE r.USERID = :clientId AND r.STATE = 'IN-PROGRESS'", nativeQuery = true)
+    int getNumberOfInProgressRequests(@Param("clientId") Integer clientId);
+
 }

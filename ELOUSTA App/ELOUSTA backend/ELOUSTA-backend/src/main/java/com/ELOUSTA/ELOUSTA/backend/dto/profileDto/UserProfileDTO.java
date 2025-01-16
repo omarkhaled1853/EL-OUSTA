@@ -19,7 +19,7 @@ public class UserProfileDTO {
     private String lastName;
     private byte[] profilePicture;
     private int pending;
-    private int cancelled;
+    private int inProgress;
     private int completed;
     private Date dob;
     private String userName;

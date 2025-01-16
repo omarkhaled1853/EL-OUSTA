@@ -26,9 +26,18 @@ public class ClientProfileProfileServiceImpl implements ClientProfileService {
 
     public Optional<ClientProfileDTO> getClient(Integer id) {
         Optional<ClientEntity> clientEntity = clientRepository.findById(id);
+        int pendingRequests = clientRepository.getNumberOfPendingRequests(id);
+        int inProgressRequests = clientRepository.getNumberOfInProgressRequests(id);
+        int completedRequests = clientRepository.getNumberOfCompletedRequests(id);
+
+        System.out.println(pendingRequests);
+        System.out.println(inProgressRequests);
+        System.out.println(completedRequests);
+
         return clientEntity.map(entity -> {
             try {
-                return ClientMapper.clientEntityToClientDTO(entity);
+                return ClientMapper.clientEntityToClientDTO(
+                        entity, pendingRequests, inProgressRequests, completedRequests);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

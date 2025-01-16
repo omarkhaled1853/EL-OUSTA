@@ -63,12 +63,17 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchClientData() async {
     log("inside fetch client data");
     try {
-      final response = await http.get(Uri.parse('${ServerAPI.baseURL}/client/profile/${id}'),
-          headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'}); // todo
+      final response = await http.get(
+          Uri.parse('${ServerAPI.baseURL}/client/profile/${id}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          }); // todo
       if (response.statusCode == 200) {
         log(response.body);
         setState(() {
           userData = json.decode(response.body); // Parse the fetched data
+          print(userData);
           isLoading = false; // Loading completed
         });
       } else {
@@ -112,11 +117,13 @@ class _ProfilePageState extends State<ProfilePage> {
           if (response.statusCode == 200) {
             setState(() {
               _selectedImage = tempImage; // Update only on success
-              userData!['profilePicture'] = base64Encode(tempImage.readAsBytesSync());
+              userData!['profilePicture'] =
+                  base64Encode(tempImage.readAsBytesSync());
             });
             _showSnackBar('Profile photo updated!', Colors.green);
           } else {
-            _showSnackBar('Failed to update profile photo. Try again.', Colors.red);
+            _showSnackBar(
+                'Failed to update profile photo. Try again.', Colors.red);
           }
         } catch (error) {
           _showSnackBar('Error updating profile photo: $error', Colors.red);
@@ -124,7 +131,6 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
   }
-
 
   void onTabTapped(int index) {
     if (index == 0) {
@@ -149,80 +155,79 @@ class _ProfilePageState extends State<ProfilePage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: _pickImage,
-                    child: CircleAvatar(
-                      radius: 60,
-                      backgroundImage: _selectedImage != null
-                          ? FileImage(_selectedImage!)
-                          : userData != null &&
-                          userData!['profilePicture'] != null
-                          ? MemoryImage(base64Decode(
-                          userData!['profilePicture']))
-                          : const AssetImage('images/avatar.png')
-                      as ImageProvider,
-                      child: _selectedImage == null
-                          ? const Align(
-                        alignment: Alignment.bottomRight,
-                        child: Icon(Icons.camera_alt, size: 30),
-                      )
-                          : null,
+                  Center(
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: _pickImage,
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundImage: _selectedImage != null
+                                ? FileImage(_selectedImage!)
+                                : userData != null &&
+                                        userData!['profilePicture'] != null
+                                    ? MemoryImage(base64Decode(
+                                        userData!['profilePicture']))
+                                    : const AssetImage('images/avatar.png')
+                                        as ImageProvider,
+                            child: _selectedImage == null
+                                ? const Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Icon(Icons.camera_alt, size: 30),
+                                  )
+                                : null,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        
+                        Text(
+                          userData?['firstName'] ?? 'User Name',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          userData?['email'] ?? 'user@example.com',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    userData?['firstName'] ?? 'User Name',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildStatCard(
+                          "Pending", userData?['pending'].toString() ?? '1'),
+                      _buildStatCard('InProgress',
+                          userData?['inProgress'].toString() ?? '1'),
+                      _buildStatCard('Completed',
+                          userData?['completed'].toString() ?? '1'),
+                    ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    userData?['email'] ?? 'user@example.com',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
+                  const Spacer(),
+                  Column(
+                    children: [
+                      _buildButton(
+                          'Change Profile Photo', Colors.blue, _pickImage),
+                      const SizedBox(height: 10),
+                      _buildButton('Reset Password', Colors.red, () {
+                        _resetPassword(context);
+                      }),
+                    ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildStatCard(
-                    "Requests",
-                    userData?['requests'].toString() ??
-                        '1'),
-                _buildStatCard('Accepted',
-                    userData?['accepted'].toString() ?? '1'),
-                _buildStatCard('cancelled',
-                    userData?['cancelled'].toString() ?? '1'),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                _buildButton('Change Profile Photo', Colors.blue, _pickImage),
-                const SizedBox(height: 10),
-                _buildButton('Reset Password', Colors.red, () {
-                  _resetPassword(context);
-                }),
-              ],
-            ),
-          ],
-        ),
-      ),
-
     );
   }
 
@@ -265,22 +270,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<bool> _showConfirmDialog(String title, String content) async {
     return await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Confirm'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Confirm'),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 
@@ -401,7 +406,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
 
   void _showSnackBar(String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(

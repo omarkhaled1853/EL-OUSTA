@@ -34,7 +34,7 @@ public final class ProfileTestData {
                 .lastName("Doe")
                 .profilePicture(profilePhoto)
                 .pending(0)
-                .cancelled(0)
+                .inProgress(0)
                 .completed(0)
                 .dob(Date.valueOf("1990-01-15"))
                 .userName("johndoe")
