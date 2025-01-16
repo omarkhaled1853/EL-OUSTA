@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'old files/homeclient.dart';
 
 class back extends StatefulWidget {
-  const back({Key? key}) : super(key: key);
+  const back({super.key});
 
   @override
   State<back> createState() => _ProfilePageState();

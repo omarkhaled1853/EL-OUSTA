@@ -243,8 +243,8 @@ class ProfessionCard extends StatelessWidget {
                           selectedProfession, // Pass the selected profession
                       techName: techCard.techName, // Pass variables directly
                       rating: double.parse(techCard.rating),
-                      techid: this.techCard.techId, // Pass variables directly
-                      token: this.token,
+                      techid: techCard.techId, // Pass variables directly
+                      token: token,
                     );
                   },
                 );

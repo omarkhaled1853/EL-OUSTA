@@ -38,7 +38,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
 
             await presentPaymentSheet(clientSecret);
             final response = await http.post(
-                Uri.parse(ServerAPI.baseURL + '/tech/requests/accept'),
+                Uri.parse('${ServerAPI.baseURL}/tech/requests/accept'),
                 body: jsonEncode({
                   "id": widget.id,
                   "techId": widget.techId,
@@ -50,7 +50,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
                 }
             );
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Payment Successful!'), backgroundColor: Colors.green,),
+              const SnackBar(content: Text('Payment Successful!'), backgroundColor: Colors.green,),
             );
           } on StripeException catch (e) {
             // Handle specific Stripe exceptions
@@ -90,7 +90,7 @@ class _CheckoutButtonState extends State<CheckoutButton> {
   }
   Future<String> createPaymentIntent(int amount) async {
     final response = await http.post(
-      Uri.parse(ServerAPI.baseURL + '/tech/create-payment-intent'),
+      Uri.parse('${ServerAPI.baseURL}/tech/create-payment-intent'),
       headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ${widget.token}'},
       body: jsonEncode({'amount': amount, 'currency': "EGP"}),
     );

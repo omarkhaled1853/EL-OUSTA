@@ -87,16 +87,10 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
       List<TechCard>? searchResults =
           await service_search(searchQuery, widget.professionType, widget.token);
 
-      if (searchResults != null) {
-        setState(() {
-          techcards = searchResults; // Update the state with search results
-        });
-      } else {
-        setState(() {
-          techcards = []; // Handle no results case
-        });
-      }
-    } catch (e) {
+      setState(() {
+        techcards = searchResults; // Update the state with search results
+      });
+        } catch (e) {
       print("Error during search: $e");
       setState(() {
         techcards = []; // Handle error case
@@ -111,7 +105,7 @@ class _ProfessionsScreenState extends State<ProfessionsScreen> {
     }
 
     return Scaffold(
-      appBar: NotificationScreen(type: Type.USER), // Custom AppBar
+      appBar: const NotificationScreen(type: Type.USER), // Custom AppBar
       body: Column(
         children: [
           // const Padding(
@@ -174,7 +168,7 @@ class FilterSectionState extends State<FilterSection> {
     print("search on $profession");
     List<TechCard> testData = [];
     var client = http.Client();
-    var uri = Uri.parse(ServerAPI.baseURL + "/client/home/filtercard");
+    var uri = Uri.parse("${ServerAPI.baseURL}/client/home/filtercard");
 
     try {
       // The body must contain the "field" and "query" parameters for filtering

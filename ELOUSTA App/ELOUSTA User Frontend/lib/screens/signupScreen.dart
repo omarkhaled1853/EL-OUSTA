@@ -43,9 +43,9 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   late bool _passwordVisible = true;
-  String? _emailErrorText = null;
-  String? _passwordErrorText = null;
-  String? _confirmPasswordErrorText = null;
+  String? _emailErrorText;
+  String? _passwordErrorText;
+  String? _confirmPasswordErrorText;
   bool isFormValid = false;
 
   Future signIn() async {
@@ -56,11 +56,12 @@ class _SignupScreenState extends State<SignupScreen> {
       log(user.displayName ?? 'No display name');
       log(user.id);
       log(user.serverAuthCode ?? 'No server auth code');
-      var url;
-      if(widget.type == Type.USER)
-        url = Uri.parse(ServerAPI.baseURL + '/client/signIn/google');
-      else
-        url = Uri.parse(ServerAPI.baseURL + '/tech/signIn/google');
+      Uri url;
+      if(widget.type == Type.USER) {
+        url = Uri.parse('${ServerAPI.baseURL}/client/signIn/google');
+      } else {
+        url = Uri.parse('${ServerAPI.baseURL}/tech/signIn/google');
+      }
       // make http get request
       var response = await http.post(
           url,
@@ -234,12 +235,10 @@ class _SignupScreenState extends State<SignupScreen> {
             )
         );
       }
-      if(result != null) {
-        setState(() {
-          _emailErrorText = "email already in use, sign in instead";
-        });
-      }
-    }
+      setState(() {
+        _emailErrorText = "email already in use, sign in instead";
+      });
+        }
   }
   void validateForm() {
     setState(() {

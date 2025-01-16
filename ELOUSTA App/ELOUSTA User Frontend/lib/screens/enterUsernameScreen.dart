@@ -29,7 +29,7 @@ class EnterusernameScreen extends StatefulWidget {
 class _EnterusernameScreenState extends State<EnterusernameScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
-  String? usernameErrorText = null;
+  String? usernameErrorText;
   bool _isUsernameValid = false;
   bool isFormValid = false;
   // bool loggedIn = false;
@@ -62,10 +62,10 @@ class _EnterusernameScreenState extends State<EnterusernameScreen> {
     if(isFormValid) {
       var url, user;
       if(widget.type == Type.USER) {
-        url = Uri.parse(ServerAPI.baseURL + "/client/fetchUser");
+        url = Uri.parse("${ServerAPI.baseURL}/client/fetchUser");
       }
       else {
-        url = Uri.parse(ServerAPI.baseURL + "/tech/fetchTch");
+        url = Uri.parse("${ServerAPI.baseURL}/tech/fetchTch");
       }
       final response = await http.post(
           url,
@@ -83,7 +83,7 @@ class _EnterusernameScreenState extends State<EnterusernameScreen> {
         print(response.body);
         // user = User.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         final data = jsonDecode(response.body);
-        User user = new User(
+        User user = User(
           username: data['username'],
           password: data['password'],
           emailAddress: data['emailAddress'],

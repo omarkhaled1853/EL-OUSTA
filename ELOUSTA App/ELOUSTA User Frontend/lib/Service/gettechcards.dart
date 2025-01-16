@@ -9,7 +9,7 @@ class Gettechcards {
     print(token);
     List<TechCard> testData = [];
     var client = http.Client();
-    var uri = Uri.parse(ServerAPI.baseURL + "/client/home/filtercard");
+    var uri = Uri.parse("${ServerAPI.baseURL}/client/home/filtercard");
 
     try {
       // The body must contain the "field" and "query" parameters for filtering

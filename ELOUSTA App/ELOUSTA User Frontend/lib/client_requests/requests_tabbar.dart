@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RequestsTabBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController controller;
 
-  const RequestsTabBar({Key? key, required this.controller}) : super(key: key);
+  const RequestsTabBar({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

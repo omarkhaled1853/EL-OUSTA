@@ -34,7 +34,7 @@ class RequestService {
     };
     print(token);
     final response = await http.post(
-      Uri.parse(ServerAPI.baseURL + '/client/request/addRequest'),
+      Uri.parse('${ServerAPI.baseURL}/client/request/addRequest'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
@@ -45,13 +45,13 @@ class RequestService {
     if (response.statusCode == 200) {
       // Successfully sent the request
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Request successfully sent!')),
+        const SnackBar(content: Text('Request successfully sent!')),
       );
       return true;
     } else {
       // Error occurred while sending the request
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to send the request.')),
+        const SnackBar(content: Text('Failed to send the request.')),
       );
       return false;
     }

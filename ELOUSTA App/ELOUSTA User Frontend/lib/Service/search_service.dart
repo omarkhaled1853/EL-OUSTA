@@ -11,7 +11,7 @@ Future<List<TechCard>> service_search(
       "Searching for technicians with query: $searchQuery in domain ID: $Profession");
   var client = http.Client();
   var uri = Uri.parse(
-      ServerAPI.baseURL + "/client/home/searchbyname/$Profession");
+      "${ServerAPI.baseURL}/client/home/searchbyname/$Profession");
 
   try {
     print(token);

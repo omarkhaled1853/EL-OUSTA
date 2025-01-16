@@ -37,7 +37,7 @@ class NotificationScreen extends StatefulWidget implements PreferredSizeWidget {
   @override
   // TODO: implement preferredSize
   Size get preferredSize =>
-      Size.fromHeight(kToolbarHeight); // Standard AppBar height
+      const Size.fromHeight(kToolbarHeight); // Standard AppBar height
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
@@ -75,10 +75,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
   // Fetch notifications from backend
   Future<void> fetchNotifications() async {
     final String url;
-    if (widget.type == Type.USER)
-      url = ServerAPI.baseURL + '/client/notifications/$userId';
-    else
-      url = ServerAPI.baseURL + '/tech/notifications/$userId';
+    if (widget.type == Type.USER) {
+      url = '${ServerAPI.baseURL}/client/notifications/$userId';
+    } else {
+      url = '${ServerAPI.baseURL}/tech/notifications/$userId';
+    }
 
     final response = await http.get(
       Uri.parse(url),
@@ -103,7 +104,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initializeWebSocket() {
     stompClient = StompClient(
       config: StompConfig(
-        url: ServerAPI.baseURLSocket + '/elousta-websocket',
+        url: '${ServerAPI.baseURLSocket}/elousta-websocket',
         onConnect: (frame) {
           setState(() {
             isConnected = true;
@@ -161,13 +162,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
           onPressed: () async {
             await storage.delete(key: 'auth_token');
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (ctx) => UserTechScreen()));
+                MaterialPageRoute(builder: (ctx) => const UserTechScreen()));
           },
         ),
         PopupMenuButton<String>(
           icon: Stack(
             children: [
-              Icon(
+              const Icon(
                 Icons.notifications_none,
                 color: Colors.black,
               ),
@@ -176,14 +177,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   right: 0,
                   top: 0,
                   child: Container(
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
                       color: Colors.red,
                       shape: BoxShape.circle,
                     ),
                     child: Text(
                       '$notificationCount',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
                 ),
@@ -199,7 +200,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             return [
               PopupMenuItem<String>(
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   width: 300,
                   height: 300,
                   decoration: BoxDecoration(
@@ -210,7 +211,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         color: Colors.grey.withOpacity(0.2),
                         spreadRadius: 1,
                         blurRadius: 4,
-                        offset: Offset(0, 3), // changes position of shadow
+                        offset: const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
@@ -220,33 +221,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           itemBuilder: (context, index) {
                             final notification = notifications[index];
                             return Container(
-                              margin: EdgeInsets.only(bottom: 10),
+                              margin: const EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
                                 color: Colors.lightBlue[50],
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 15,
                                   vertical: 10,
                                 ),
                                 title: Text(
                                   notification.message,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                   ),
                                 ),
                                 subtitle: Text(
                                   '${notification.date}',
-                                  style: TextStyle(fontSize: 12),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
                                 tileColor: Colors.white,
                               ),
                             );
                           },
                         )
-                      : Center(child: Text('No notifications available.')),
+                      : const Center(child: Text('No notifications available.')),
                 ),
               ),
             ];

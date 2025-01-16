@@ -57,7 +57,7 @@ class _RequestFormState extends State<RequestForm> {
           TextField(
             controller: _detailsController,
             maxLines: 3,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Details of Request',
             ),
             inputFormatters: [
@@ -207,13 +207,13 @@ class RequestPopupDialog extends StatelessWidget {
                   final int userId = int.parse(userStringId!);
                   print(userId);
                   final int techId =
-                      this.techid; // Replace with actual technician ID
+                      techid; // Replace with actual technician ID
                   // ---------------------------------------------
                   // Call your service to send the request
                   print(techId);
                   RequestService(baseUrl: ServerAPI.baseURL)
                       .sendRequest(userId, techId, details, location, startDate,
-                          endDate, context, this.token)
+                          endDate, context, token)
                       .then((success) {
                     if (success) {
                       ScaffoldMessenger.of(context)

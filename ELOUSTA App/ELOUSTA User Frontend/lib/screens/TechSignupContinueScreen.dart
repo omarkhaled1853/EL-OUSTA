@@ -51,13 +51,13 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
   bool _isDomainValid = false;
   bool isFormValid = false;
 
-  String? lnErrorText = null;
-  String? fnErrorText = null;
-  String? usernameErrorText = null;
-  String? phoneErrorText = null;
-  String? dobErrorText = null;
-  String? cityErrorText = null;
-  String? domainErrorText = null;
+  String? lnErrorText;
+  String? fnErrorText;
+  String? usernameErrorText;
+  String? phoneErrorText;
+  String? dobErrorText;
+  String? cityErrorText;
+  String? domainErrorText;
   String? selectedProfession;
   int? selectedProfessionId;
 
@@ -90,7 +90,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
       //     rates: null
       // );
 
-      var url = Uri.parse(ServerAPI.baseURL + '/tech/signUp');
+      var url = Uri.parse('${ServerAPI.baseURL}/tech/signUp');
       // make http get request
       var response = await http.post(url,
           headers: {
@@ -110,7 +110,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
             'domainEntity': {
               'id': selectedProfessionId
             },
-            'signUpDate': (new DateTime.now()).toIso8601String(), // Convert DateTime to ISO format
+            'signUpDate': (DateTime.now()).toIso8601String(), // Convert DateTime to ISO format
             'technicianNotifications': [],
             'jobStartDate': '1923-07-23',
             'profilePicture': null,
@@ -122,7 +122,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
         log(response.body);
         if(response.body != 'Invalid username' && response.body != 'Invalid email address') {
           String id = response.body;
-          url = Uri.parse(ServerAPI.baseURL + '/tech/signIn');
+          url = Uri.parse('${ServerAPI.baseURL}/tech/signIn');
           // make http get request
           response = await http.post(
             url,
@@ -287,7 +287,7 @@ class _TechSignupContinueScreenState extends State<TechSignupContinueScreen> {
   Future<void> fetchAllDomains() async {
     try {
       final response = await http.get(
-          Uri.parse(ServerAPI.baseURL + '/tech/signUp/domains'),
+          Uri.parse('${ServerAPI.baseURL}/tech/signUp/domains'),
           // headers: {'Authorization': 'Bearer $token'}
       );
       print(response.statusCode);

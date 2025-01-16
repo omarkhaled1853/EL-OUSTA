@@ -112,7 +112,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
               ? () async {
               var url, response;
               if(widget.method == 'mail') {
-                url = Uri.parse(ServerAPI.baseURL + '/mail/verification/${widget.user.emailAddress}/${_otp}');
+                url = Uri.parse('${ServerAPI.baseURL}/mail/verification/${widget.user.emailAddress}/${_otp}');
                 response = await http.post(
                   url,
                   headers: {
@@ -125,7 +125,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 );
               }
               else {
-                url = Uri.parse(ServerAPI.baseURL + '/twilio-otp/verification');
+                url = Uri.parse('${ServerAPI.baseURL}/twilio-otp/verification');
                 response = await http.post(
                   url,
                   headers: {

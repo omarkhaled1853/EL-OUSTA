@@ -26,6 +26,8 @@ late String token;
 // }
 
 class RequestHomePage extends StatefulWidget {
+  const RequestHomePage({super.key});
+
   @override
   _RequestHomePageState createState() => _RequestHomePageState();
 }
@@ -51,7 +53,7 @@ class _RequestHomePageState extends State<RequestHomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: NotificationScreen(
+        appBar: const NotificationScreen(
           type: Type.TECHNICIAN,
           addBackButton: false,
         ),
@@ -107,7 +109,7 @@ class RequestList extends StatefulWidget {
   final String endpoint;
   final Color? boxColor;
 
-  const RequestList({
+  const RequestList({super.key, 
     required this.state,
     required this.isPending,
     required this.endpoint,
@@ -138,7 +140,7 @@ class _RequestListState extends State<RequestList> {
     });
     initId();
     // print("HELLO FROM HERE");
-    final url = Uri.parse(ServerAPI.baseURL + '${widget.endpoint}/$id');
+    final url = Uri.parse('${ServerAPI.baseURL}${widget.endpoint}/$id');
     final response =
         await http.get(url, headers: {'Authorization': 'Bearer $token'});
 
@@ -158,7 +160,7 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applyFilter() async {
-    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/filter');
+    final url = Uri.parse('${ServerAPI.baseURL}/tech/requests/filter');
     final body =
         json.encode({"id": id, "state": widget.state, "query": filterQuery});
 
@@ -182,7 +184,7 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applySearch() async {
-    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/search');
+    final url = Uri.parse('${ServerAPI.baseURL}/tech/requests/search');
     final body =
         json.encode({"id": id, "state": widget.state, "query": searchQuery});
 
@@ -206,7 +208,7 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> applySort() async {
-    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/sort');
+    final url = Uri.parse('${ServerAPI.baseURL}/tech/requests/sort');
     final body =
         json.encode({"id": id, "type": sortType, "state": widget.state});
 
@@ -230,7 +232,7 @@ class _RequestListState extends State<RequestList> {
   }
 
   Future<void> refuseTask(Request request) async {
-    final url = Uri.parse(ServerAPI.baseURL + '/tech/requests/refuse');
+    final url = Uri.parse('${ServerAPI.baseURL}/tech/requests/refuse');
     final body = json.encode({
       "id": request.id,
       "techId": request.techId,

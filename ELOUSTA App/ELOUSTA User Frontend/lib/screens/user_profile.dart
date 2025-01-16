@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:el_ousta/old%20files/homeclient.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> fetchClientData() async {
     log("inside fetch client data");
     try {
-      final response = await http.get(Uri.parse(ServerAPI.baseURL + '/client/profile/${id}'),
+      final response = await http.get(Uri.parse('${ServerAPI.baseURL}/client/profile/${id}'),
           headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'}); // todo
       if (response.statusCode == 200) {
         log(response.body);
@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
         try {
           final request = http.MultipartRequest(
             'POST',
-            Uri.parse(ServerAPI.baseURL + '/update-profile-photo'),
+            Uri.parse('${ServerAPI.baseURL}/update-profile-photo'),
           );
           request.files.add(await http.MultipartFile.fromPath(
             'profilePhoto',

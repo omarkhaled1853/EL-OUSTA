@@ -13,7 +13,7 @@ import 'package:el_ousta/common/userTech.dart';
 const storage = FlutterSecureStorage();
 
 class DomainPage extends StatefulWidget {
-  const DomainPage({Key? key}) : super(key: key);
+  const DomainPage({super.key});
 
   @override
   State<DomainPage> createState() => _DomainPageState();
@@ -36,7 +36,7 @@ class _DomainPageState extends State<DomainPage> {
     String? token = await storage.read(key: 'auth_token');
     try {
       final response = await http.get(
-          Uri.parse(ServerAPI.baseURL + '/client/home/'),
+          Uri.parse('${ServerAPI.baseURL}/client/home/'),
           headers: {'Authorization': 'Bearer $token'});
       print(response.statusCode);
       if (response.statusCode == 200) {
@@ -89,7 +89,7 @@ class _DomainPageState extends State<DomainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NotificationScreen(
+      appBar: const NotificationScreen(
         type: Type.USER,
         addBackButton: false,
       ),

@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 const storage = FlutterSecureStorage();
 class TechnicianHome extends StatefulWidget {
-  const TechnicianHome({Key? key}) : super(key: key);
+  const TechnicianHome({super.key});
 
   @override
   State<TechnicianHome> createState() => _TechnicianHomeState();
@@ -33,7 +33,7 @@ bool isLoading = true;
   }
 Future<void> fetchClientData() async {
   try {
-    final response = await http.get(Uri.parse(ServerAPI.baseURL + '/technician/Home'));
+    final response = await http.get(Uri.parse('${ServerAPI.baseURL}/technician/Home'));
     if (response.statusCode == 200) {
       setState(() {
         pendingRequests = json.decode(response.body); // Parse the fetched data
