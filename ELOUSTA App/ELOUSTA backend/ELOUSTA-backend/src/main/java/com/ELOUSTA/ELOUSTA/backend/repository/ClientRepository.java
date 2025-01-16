@@ -24,19 +24,19 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
 
     @Query("SELECT COUNT(*) " +
             "FROM request r " +
-            "WHERE r.USERID = :clientID AND STATE = 'PENDING'"
+            "WHERE r.USERID = :clientId AND r.STATE = 'PENDING'"
     )
-    void getNumberOfPendingRequests(@Param("clintId") Integer id);
+    int getNumberOfPendingRequests(@Param("clintId") Integer id);
 
     @Query("SELECT COUNT(*) " +
             "FROM request r " +
-            "WHERE r.USERID = :clientID AND STATE = 'COMPLETED'"
+            "WHERE r.USERID = :clientId AND r.STATE = 'COMPLETED'"
     )
-    void getNumberOfCompletedRequests(@Param("clintId") Integer id);
+    int getNumberOfCompletedRequests(@Param("clintId") Integer id);
 
     @Query("SELECT COUNT(*) " +
             "FROM request r " +
-            "WHERE r.USERID = :clientID AND STATE = 'IN-PROGRESS'"
+            "WHERE r.USERID = :clientId AND r.STATE = 'IN-PROGRESS'"
     )
-    void getNumberOfInProgressRequests(@Param("clintId") Integer id);
+    int getNumberOfInProgressRequests(@Param("clintId") Integer id);
 }
