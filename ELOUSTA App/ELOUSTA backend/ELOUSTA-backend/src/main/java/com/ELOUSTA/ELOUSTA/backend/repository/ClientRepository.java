@@ -22,4 +22,21 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
             " WHERE c.id = :clientId")
     void deleteProfilePictureById(@Param("clientId") Integer id);
 
+    @Query("SELECT COUNT(*) " +
+            "FROM request r " +
+            "WHERE r.USERID = :clientID AND STATE = 'PENDING'"
+    )
+    void getNumberOfPendingRequests(@Param("clintId") Integer id);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM request r " +
+            "WHERE r.USERID = :clientID AND STATE = 'COMPLETED'"
+    )
+    void getNumberOfCompletedRequests(@Param("clintId") Integer id);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM request r " +
+            "WHERE r.USERID = :clientID AND STATE = 'IN-PROGRESS'"
+    )
+    void getNumberOfInProgressRequests(@Param("clintId") Integer id);
 }
