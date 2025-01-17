@@ -2,7 +2,7 @@
 
 ## Overview
 
-**ELOUSTA** is a platform designed to simplify the connection between clients and technicians. It enables clients to easily request services, communicate with technicians, and manage their requests efficiently. Technicians can manage client requests, accept or decline jobs, and ensure smooth interactions through notifications and feedback mechanisms. The application also includes an admin interface to oversee and manage the platform's operations.
+**ELOUSTA** is a mobile application designed to simplify the connection between clients and technicians. It enables clients to easily request services, communicate with technicians, and manage their requests efficiently. Technicians can manage client requests, accept or decline jobs, and ensure smooth interactions through notifications and feedback mechanisms. The application also includes an admin interface to oversee and manage the platform's operations.
 
 ---
 
